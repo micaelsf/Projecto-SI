@@ -1,0 +1,13 @@
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DU_\bin\Debug\AirSensorNodeDll.dll
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DU_\obj\Debug\AirMonit_DU.csproj.CoreCompileInputs.cache
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DU_\bin\Debug\AirMonit_DU.dll
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DU_\bin\Debug\AirMonit_DU.pdb
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DU_\obj\Debug\AirMonit_DU.csprojResolveAssemblyReference.cache
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DU_\obj\Debug\AirMonit_DU.dll
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DU_\obj\Debug\AirMonit_DU.pdb
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DU\bin\Debug\AirMonit_DU.dll
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DU\bin\Debug\AirMonit_DU.pdb
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DU\bin\Debug\AirSensorNodeDll.dll
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DU\obj\Debug\AirMonit_DU.csproj.CoreCompileInputs.cache
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DU\obj\Debug\AirMonit_DU.dll
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DU\obj\Debug\AirMonit_DU.pdb

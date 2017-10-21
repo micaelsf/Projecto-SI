@@ -1,0 +1,10 @@
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\ComunicationChannelTeste\bin\Debug\ComunicationChannelTeste.exe.config
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\ComunicationChannelTeste\bin\Debug\ComunicationChannelTeste.exe
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\ComunicationChannelTeste\bin\Debug\ComunicationChannelTeste.pdb
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\ComunicationChannelTeste\bin\Debug\AirSensorNodeDll.dll
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\ComunicationChannelTeste\obj\Debug\ComunicationChannelTeste.csprojResolveAssemblyReference.cache
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\ComunicationChannelTeste\obj\Debug\ComunicationChannelTeste.csproj.CoreCompileInputs.cache
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\ComunicationChannelTeste\obj\Debug\ComunicationChannelTeste.exe
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\ComunicationChannelTeste\obj\Debug\ComunicationChannelTeste.pdb
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\ComunicationChannelTeste\bin\Debug\AirMonit_DU.dll
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\ComunicationChannelTeste\bin\Debug\AirMonit_DU.pdb
