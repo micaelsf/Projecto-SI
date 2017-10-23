@@ -25,6 +25,8 @@ namespace ComunicationChannelTeste
             Data[] dataArray = new Data[4];
             Boolean initializedSensors;
 
+            bool keyPress;
+
             createBaseXMLStructure();
             initializedSensors = sensorData.initializeSensor();
 
@@ -43,6 +45,7 @@ namespace ComunicationChannelTeste
                 }
                 else
                 {
+                    //just to check
                     //Console.WriteLine("No data available!");
                 }
             }

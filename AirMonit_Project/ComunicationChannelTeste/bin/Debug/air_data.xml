@@ -2,198 +2,30 @@
 <air_quality_data>
   <air_data>
     <city>Leiria</city>
-    <co>9</co>
-    <no2>1154</no2>
-    <o3>101</o3>
-    <date>10/21/2017 8:25:59 PM</date>
-  </air_data>
-  <air_data>
-    <city>Coimbra</city>
-    <co>10</co>
-    <no2>969</no2>
-    <o3>143</o3>
-    <date>10/21/2017 8:26:00 PM</date>
-  </air_data>
-  <air_data>
-    <city>Lisboa</city>
-    <co>11</co>
-    <no2>966</no2>
-    <o3>166</o3>
-    <date>10/21/2017 8:26:03 PM</date>
-  </air_data>
-  <air_data>
-    <city>Porto</city>
     <co>4</co>
-    <no2>660</no2>
-    <o3>114</o3>
-    <date>10/21/2017 8:26:02 PM</date>
-  </air_data>
-  <air_data>
-    <city>Leiria</city>
-    <co>5</co>
-    <no2>812</no2>
-    <o3>42</o3>
-    <date>10/21/2017 8:26:05 PM</date>
+    <no2>825</no2>
+    <o3>167</o3>
+    <date>23/10/2017 01:51:29</date>
   </air_data>
   <air_data>
     <city>Coimbra</city>
+    <co>17</co>
+    <no2>75</no2>
+    <o3>50</o3>
+    <date>23/10/2017 01:51:30</date>
+  </air_data>
+  <air_data>
+    <city>Lisboa</city>
+    <co>4</co>
+    <no2>326</no2>
+    <o3>36</o3>
+    <date>23/10/2017 01:51:33</date>
+  </air_data>
+  <air_data>
+    <city>Porto</city>
     <co>2</co>
-    <no2>15</no2>
-    <o3>97</o3>
-    <date>10/21/2017 8:26:06 PM</date>
-  </air_data>
-  <air_data>
-    <city>Lisboa</city>
-    <co>23</co>
-    <no2>872</no2>
-    <o3>131</o3>
-    <date>10/21/2017 8:26:09 PM</date>
-  </air_data>
-  <air_data>
-    <city>Porto</city>
-    <co>17</co>
-    <no2>1113</no2>
-    <o3>5</o3>
-    <date>10/21/2017 8:26:08 PM</date>
-  </air_data>
-  <air_data>
-    <city>Leiria</city>
-    <co>15</co>
-    <no2>864</no2>
-    <o3>106</o3>
-    <date>10/21/2017 8:26:11 PM</date>
-  </air_data>
-  <air_data>
-    <city>Coimbra</city>
-    <co>22</co>
-    <no2>397</no2>
-    <o3>227</o3>
-    <date>10/21/2017 8:26:12 PM</date>
-  </air_data>
-  <air_data>
-    <city>Lisboa</city>
-    <co>13</co>
-    <no2>439</no2>
-    <o3>128</o3>
-    <date>10/21/2017 8:26:15 PM</date>
-  </air_data>
-  <air_data>
-    <city>Porto</city>
-    <co>15</co>
-    <no2>263</no2>
-    <o3>24</o3>
-    <date>10/21/2017 8:26:14 PM</date>
-  </air_data>
-  <air_data>
-    <city>Leiria</city>
-    <co>11</co>
-    <no2>5</no2>
-    <o3>44</o3>
-    <date>10/21/2017 8:26:17 PM</date>
-  </air_data>
-  <air_data>
-    <city>Coimbra</city>
-    <co>2</co>
-    <no2>289</no2>
-    <o3>91</o3>
-    <date>10/21/2017 8:26:18 PM</date>
-  </air_data>
-  <air_data>
-    <city>Lisboa</city>
-    <co>17</co>
-    <no2>171</no2>
-    <o3>96</o3>
-    <date>10/21/2017 8:26:21 PM</date>
-  </air_data>
-  <air_data>
-    <city>Porto</city>
-    <co>14</co>
-    <no2>60</no2>
-    <o3>107</o3>
-    <date>10/21/2017 8:26:20 PM</date>
-  </air_data>
-  <air_data>
-    <city>Leiria</city>
-    <co>24</co>
-    <no2>111</no2>
-    <o3>72</o3>
-    <date>10/21/2017 8:26:23 PM</date>
-  </air_data>
-  <air_data>
-    <city>Coimbra</city>
-    <co>11</co>
-    <no2>1137</no2>
-    <o3>138</o3>
-    <date>10/21/2017 8:26:24 PM</date>
-  </air_data>
-  <air_data>
-    <city>Lisboa</city>
-    <co>2</co>
-    <no2>1045</no2>
-    <o3>190</o3>
-    <date>10/21/2017 8:26:27 PM</date>
-  </air_data>
-  <air_data>
-    <city>Porto</city>
-    <co>7</co>
-    <no2>236</no2>
-    <o3>126</o3>
-    <date>10/21/2017 8:26:26 PM</date>
-  </air_data>
-  <air_data>
-    <city>Leiria</city>
-    <co>6</co>
-    <no2>193</no2>
-    <o3>97</o3>
-    <date>10/21/2017 8:26:29 PM</date>
-  </air_data>
-  <air_data>
-    <city>Coimbra</city>
-    <co>17</co>
-    <no2>607</no2>
-    <o3>193</o3>
-    <date>10/21/2017 8:26:30 PM</date>
-  </air_data>
-  <air_data>
-    <city>Lisboa</city>
-    <co>0</co>
-    <no2>751</no2>
-    <o3>163</o3>
-    <date>10/21/2017 8:26:33 PM</date>
-  </air_data>
-  <air_data>
-    <city>Porto</city>
-    <co>9</co>
-    <no2>741</no2>
-    <o3>169</o3>
-    <date>10/21/2017 8:26:32 PM</date>
-  </air_data>
-  <air_data>
-    <city>Leiria</city>
-    <co>20</co>
-    <no2>273</no2>
-    <o3>111</o3>
-    <date>10/21/2017 8:26:35 PM</date>
-  </air_data>
-  <air_data>
-    <city>Coimbra</city>
-    <co>20</co>
-    <no2>752</no2>
-    <o3>67</o3>
-    <date>10/21/2017 8:26:36 PM</date>
-  </air_data>
-  <air_data>
-    <city>Lisboa</city>
-    <co>7</co>
-    <no2>54</no2>
-    <o3>211</o3>
-    <date>10/21/2017 8:26:39 PM</date>
-  </air_data>
-  <air_data>
-    <city>Porto</city>
-    <co>17</co>
-    <no2>124</no2>
-    <o3>214</o3>
-    <date>10/21/2017 8:26:38 PM</date>
+    <no2>713</no2>
+    <o3>113</o3>
+    <date>23/10/2017 01:51:32</date>
   </air_data>
 </air_quality_data>
