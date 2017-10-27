@@ -12,7 +12,7 @@ namespace ComunicationChannelTeste
     class Program
     {
         //private static string xmlPath = AppDomain.CurrentDomain.BaseDirectory + @"data/air_data.xml";
-        private static string xmlPath = @"air_data.xml";
+        private static string xmlPath =  @"air_data.xml";
         private static XmlDocument doc;
         private static XmlElement root;
 
