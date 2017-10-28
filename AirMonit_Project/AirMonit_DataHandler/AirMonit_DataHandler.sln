@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirMonit_DU", "AirMonit_DU\AirMonit_DU.csproj", "{97EE0474-679E-4CA0-8BE7-5C744BD9B1D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationChannelInfrastructure", "CommunicationChannelInfrastructure\CommunicationChannelInfrastructure.csproj", "{2647DCE0-FC90-425F-A663-E7C35B812503}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97EE0474-679E-4CA0-8BE7-5C744BD9B1D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97EE0474-679E-4CA0-8BE7-5C744BD9B1D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97EE0474-679E-4CA0-8BE7-5C744BD9B1D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97EE0474-679E-4CA0-8BE7-5C744BD9B1D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2647DCE0-FC90-425F-A663-E7C35B812503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2647DCE0-FC90-425F-A663-E7C35B812503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2647DCE0-FC90-425F-A663-E7C35B812503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2647DCE0-FC90-425F-A663-E7C35B812503}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C763AF5C-5D75-4D52-9A0C-64283416D2EA}
+	EndGlobalSection
+EndGlobal
