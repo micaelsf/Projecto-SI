@@ -1,0 +1,48 @@
+-> criar estrutura xml para guardar dados de monotorizações
+	+ criar respectivo serviço para disponibilizar os referidos dados
+
+
+-> AirMonitor_Alarm (application)
+	+ xml trigger rules
+		* more than one alarm condition
+		* conditions (equal; less; greater; between)
+		* condition Active/Inactive
+		* app alolows user to change de alarms conditions in the xml ???
+	
+	+ app compares the values of xml (alarms) with xml (airData) and check conditions
+	  and trigger actions (alarms) if conditions true;
+	
+	+ user can choose witch parameter to monitor
+
+	+ the alarm must have information about
+		* the paramenter name
+		* value
+		* date-time
+		* city 
+		* alarm condition (why it was triggered)
+	+ after the alarm triggered, the alarm must be sent with his information
+
+	+ the application must have ON/OFF switch for trigger
+		* with interval time (funcionalidades extra)
+		* could be made on xml file, or WebApp/page (funcionalidades Extra)
+
+-> AirMonit-DLog (air monitor data logger)
+	+ store all data beeing transmitted
+	+ store (qualitative information) like fire in certain city
+		(that could influence air quality, temperature, etc
+	+the database script (.sql file must be specified and delivered)
+	
+
+	+ Service app
+		* platafor to user visualize statistical information about air, etc
+		* this info should be sumarized by te web service
+		* this info should be available thru client app
+
+
+	+ Admin app
+		* graphic client app
+		* control communication
+		* data log of repository
+		* monitor daily and weekly stats for every air param
+
+pag 3/5 The web service.... "i'll be back"
