@@ -5,27 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 
 namespace CommunicationChannelInfrastructure
 {
-    class Program
+    public class CCI
     {
-        //private static string xmlPath = AppDomain.CurrentDomain.BaseDirectory + @"data/air_data.xml";
-        private static string xmlPath = @"air_data.xml";
-        private static XmlDocument doc;
-        private static XmlElement root;
+        //private string xmlPath = @"air_data.xml";
+        //private XmlDocument doc;
+        //private XmlElement root;
+        private DataUpload du;
+        private DataSensor data;
+        private Boolean initializedSensors;
 
-        static void Main(string[] args)
+        public CCI()
         {
-            Console.WriteLine("..::Communication channel Initialized::..");
-            Console.WriteLine("\n");
+            du = new DataUpload();
+        }
 
-            DataUpload du = new DataUpload();
-            DataSensor data;
-            Boolean initializedSensors;
-
-            CreateBaseXMLStructure();
+        public void InitializeSensors()
+        {
             initializedSensors = du.InitializeSensor();
 
             while (initializedSensors)
@@ -34,14 +32,13 @@ namespace CommunicationChannelInfrastructure
                 if (data != null)
                 {
                     Console.WriteLine(data.toString());
-                    //handleData(value);
                     Console.WriteLine("\n");
 
                 }
             }
         }
 
-        private static DataSensor CallDataSensors(DataUpload du)
+        private DataSensor CallDataSensors(DataUpload du)
         {
             int iteration = 0;
             Thread.Sleep(500);
@@ -56,13 +53,15 @@ namespace CommunicationChannelInfrastructure
             return null;
         }
 
-        private static void HandleData(DataSensor value)
+
+/*
+        private void HandleData(DataSensor value)
         {
             root.AppendChild(CreateData(value));
             doc.Save(xmlPath);
         }
 
-        private static XmlNode CreateData(DataSensor value)
+        private XmlNode CreateData(DataSensor value)
         {
             XmlElement data = doc.CreateElement("air_data");
 
@@ -86,7 +85,7 @@ namespace CommunicationChannelInfrastructure
             return data;
         }
 
-        private static void CreateBaseXMLStructure()
+        private void CreateBaseXMLStructure()
         {
             doc = new XmlDocument();
             XmlDeclaration decl = doc.CreateXmlDeclaration("1.0", null, null);
@@ -97,5 +96,6 @@ namespace CommunicationChannelInfrastructure
 
             doc.Save(xmlPath);
         }
+        */
     }
 }
