@@ -31,13 +31,13 @@ namespace AirMonit_DU
             dataLocation_ = new DataSensor(0, 0, 0, "", "");
         }
 
-        public Boolean InitializeSensor()
+        public Boolean InitializeSensor(int time)
         {
             if (!initialized)
             {
                 initialized = true;
                 dll = new AirSensorNodeDll.AirSensorNodeDll();
-                dll.Initialize(TransformData, 500);
+                dll.Initialize(TransformData, time);
                 return true;
             }
             return false;

@@ -49,6 +49,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AirMonit_DU\AirMonit_DU.csproj">
+      <Project>{97EE0474-679E-4CA0-8BE7-5C744BD9B1D9}</Project>
+      <Name>AirMonit_DU</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommunicationChannelInfrastructure\CommunicationChannelInfrastructure.csproj">
       <Project>{05fbd279-3278-407c-80ea-d842f53a7314}</Project>
       <Name>CommunicationChannelInfrastructure</Name>

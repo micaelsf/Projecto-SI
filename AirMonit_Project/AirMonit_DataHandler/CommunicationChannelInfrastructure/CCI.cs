@@ -10,42 +10,31 @@ namespace CommunicationChannelInfrastructure
 {
     public class CCI
     {
-        //private string xmlPath = @"air_data.xml";
-        //private XmlDocument doc;
-        //private XmlElement root;
         private DataUpload du;
-        private DataSensor data;
-        private Boolean initializedSensors;
+        private int iteration_;
 
         public CCI()
         {
             du = new DataUpload();
         }
 
-        public void InitializeSensors()
+        public Boolean InitializeSensors(int time)
         {
-            initializedSensors = du.InitializeSensor();
-
-            while (initializedSensors)
-            {
-                data = CallDataSensors(du);
-                if (data != null)
-                {
-                    Console.WriteLine(data.toString());
-                    Console.WriteLine("\n");
-
-                }
-            }
+            return du.InitializeSensor(time);
         }
 
-        private DataSensor CallDataSensors(DataUpload du)
+        public Boolean StopSensors()
         {
-            int iteration = 0;
-            Thread.Sleep(500);
+            return du.StopSensor();
+        }
 
-            iteration = du.Iteration;
+        public DataSensor TimeDataSensors(int time)
+        {
+            Thread.Sleep(time);
 
-            if (iteration % 3 == 0)
+            iteration_ = du.Iteration;
+
+            if (iteration_ % 3 == 0)
             {
                 return du.DataLocation;
             }
