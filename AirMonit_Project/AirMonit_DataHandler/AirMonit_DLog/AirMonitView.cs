@@ -24,9 +24,12 @@ namespace AirMonit_DLog
 
         public AirMonitView()
         {
-            InitializeComponent();
             cci = new CCI();
             // To avoid freezing the UI, we create a thread to handle the listbox populate
+        }
+
+        static void Main()
+        {
 
         }
 

@@ -3,3 +3,15 @@ D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\obj\Debug\Air
 D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\obj\Debug\AirMonit_DLog.csproj.GenerateResource.Cache
 D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\obj\Debug\AirMonit_DLog.csproj.CoreCompileInputs.cache
 D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\obj\Debug\AirMonit_DLog.AirMonitView.resources
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\bin\Debug\App_Data\DBAirMonit.mdf
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\bin\Debug\App_Data\DBAirMonit_log.ldf
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\bin\Debug\AirMonit_DLog.exe.config
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\bin\Debug\AirMonit_DLog.exe
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\bin\Debug\AirMonit_DLog.pdb
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\bin\Debug\CommunicationChannelInfrastructure.dll
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\bin\Debug\AirMonit_DU.dll
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\bin\Debug\AirSensorNodeDll.dll
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\bin\Debug\CommunicationChannelInfrastructure.pdb
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\bin\Debug\AirMonit_DU.pdb
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\obj\Debug\AirMonit_DLog.exe
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\obj\Debug\AirMonit_DLog.pdb
