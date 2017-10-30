@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirMonit_DU", "AirMonit_DU\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationChannelInfrastructure", "CommunicationChannelInfrastructure\CommunicationChannelInfrastructure.csproj", "{05FBD279-3278-407C-80EA-D842F53A7314}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirMonit_Alarm", "WindowsFormsApp1\AirMonit_Alarm.csproj", "{19C6E4E0-3C83-4BA6-8897-880BFE36689D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirMonit_DLog", "AirMonit_DLog\AirMonit_DLog.csproj", "{88063494-33F1-425B-AA0E-C839A51CE957}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{05FBD279-3278-407C-80EA-D842F53A7314}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05FBD279-3278-407C-80EA-D842F53A7314}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05FBD279-3278-407C-80EA-D842F53A7314}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19C6E4E0-3C83-4BA6-8897-880BFE36689D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19C6E4E0-3C83-4BA6-8897-880BFE36689D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19C6E4E0-3C83-4BA6-8897-880BFE36689D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19C6E4E0-3C83-4BA6-8897-880BFE36689D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{88063494-33F1-425B-AA0E-C839A51CE957}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{88063494-33F1-425B-AA0E-C839A51CE957}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88063494-33F1-425B-AA0E-C839A51CE957}.Release|Any CPU.ActiveCfg = Release|Any CPU
