@@ -45,4 +45,15 @@
 		* data log of repository
 		* monitor daily and weekly stats for every air param
 
-pag 3/5 The web service.... "i'll be back"
+-> AirMonit Service And AirMonit Admin App
+	+ Visualize statistical information
+		* Air quality params being monitored
+(web service)	* AirMonit_Service
+(AirMonit_Admin)	make available an endpoint that will control the communication with the data log repository and
+			a graphic client app
+		* allow users to monitor daily and weekly statistics for every quality paramenter being monitored.
+
+	+ provides data from database (files mantained by AirMonit-DLog)
+	+ this info is summarized by web service, making it available to client app
+		* the data refers to (Nitrogen Dioxide, Carbon Monoxide, Ozone)
+	
