@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirMonit_DU.enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,15 +59,15 @@ namespace AirMonit_DU
         {
             string[] splited_val = message.Split(';');
 
-            if (splited_val[1] == "CO")
+            if (splited_val[1] == AirParameter.CO.ToString())
             {
                 dataLocation_.CO_data = Double.Parse(splited_val[2]);
             }
-            if (splited_val[1] == "NO2")
+            if (splited_val[1] == AirParameter.NO2.ToString())
             {
                 dataLocation_.NO2_data = Double.Parse(splited_val[2]);
             }
-            if (splited_val[1] == "O3")
+            if (splited_val[1] == AirParameter.O3.ToString())
             {
                 dataLocation_.O3_data = Double.Parse(splited_val[2]);
             }
@@ -76,6 +77,8 @@ namespace AirMonit_DU
             dataLocation_.Date = splited_val[3];
 
             currentIteration_ = int.Parse(splited_val[0]);
+
+            Console.WriteLine(dataLocation_.toString());
 
         }
     }

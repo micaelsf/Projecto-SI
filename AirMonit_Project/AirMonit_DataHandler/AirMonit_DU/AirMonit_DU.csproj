@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DataUpload.cs" />
     <Compile Include="DataSensor.cs" />
+    <Compile Include="enums\Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

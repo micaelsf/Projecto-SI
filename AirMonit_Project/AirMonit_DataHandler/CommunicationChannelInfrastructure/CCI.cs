@@ -13,9 +13,25 @@ namespace CommunicationChannelInfrastructure
         private DataUpload du;
         private int iteration_;
 
+        private DataAlarm dataAlarm_;
+        private DataSensorClean dataSensorClean_;
+        private DataSensor dataSensor_;
+
+        public Data Data
+        {
+            get { return Data; }
+        }
+
+        public DataSensorClean DataSensorClean
+        {
+            get { return dataSensorClean_; }
+        }
+
+        // construct
         public CCI()
         {
             du = new DataUpload();
+            dataSensorClean_ = new DataSensorClean(0, 0, 0, "", "");
         }
 
         public Boolean InitializeSensors(int time)
@@ -28,7 +44,7 @@ namespace CommunicationChannelInfrastructure
             return du.StopSensor();
         }
 
-        public DataSensor TimeDataSensors(int time)
+        public DataSensorClean TimeDataSensors(int time)
         {
             Thread.Sleep(time);
 
@@ -36,7 +52,15 @@ namespace CommunicationChannelInfrastructure
 
             if (iteration_ % 3 == 0)
             {
-                return du.DataLocation;
+                dataSensor_ = du.DataLocation;
+
+                dataSensorClean_.City = dataSensor_.City;
+                dataSensorClean_.Date = dataSensor_.Date;
+                dataSensorClean_.CO_data = dataSensor_.CO_data;
+                dataSensorClean_.NO2_data = dataSensor_.NO2_data;
+                dataSensorClean_.O3_data = dataSensor_.O3_data;
+
+                return dataSensorClean_;
             }
 
             return null;

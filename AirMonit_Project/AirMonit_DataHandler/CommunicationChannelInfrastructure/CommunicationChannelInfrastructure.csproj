@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CCI.cs" />
+    <Compile Include="Data.cs" />
+    <Compile Include="DataAlarm.cs" />
+    <Compile Include="DataSensorClean.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
