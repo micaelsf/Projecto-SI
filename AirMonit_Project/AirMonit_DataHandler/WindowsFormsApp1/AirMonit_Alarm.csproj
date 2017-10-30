@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{19C6E4E0-3C83-4BA6-8897-880BFE36689D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>AirMonitAlarm</RootNamespace>
-    <AssemblyName>AirMonitAlarm</AssemblyName>
+    <RootNamespace>AirMonitAlarmForm</RootNamespace>
+    <AssemblyName>AirMonitAlarmForm</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -51,6 +51,7 @@
     <Compile Include="AirMonitAlarmForm.Designer.cs">
       <DependentUpon>AirMonitAlarmForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="enums\Enums.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AirMonitAlarmForm.resx">

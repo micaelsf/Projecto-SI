@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1
 {
-    partial class AirMonitAlarm
+    partial class AirMonitAlarmForm
     {
         /// <summary>
         /// Required designer variable.
@@ -34,19 +34,21 @@
             this.timeTextbox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.errorFrequencyLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(12, 65);
+            this.listBox1.Location = new System.Drawing.Point(12, 96);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(487, 186);
+            this.listBox1.Size = new System.Drawing.Size(430, 173);
             this.listBox1.TabIndex = 0;
             // 
             // initSensorsButton
             // 
-            this.initSensorsButton.Location = new System.Drawing.Point(12, 38);
+            this.initSensorsButton.Location = new System.Drawing.Point(12, 56);
             this.initSensorsButton.Name = "initSensorsButton";
             this.initSensorsButton.Size = new System.Drawing.Size(117, 21);
             this.initSensorsButton.TabIndex = 1;
@@ -56,7 +58,7 @@
             // 
             // stopSensorsButton
             // 
-            this.stopSensorsButton.Location = new System.Drawing.Point(135, 38);
+            this.stopSensorsButton.Location = new System.Drawing.Point(135, 56);
             this.stopSensorsButton.Name = "stopSensorsButton";
             this.stopSensorsButton.Size = new System.Drawing.Size(117, 21);
             this.stopSensorsButton.TabIndex = 2;
@@ -70,6 +72,7 @@
             this.timeTextbox.Name = "timeTextbox";
             this.timeTextbox.Size = new System.Drawing.Size(51, 20);
             this.timeTextbox.TabIndex = 3;
+            this.timeTextbox.TextChanged += new System.EventHandler(this.timeTextbox_TextChanged);
             // 
             // label1
             // 
@@ -84,23 +87,44 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(135, 15);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 13);
+            this.label2.Size = new System.Drawing.Size(110, 13);
             this.label2.TabIndex = 5;
-            this.label2.Text = "(seconds)";
+            this.label2.Text = " [0.1 to 60] seconds";
             // 
-            // AirMonitAlarm
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 80);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(110, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Sensors value history:";
+            // 
+            // errorFrequencyLabel
+            // 
+            this.errorFrequencyLabel.AutoSize = true;
+            this.errorFrequencyLabel.ForeColor = System.Drawing.Color.Red;
+            this.errorFrequencyLabel.Location = new System.Drawing.Point(12, 35);
+            this.errorFrequencyLabel.Name = "errorFrequencyLabel";
+            this.errorFrequencyLabel.Size = new System.Drawing.Size(0, 13);
+            this.errorFrequencyLabel.TabIndex = 7;
+            // 
+            // AirMonitAlarmForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(511, 262);
+            this.ClientSize = new System.Drawing.Size(715, 426);
+            this.Controls.Add(this.errorFrequencyLabel);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.timeTextbox);
             this.Controls.Add(this.stopSensorsButton);
             this.Controls.Add(this.initSensorsButton);
             this.Controls.Add(this.listBox1);
-            this.Name = "AirMonitAlarm";
+            this.Name = "AirMonitAlarmForm";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AirMonitAlarmForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -114,6 +138,8 @@
         private System.Windows.Forms.TextBox timeTextbox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label errorFrequencyLabel;
     }
 }
 
