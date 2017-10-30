@@ -1,0 +1,15 @@
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\bin\Debug\AirMonit_DU.dll
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\bin\Debug\CommunicationChannelInfrastructure.dll
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\bin\Debug\AirSensorNodeDll.dll
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\bin\Debug\AirMonit_DU.pdb
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\bin\Debug\CommunicationChannelInfrastructure.pdb
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\obj\Debug\AirMonit_Alarm.csprojResolveAssemblyReference.cache
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\obj\Debug\AirMonit_Alarm.csproj.GenerateResource.Cache
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\obj\Debug\AirMonit_Alarm.csproj.CoreCompileInputs.cache
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AirMonitAlarmForm.resources
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\obj\Debug\AirMonitAlarmForm.Properties.Resources.resources
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\bin\Debug\AirMonitAlarmForm.exe.config
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\bin\Debug\AirMonitAlarmForm.exe
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\bin\Debug\AirMonitAlarmForm.pdb
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\obj\Debug\AirMonitAlarmForm.exe
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project\AirMonit_DataHandler\WindowsFormsApp1\obj\Debug\AirMonitAlarmForm.pdb
