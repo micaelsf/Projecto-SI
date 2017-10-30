@@ -1,5 +1,5 @@
 ﻿using AirMonit_DU;
-using CommunicationChannelInfrastructure;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +15,7 @@ namespace WindowsFormsApp1
 {
     public partial class AirMonitAlarm : Form
     {
-        private CCI cci;
+       // private CCI cci;
         // time by default is 500ms
         private static int TIME = 500;
         private Boolean initializedSensors;
@@ -23,7 +23,7 @@ namespace WindowsFormsApp1
         public AirMonitAlarm()
         {
             InitializeComponent();
-            cci = new CCI();
+         //   cci = new CCI();
         }
 
         private void InitSensorsButton_Click(object sender, EventArgs e)
@@ -36,7 +36,7 @@ namespace WindowsFormsApp1
         private void populateList()
         {
             DataSensor data;
-            cci = new CCI();
+          //  cci = new CCI();
 
             try
             {
@@ -52,18 +52,18 @@ namespace WindowsFormsApp1
                 Console.WriteLine(ex);
             }
 
-            initializedSensors = cci.InitializeSensors(TIME);
+          //  initializedSensors = cci.InitializeSensors(TIME);
 
             while (initializedSensors)
             {
-                data = cci.TimeDataSensors(TIME);
+           //     data = cci.TimeDataSensors(TIME);
 
-                if (data != null)
+                if ("data" != null)
                 {
                     this.Invoke(new MethodInvoker(delegate ()
                     {
                         // insert at first line
-                        listBox1.Items.Insert(0, data.toString());
+              //          listBox1.Items.Insert(0, data.toString());
                     }));
 
                 }
@@ -72,7 +72,7 @@ namespace WindowsFormsApp1
 
         private void StopSensorsButton_Click(object sender, EventArgs e)
         {
-            initializedSensors = !cci.StopSensors();
+          //  initializedSensors = !cci.StopSensors();
         }
     }
 }

@@ -1,0 +1,5 @@
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\obj\Debug\AirMonit_DLog.csprojResolveAssemblyReference.cache
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\obj\Debug\AirMonit_DLog.Properties.Resources.resources
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\obj\Debug\AirMonit_DLog.csproj.GenerateResource.Cache
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\obj\Debug\AirMonit_DLog.csproj.CoreCompileInputs.cache
+D:\IS\Projecto\AirMonit_Project\AirMonit_DataHandler\AirMonit_DLog\obj\Debug\AirMonit_DLog.AirMonitView.resources
