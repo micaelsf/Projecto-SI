@@ -122,5 +122,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommunicationChannelInfrastructure\CommunicationChannelInfrastructure.csproj">
+      <Project>{05fbd279-3278-407c-80ea-d842f53a7314}</Project>
+      <Name>CommunicationChannelInfrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

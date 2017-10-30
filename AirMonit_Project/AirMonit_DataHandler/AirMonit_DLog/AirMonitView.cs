@@ -9,21 +9,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AirMonit_DLog;
 using System.Threading;
+using CommunicationChannelInfrastructure;
 
 namespace AirMonit_DLog
 {
     public partial class AirMonitView : Form
     {
-        //private CCI cci;
+        private CommunicationChannelInfrastructure.CCI cci;
         // time by default is 500ms
         private static int TIME = 500;
         private Thread threadCity;
         private Thread threadAlarm;
+        Boolean initializedSensors = true; //apagar
 
         public AirMonitView()
         {
             InitializeComponent();
-            //cci = new CCI();
+            cci = new CCI();
             // To avoid freezing the UI, we create a thread to handle the listbox populate
 
         }
@@ -31,7 +33,7 @@ namespace AirMonit_DLog
         private void populateList()
         {
          //   DataSensor data;
-          //  cci = new CCI();
+            cci = new CCI();
 
             try
             {
@@ -75,7 +77,7 @@ namespace AirMonit_DLog
 
         private void btnStopAlarmLog_Click(object sender, EventArgs e)
         {
-            // initializedSensors = !cci.StopSensors();
+            initializedSensors = !cci.StopSensors();
             threadAlarm.Abort();
         }
 
@@ -89,7 +91,7 @@ namespace AirMonit_DLog
         private void btnStopCityLog_Click(object sender, EventArgs e)
         {
             threadCity.Abort();
-        //    initializedSensors = !cci.StopSensors();
+            initializedSensors = !cci.StopSensors();
         }
 
 
