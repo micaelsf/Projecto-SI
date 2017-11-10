@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirMonit_DU;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,7 +16,6 @@ namespace AitMonit_DU
     public partial class SensorModule : Form
     {
         private HandleSensorData hsd;
-        private Boolean running;
 
         public SensorModule()
         {
@@ -24,15 +24,11 @@ namespace AitMonit_DU
             InitializeComponent();
             labelErrorDelay.Visible = false;
             labelErrorIP.Visible = false;
+            textBoxIp.Text = "127.0.0.1";
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            if (running)
-            {
-                return;
-            }
-
             int delay;
             IPAddress ip;
 
@@ -53,19 +49,16 @@ namespace AitMonit_DU
 
             if (hsd.Init(delay, ip))
             {
-
-                labelStatus.Text = "ON";
+                labelStatus.Text = "Connected";
             }
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
-            if (hsd.Stop() && running)
+            if (hsd.Stop())
             {
-                running = false;
-                labelStatus.Text = "OFF";
+                labelStatus.Text = "Disconnected";
             }
         }
-
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
 
-namespace AitMonit_DU
+namespace AirMonit_DU
 {
     class HandleSensorData
     {
@@ -24,6 +24,8 @@ namespace AitMonit_DU
         private XmlElement sensorDate;
         private XmlElement sensorTime;
         private XmlElement sensorCity;
+
+        private string validationMessage;
 
         public HandleSensorData()
         {
@@ -40,7 +42,7 @@ namespace AitMonit_DU
             sensorTime = doc.CreateElement("time");
             sensorCity = doc.CreateElement("city");
 
-            airMonitParam.SetAttribute("parameter", "");
+            airMonitParam.SetAttribute("param", "");
             airMonitParam.AppendChild(sensorId);
             airMonitParam.AppendChild(sensorValue);
             airMonitParam.AppendChild(sensorDate);
@@ -52,29 +54,59 @@ namespace AitMonit_DU
 
         public Boolean Init(int delay, IPAddress ip)
         {
-            dll = new AirSensorNodeDll.AirSensorNodeDll();
-            dll.Initialize(TransformData, delay);
-            return true;
+            if (dll == null)
+            {
+                dll = new AirSensorNodeDll.AirSensorNodeDll();
+                dll.Initialize(TransformData, delay);
+                return true;
+            }
+
+            return false;
         }
 
         public Boolean Stop()
         {
-            dll.Stop();
-            return true;
+            if (dll != null)
+            {
+                dll.Stop();
+                return true;
+            }
+
+            return false;
         }
 
         private void TransformData(string message)
         {
             string[] splitedSensorData = message.Split(';');
 
-            airMonitParam.SetAttribute("parameter", splitedSensorData[1].Trim());
+            airMonitParam.SetAttribute("param", splitedSensorData[1].Trim());
             sensorId.InnerText = splitedSensorData[0].Trim();
             sensorValue.InnerText = splitedSensorData[2].Trim();
 
-            string[] splitedDate = splitedSensorData[3].Split(' ');
+            string[] splitedDateTime = splitedSensorData[3].Split(' ');
+            string[] splitedTime = splitedDateTime[1].Split(':');
 
-            sensorDate.InnerText = splitedDate[0].Trim();
-            sensorTime.InnerText = splitedDate[1].Trim();
+            // handle hours to match correct format HH:MM:SS 
+            int hour = 0;
+            string hourStr = splitedTime[0];
+
+            try
+            {
+                int.TryParse(splitedTime[0], out hour);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+
+            if (hour < 10)
+            {
+                hourStr = "0" + splitedTime[0];
+            }
+            // end handling hours
+
+            sensorDate.InnerText = splitedDateTime[0].Trim();
+            sensorTime.InnerText = hourStr + ":" + splitedTime[1] + ":" + splitedTime[2];
 
             sensorCity.InnerText = splitedSensorData[4].Trim();
 
@@ -97,17 +129,24 @@ namespace AitMonit_DU
             catch (XmlException ex)
             {
                 isValid = false;
-                //validationMessage = string.Format("ERROR: {0}", ex.ToString());
+                validationMessage = string.Format("ERROR: {0}", ex.ToString());
             }
-            //return isValid;
-
-            Debug.WriteLine(isValid + "");
         }
 
         private void MyValidateMethod(object sender, ValidationEventArgs e)
         {
             isValid = false;
-            //throw new NotImplementedException();
+            switch (e.Severity)
+            {
+                case XmlSeverityType.Error:
+                    validationMessage = string.Format("ERROR: {0}", e.Message);
+                    break;
+                case XmlSeverityType.Warning:
+                    validationMessage = string.Format("WARNING: {0}", e.Message);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
