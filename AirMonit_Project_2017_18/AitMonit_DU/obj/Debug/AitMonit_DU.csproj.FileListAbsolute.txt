@@ -9,3 +9,13 @@ c:\users\micae\source\repos\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMo
 c:\users\micae\source\repos\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.csproj.CoreCompileInputs.cache
 c:\users\micae\source\repos\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.exe
 c:\users\micae\source\repos\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.pdb
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\AitMonit_DU.exe.config
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\AitMonit_DU.exe
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\AitMonit_DU.pdb
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.csprojResolveAssemblyReference.cache
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.SensorModule.resources
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.Properties.Resources.resources
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.csproj.GenerateResource.Cache
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.csproj.CoreCompileInputs.cache
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.exe
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.pdb

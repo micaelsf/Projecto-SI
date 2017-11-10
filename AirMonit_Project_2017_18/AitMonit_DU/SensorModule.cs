@@ -15,6 +15,7 @@ namespace AitMonit_DU
     public partial class SensorModule : Form
     {
         private HandleSensorData hsd;
+        private Boolean running;
 
         public SensorModule()
         {
@@ -27,6 +28,11 @@ namespace AitMonit_DU
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
+            if (running)
+            {
+                return;
+            }
+
             int delay;
             IPAddress ip;
 
@@ -47,14 +53,16 @@ namespace AitMonit_DU
 
             if (hsd.Init(delay, ip))
             {
+
                 labelStatus.Text = "ON";
             }
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
-            if (hsd.Stop())
+            if (hsd.Stop() && running)
             {
+                running = false;
                 labelStatus.Text = "OFF";
             }
         }

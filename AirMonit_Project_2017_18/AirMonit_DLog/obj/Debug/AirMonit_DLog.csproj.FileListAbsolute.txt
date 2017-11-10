@@ -1,0 +1,14 @@
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\bin\Debug\App_Data\DBAirMonit.mdf
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\bin\Debug\App_Data\DBAirMonit_log.ldf
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\bin\Debug\AirMonit_DLog.exe.config
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\bin\Debug\AirMonit_DLog.exe
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\bin\Debug\AirMonit_DLog.pdb
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.AirMonit_DLog.resources
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.Properties.Resources.resources
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.csproj.GenerateResource.Cache
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.csproj.CoreCompileInputs.cache
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.exe
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.pdb
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\bin\Debug\M2Mqtt.Net.dll
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\bin\Debug\M2Mqtt.Net.pdb
+D:\IS\Projecto\projectoSi\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.csprojResolveAssemblyReference.cache

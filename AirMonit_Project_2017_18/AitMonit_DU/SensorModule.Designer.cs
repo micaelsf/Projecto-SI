@@ -155,6 +155,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonStart);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "SensorModule";
             this.Text = "SensorModule";
             this.ResumeLayout(false);
