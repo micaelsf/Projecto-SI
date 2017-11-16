@@ -8,13 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
+using uPLibrary.Networking.M2Mqtt;
 
 namespace AirMonit_DU
 {
     class HandleSensorData
     {
         private string xmlSchemaPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\XMLParameterSchema.xsd");
-        bool isValid;
+        private bool isValid;
+        MqttClient mClient;
+        private string topic = "data";
 
         AirSensorNodeDll.AirSensorNodeDll dll;
         private XmlDocument doc;
@@ -54,6 +57,16 @@ namespace AirMonit_DU
 
         public Boolean Init(int delay, IPAddress ip)
         {
+            mClient = new MqttClient(ip.ToString());
+
+            mClient.Connect(Guid.NewGuid().ToString());
+
+            if (!mClient.IsConnected)
+            {
+                Debug.WriteLine("Error connecting to message broker...");
+                return false;
+            }
+
             if (dll == null)
             {
                 dll = new AirSensorNodeDll.AirSensorNodeDll();
@@ -69,6 +82,7 @@ namespace AirMonit_DU
             if (dll != null)
             {
                 dll.Stop();
+                dll = null;
                 return true;
             }
 
@@ -112,13 +126,34 @@ namespace AirMonit_DU
 
             Debug.WriteLine(message);
 
-            SendXMLStructure(airMonitParam.OuterXml);
+            PublishData(airMonitParam.OuterXml);
         }
 
-        private void SendXMLStructure(string outerXml)
+        private void PublishData(string outerXml)
+        {
+            if (mClient == null || !mClient.IsConnected)
+            {
+                Debug.WriteLine("ERROR: No connection with message broker");
+                return;
+            }
+
+            if (!ValidateXMLStructure(outerXml))
+            {
+                Debug.WriteLine("ERROR: " + validationMessage);
+                return;
+            }
+
+            mClient.Publish(topic, Encoding.UTF8.GetBytes(outerXml));
+            Debug.WriteLine("Sended data: " + outerXml);
+
+        }
+
+        private bool ValidateXMLStructure(string outerXml)
         {
             isValid = true;
             XmlDocument doc = new XmlDocument();
+            validationMessage = "Valid XML";
+
             try
             {
                 doc.LoadXml(outerXml);
@@ -131,6 +166,8 @@ namespace AirMonit_DU
                 isValid = false;
                 validationMessage = string.Format("ERROR: {0}", ex.ToString());
             }
+
+            return isValid;
         }
 
         private void MyValidateMethod(object sender, ValidationEventArgs e)

@@ -18,3 +18,5 @@ C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\
 C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\AitMonit_DU.exe.config
 C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\AitMonit_DU.exe
 C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\AitMonit_DU.pdb
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\M2Mqtt.Net.dll
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\M2Mqtt.Net.pdb

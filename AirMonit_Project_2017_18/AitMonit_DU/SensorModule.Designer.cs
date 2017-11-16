@@ -137,9 +137,9 @@
             this.labelErrorDelay.ForeColor = System.Drawing.Color.Red;
             this.labelErrorDelay.Location = new System.Drawing.Point(24, 177);
             this.labelErrorDelay.Name = "labelErrorDelay";
-            this.labelErrorDelay.Size = new System.Drawing.Size(92, 13);
+            this.labelErrorDelay.Size = new System.Drawing.Size(88, 13);
             this.labelErrorDelay.TabIndex = 9;
-            this.labelErrorDelay.Text = "Invalid IP Address";
+            this.labelErrorDelay.Text = "Invalid delay time";
             // 
             // SensorModule
             // 
