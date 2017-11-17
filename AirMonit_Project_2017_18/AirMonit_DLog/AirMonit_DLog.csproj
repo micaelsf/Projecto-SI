@@ -98,13 +98,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\DBAirMonit.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\DBAirMonit_log.ldf">
-      <DependentUpon>DBAirMonit.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="App_Data\dbo.AlarmLogs.sql" />
     <Content Include="App_Data\dbo.City.sql" />
   </ItemGroup>

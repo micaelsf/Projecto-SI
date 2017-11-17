@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<conditions>
+  <parameter type="NO2">
+    <rule active="false" condition="greaterThan">
+      <description>NO2 must be greater than 5</description>
+      <value>5</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
+    <rule active="false" condition="lessThan">
+      <description>NO2 must be less than 5</description>
+      <value>5</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
+    <rule active="false" condition="equals">
+      <description>NO2 equals 5</description>
+      <value>5</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
+    <rule active="false" condition="between">
+      <description>NO2 must be between 5 and 10</description>
+      <value>-1</value>
+      <minValue>5</minValue>
+      <maxValue>10</maxValue>
+    </rule>
+  </parameter>
+  <parameter type="CO">
+    <rule active="false" condition="greaterThan">
+      <description>NO2 must be greater than 5</description>
+      <value>5</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
+    <rule active="false" condition="lessThan">
+      <description>NO2 must be less than 5</description>
+      <value>5</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
+    <rule active="false" condition="equals">
+      <description>NO2 equals 5</description>
+      <value>5</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
+    <rule active="false" condition="between">
+      <description>NO2 must be between 5 and 10</description>
+      <value>-1</value>
+      <minValue>5</minValue>
+      <maxValue>10</maxValue>
+    </rule>
+  </parameter>
+  <parameter type="O3">
+    <rule active="false" condition="greaterThan">
+      <description>NO2 must be greater than 5</description>
+      <value>5</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
+    <rule active="false" condition="lessThan">
+      <description>NO2 must be less than 5</description>
+      <value>5</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
+    <rule active="false" condition="equals">
+      <description>NO2 equals 5</description>
+      <value>5</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
+    <rule active="false" condition="between">
+      <description>NO2 must be between 5 and 10</description>
+      <value>-1</value>
+      <minValue>5</minValue>
+      <maxValue>10</maxValue>
+    </rule>
+  </parameter>
+</conditions>
