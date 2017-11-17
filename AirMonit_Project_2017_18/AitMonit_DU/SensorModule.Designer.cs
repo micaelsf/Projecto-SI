@@ -43,6 +43,7 @@
             // buttonStart
             // 
             this.buttonStart.BackColor = System.Drawing.Color.LimeGreen;
+            this.buttonStart.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonStart.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttonStart.Location = new System.Drawing.Point(188, 49);
@@ -56,6 +57,7 @@
             // buttonStop
             // 
             this.buttonStop.BackColor = System.Drawing.Color.Firebrick;
+            this.buttonStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonStop.ForeColor = System.Drawing.SystemColors.Control;
             this.buttonStop.Location = new System.Drawing.Point(188, 123);
@@ -101,10 +103,10 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(7, 11);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 20);
+            this.label3.Size = new System.Drawing.Size(67, 20);
             this.label3.TabIndex = 6;
             this.label3.Text = "Status:";
             // 
@@ -113,7 +115,7 @@
             this.labelStatus.AutoSize = true;
             this.labelStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelStatus.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.labelStatus.Location = new System.Drawing.Point(73, 11);
+            this.labelStatus.Location = new System.Drawing.Point(80, 11);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(29, 20);
             this.labelStatus.TabIndex = 7;
