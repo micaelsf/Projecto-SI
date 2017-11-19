@@ -25,6 +25,7 @@ namespace AitMonit_DU
             labelErrorDelay.Visible = false;
             labelErrorIP.Visible = false;
             textBoxIp.Text = "127.0.0.1";
+            textBoxTime.Text = "1000";
             labelStatus.Text = "Disconnected";
         }
 

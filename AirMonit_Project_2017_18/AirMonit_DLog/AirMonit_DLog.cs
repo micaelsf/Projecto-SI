@@ -1,10 +1,12 @@
-﻿using System;
+﻿using ProjectXML;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,7 +19,6 @@ namespace AirMonit_DLog
 {
     public partial class AirMonit_DLog : Form
     {
-
         MqttClient m_cClient;
         Boolean serviceActive;
         string[] m_strTopicsInfo = { "data", "alarm" };
@@ -31,13 +32,14 @@ namespace AirMonit_DLog
         {
             InitializeComponent();
             serviceActive = false;
+            textBoxBrokerIP.Text = "127.0.0.1";
         }
 
         private void AirMonit_DLog_Load(object sender, EventArgs e)
         {
             //just for some inicial show off purpose
-            listBoxAlarmLog.Items.Add("alarm");
-            listBoxCityLog.Items.Insert(0, "city");
+           // listBoxAlarmLog.Items.Add("alarm");
+            //listBoxCityLog.Items.Insert(0, "city");
         }
 
         private void btnStartStop_Click(object sender, EventArgs e)
@@ -54,9 +56,6 @@ namespace AirMonit_DLog
             { // activa o serviço
                 m_cClient = new MqttClient(brokerIP);
                 m_cClient.Connect(Guid.NewGuid().ToString());
-                serviceActive = true;
-                btnStartStop.Text = "Stop";
-                btnStartStop.ForeColor = Color.Red;
 
                 if (!m_cClient.IsConnected)
                 {
@@ -64,77 +63,56 @@ namespace AirMonit_DLog
                     return;
                 }
 
+                serviceActive = true;
+                btnStartStop.Text = "Stop";
+                btnStartStop.ForeColor = Color.Red;
+
+                //Specify events we are interest on
+                //New Msg Arrived
                 m_cClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
+                //This client's subscription operation id done
+               // m_cClient.MqttMsgSubscribed += client_MqttMsgSubscribed;
 
-                byte[] qosLevels = { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE };//QoS
+                //Subscribe to topics
+                byte[] qosLevels = { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE,
+                                        MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE};//QoS
                 m_cClient.Subscribe(m_strTopicsInfo, qosLevels);
-
-                return;
             }
-
-            // desliga o serviço
-            m_cClient.Disconnect();
-            serviceActive = false;
-            btnStartStop.Text = "Start";
-            btnStartStop.ForeColor = Color.Green;
+            else
+            {
+                // desliga o serviço
+                m_cClient.Unsubscribe(m_strTopicsInfo); //Put this in a button to see notif!
+                m_cClient.Disconnect();
+                serviceActive = false;
+                btnStartStop.Text = "Start";
+                btnStartStop.ForeColor = Color.Green;
+            }
         }
 
         private void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
-            if (e.Topic.Equals("Alarm"))
+            HandlerXML handlerXml = new HandlerXML(xmlSchemaPath);
+            if (e.Topic.Equals(m_strTopicsInfo[1])) // alarm
             {
-                if (ValidateXMLStructure(e.Message.ToString()))
+                if (handlerXml.ValidateXMLStructure(Encoding.UTF8.GetString(e.Message)))
                 {
-                    listBoxAlarmLog.Items.Insert(0, Encoding.UTF8.GetString(e.Message));
+                    listBoxAlarmLog.BeginInvoke((MethodInvoker)delegate { listBoxAlarmLog.Items.Insert(0, Encoding.UTF8.GetString(e.Message)); });
+                    handlerXml.LoadAlarms(Encoding.UTF8.GetString(e.Message));
+                    int no2 = handlerXml.No2;
+                    ///listBoxAlarmLog.Items.Insert(0, Encoding.UTF8.GetString(e.Message));
                 }
             }
-            if (e.Topic.Equals("Data"))
+            if (e.Topic.Equals(m_strTopicsInfo[0])) //data
             {
-                if (ValidateXMLStructure(e.Message.ToString()))
+                if (handlerXml.ValidateXMLStructure(Encoding.UTF8.GetString(e.Message)))
                 {
-                    listBoxCityLog.Items.Insert(0, Encoding.UTF8.GetString(e.Message));
+                    listBoxCityLog.BeginInvoke((MethodInvoker)delegate { listBoxCityLog.Items.Insert(0, Encoding.UTF8.GetString(e.Message)); });
+                    handlerXml.LoadAlarms(Encoding.UTF8.GetString(e.Message));
+                    //int no2 = handlerXml.No2;
+                    // listBoxCityLog.Items.Insert(0, Encoding.UTF8.GetString(e.Message));
                 }
             }
         }
-
-        private bool ValidateXMLStructure(string outerXml)
-        {
-            isValid = true;
-            XmlDocument doc = new XmlDocument();
-            validationMessage = "Valid XML";
-
-            try
-            {
-                doc.LoadXml(outerXml);
-                ValidationEventHandler eventHandler = new ValidationEventHandler(MyValidateMethod);
-                doc.Schemas.Add(null, xmlSchemaPath);
-                doc.Validate(eventHandler);
-            }
-            catch (XmlException ex)
-            {
-                isValid = false;
-                validationMessage = string.Format("ERROR: {0}", ex.ToString());
-            }
-
-            return isValid;
-        }
-
-        private void MyValidateMethod(object sender, ValidationEventArgs e)
-        {
-            isValid = false;
-            switch (e.Severity)
-            {
-                case XmlSeverityType.Error:
-                    validationMessage = string.Format("ERROR: {0}", e.Message);
-                    break;
-                case XmlSeverityType.Warning:
-                    validationMessage = string.Format("WARNING: {0}", e.Message);
-                    break;
-                default:
-                    break;
-            }
-        }
-
 
         public bool IsIpAddressValid(string Address)
         {
@@ -142,6 +120,6 @@ namespace AirMonit_DLog
             return System.Net.IPAddress.TryParse(Address, out parsed);
         }
 
-
     }
 }
+ 

@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[CO]
+(
+	[Id] INT IDENTITY (1, 1) NOT NULL, 
+	[CO] SMALLINT NULL, 
+    [City_Name] NCHAR(50) NOT NULL, 
+    [Date_Time] DATETIME NOT NULL, 
+	PRIMARY KEY CLUSTERED ([Id] ASC)
+)

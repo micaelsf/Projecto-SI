@@ -20,3 +20,15 @@ C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\
 C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\AitMonit_DU.pdb
 C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\M2Mqtt.Net.dll
 C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\M2Mqtt.Net.pdb
+D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\AitMonit_DU.exe.config
+D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\AitMonit_DU.exe
+D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\AitMonit_DU.pdb
+D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\M2Mqtt.Net.dll
+D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\M2Mqtt.Net.pdb
+D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AirMonit_DU.csprojResolveAssemblyReference.cache
+D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.SensorModule.resources
+D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.Properties.Resources.resources
+D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AirMonit_DU.csproj.GenerateResource.Cache
+D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AirMonit_DU.csproj.CoreCompileInputs.cache
+D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.exe
+D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.pdb

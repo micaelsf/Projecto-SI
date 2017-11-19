@@ -69,6 +69,7 @@
     <Compile Include="AirMonit_DLog.Designer.cs">
       <DependentUpon>AirMonit_DLog.cs</DependentUpon>
     </Compile>
+    <Compile Include="HandlerXML.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AirMonit_DLog.resx">
@@ -107,6 +108,10 @@
     </Content>
     <Content Include="App_Data\dbo.AlarmLogs.sql" />
     <Content Include="App_Data\dbo.City.sql" />
+    <Content Include="App_Data\dbo.Co.sql" />
+    <Content Include="App_Data\dbo.No2.sql" />
+    <Content Include="App_Data\dbo.O3.sql" />
+    <Content Include="Local_data\XMLParameter.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

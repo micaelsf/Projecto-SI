@@ -113,7 +113,7 @@ namespace AirMonit_DU
                 Debug.WriteLine(e.ToString());
             }
 
-            if (hour < 10)
+            if (hour < 10 && hourStr.Length < 0)
             {
                 hourStr = "0" + splitedTime[0];
             }
