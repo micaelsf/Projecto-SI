@@ -1,5 +1,4 @@
-﻿using ProjectXML;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -91,14 +90,18 @@ namespace AirMonit_DLog
 
         private void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
-            HandlerXML handlerXml = new HandlerXML(xmlSchemaPath);
+            XMLHandler handlerXml = new XMLHandler(xmlSchemaPath);
             if (e.Topic.Equals(m_strTopicsInfo[1])) // alarm
             {
                 if (handlerXml.ValidateXMLStructure(Encoding.UTF8.GetString(e.Message)))
                 {
-                    listBoxAlarmLog.BeginInvoke((MethodInvoker)delegate { listBoxAlarmLog.Items.Insert(0, Encoding.UTF8.GetString(e.Message)); });
-                    handlerXml.LoadAlarms(Encoding.UTF8.GetString(e.Message));
-                    int no2 = handlerXml.No2;
+                    listBoxAlarmLog.BeginInvoke(
+                       (MethodInvoker)delegate {
+                           listBoxAlarmLog.Items.Insert(0, handlerXml.ParseXMLData(
+                               Encoding.UTF8.GetString(e.Message))
+                               );
+                       }
+                   );
                     ///listBoxAlarmLog.Items.Insert(0, Encoding.UTF8.GetString(e.Message));
                 }
             }
@@ -106,10 +109,14 @@ namespace AirMonit_DLog
             {
                 if (handlerXml.ValidateXMLStructure(Encoding.UTF8.GetString(e.Message)))
                 {
-                    listBoxCityLog.BeginInvoke((MethodInvoker)delegate { listBoxCityLog.Items.Insert(0, Encoding.UTF8.GetString(e.Message)); });
-                    handlerXml.LoadAlarms(Encoding.UTF8.GetString(e.Message));
-                    //int no2 = handlerXml.No2;
-                    // listBoxCityLog.Items.Insert(0, Encoding.UTF8.GetString(e.Message));
+                    listBoxCityLog.BeginInvoke(
+                        (MethodInvoker)delegate {
+                            listBoxCityLog.Items.Insert(0, handlerXml.ParseXMLData(
+                                Encoding.UTF8.GetString(e.Message))
+                                );
+                        }
+                    );
+                    StoreData.storeSensorData(SensorData.Instance);
                 }
             }
         }

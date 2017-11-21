@@ -69,7 +69,8 @@
     <Compile Include="AirMonit_DLog.Designer.cs">
       <DependentUpon>AirMonit_DLog.cs</DependentUpon>
     </Compile>
-    <Compile Include="HandlerXML.cs" />
+    <Compile Include="SensorData.cs" />
+    <Compile Include="XMLHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AirMonit_DLog.resx">

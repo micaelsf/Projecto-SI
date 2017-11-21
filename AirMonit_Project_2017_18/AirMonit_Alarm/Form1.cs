@@ -86,6 +86,9 @@ namespace AirMonit_Alarm
             {
                 listBoxData.Items.Insert(0, dataStr + Environment.NewLine);
             });
+
         }
+
+        
     }
 }

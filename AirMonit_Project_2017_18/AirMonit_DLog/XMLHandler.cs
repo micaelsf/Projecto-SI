@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,9 +9,9 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 
-namespace ProjectXML
+namespace AirMonit_DLog 
 {
-    class HandlerXML
+    class XMLHandler
     {
         private bool isValid = true;
         private string validationMessage;
@@ -19,25 +21,36 @@ namespace ProjectXML
         public int No2 { get; set; }
         public int CO { get; set; }
 
-        public string ValidationMessage
-        {
-            get { return validationMessage; }
-        }
+        private XmlDocument doc;
 
-        public HandlerXML(String xmlSchemaPath)
+        public string ValidationMessage { get; set; }
+
+        public XMLHandler(String xmlSchemaPath)
         {
+            doc = new XmlDocument();
             this.xmlSchemaPath = xmlSchemaPath;
         }
 
-        public void LoadAlarms(string outerXml)
+        public string ParseXMLData(string xmldata)
         {
-            XElement xmlroot = XElement.Parse(outerXml);
-            City = ((XElement)(xmlroot.FirstNode)).Value;
-           // No2 = (int)((XElement)(xmlroot.PreviousNode));
-          //  O3 = (int)((XElement)(xmlroot.PreviousNode));
-          //  CO = (int)((XElement)(xmlroot.PreviousNode));
+            if (!ValidateXMLStructure(xmldata))
+            {
+                Debug.WriteLine(ValidationMessage);
+            }
+
+            doc.LoadXml(xmldata);
+            XmlElement root = (XmlElement)doc.SelectSingleNode("/AirMonitParam");
+
+            SensorData.Instance.Param = root.Attributes["param"].Value;
+            SensorData.Instance.Id = int.Parse(root.SelectSingleNode("id").InnerText);
+            SensorData.Instance.Value = long.Parse(root.SelectSingleNode("value").InnerText);
+            SensorData.Instance.Date = root.SelectSingleNode("date").InnerText;
+            SensorData.Instance.Time = root.SelectSingleNode("time").InnerText;
+            SensorData.Instance.City = root.SelectSingleNode("city").InnerText;
+
+            return SensorData.Instance.ToString();
         }
-   
+
         public bool ValidateXMLStructure(string outerXml)
         {
             isValid = true;
