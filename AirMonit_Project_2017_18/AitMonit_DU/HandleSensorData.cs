@@ -113,7 +113,7 @@ namespace AirMonit_DU
                 Debug.WriteLine(e.ToString());
             }
 
-            if (hour < 10 && hourStr.Length < 0)
+            if (hour < 10 && hourStr.Length == 1)
             {
                 hourStr = "0" + splitedTime[0];
             }
@@ -152,7 +152,7 @@ namespace AirMonit_DU
         {
             isValid = true;
             XmlDocument doc = new XmlDocument();
-            validationMessage = "Valid XML";
+            validationMessage = "Data structure is valid";
 
             try
             {

@@ -11,6 +11,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +24,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -108,9 +108,7 @@
     </Content>
     <Content Include="App_Data\dbo.AlarmLogs.sql" />
     <Content Include="App_Data\dbo.City.sql" />
-    <Content Include="App_Data\dbo.Co.sql" />
-    <Content Include="App_Data\dbo.No2.sql" />
-    <Content Include="App_Data\dbo.O3.sql" />
+    <Content Include="App_Data\dbo.Table.sensorData.sql" />
     <Content Include="Local_data\XMLParameter.xml" />
   </ItemGroup>
   <ItemGroup>

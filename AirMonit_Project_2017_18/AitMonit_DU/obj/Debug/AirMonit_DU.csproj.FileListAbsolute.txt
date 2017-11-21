@@ -32,3 +32,4 @@ D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AirMon
 D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AirMonit_DU.csproj.CoreCompileInputs.cache
 D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.exe
 D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\obj\Debug\AitMonit_DU.pdb
+D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AitMonit_DU\bin\Debug\AirSensorNodeDll.dll
