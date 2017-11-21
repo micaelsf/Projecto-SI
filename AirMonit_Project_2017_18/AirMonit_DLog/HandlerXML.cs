@@ -33,9 +33,9 @@ namespace ProjectXML
         {
             XElement xmlroot = XElement.Parse(outerXml);
             City = ((XElement)(xmlroot.FirstNode)).Value;
-            No2 = (int)((XElement)(xmlroot.PreviousNode));
-            O3 = (int)((XElement)(xmlroot.PreviousNode));
-            CO = (int)((XElement)(xmlroot.PreviousNode));
+           // No2 = (int)((XElement)(xmlroot.PreviousNode));
+          //  O3 = (int)((XElement)(xmlroot.PreviousNode));
+          //  CO = (int)((XElement)(xmlroot.PreviousNode));
         }
    
         public bool ValidateXMLStructure(string outerXml)
