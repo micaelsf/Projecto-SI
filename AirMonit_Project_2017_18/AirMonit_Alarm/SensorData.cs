@@ -36,10 +36,10 @@ namespace AirMonit_Alarm
         {
             return
                 "[ " + Param + " ] " +
-                "Id: " + Id +
-                ", Value: " + Value +
-                ", Date Time: " + Date + " " + Time +
-                ", City: " + City;
+                ", Sensor Id: " + Id + 
+                ", Value: " + Value + 
+                ", Date Time: " + Date + " at " + Time + 
+                ", City: " + City ;
         }
     }
 }
