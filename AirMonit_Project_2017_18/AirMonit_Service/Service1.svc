@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="AirMonit_Service.AirMonit_Service" CodeBehind="Service1.svc.cs" %>
