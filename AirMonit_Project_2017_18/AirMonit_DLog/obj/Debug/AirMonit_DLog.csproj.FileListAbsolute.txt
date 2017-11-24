@@ -12,3 +12,17 @@ D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirM
 D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.csproj.CoreCompileInputs.cache
 D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.exe
 D:\IS\Projecto\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.pdb
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.AirMonit_DLog.resources
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.Properties.Resources.resources
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.csproj.GenerateResource.Cache
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.csproj.CoreCompileInputs.cache
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.exe
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.pdb
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\bin\Debug\App_Data\DBAirMonit.mdf
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\bin\Debug\App_Data\DBAirMonit_log.ldf
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\bin\Debug\AirMonit_DLog.exe.config
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\bin\Debug\AirMonit_DLog.exe
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\bin\Debug\AirMonit_DLog.pdb
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\bin\Debug\M2Mqtt.Net.dll
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\bin\Debug\M2Mqtt.Net.pdb
+C:\Users\micae\Universidade\SI\Projecto-SI\AirMonit_Project_2017_18\AirMonit_DLog\obj\Debug\AirMonit_DLog.csprojResolveAssemblyReference.cache

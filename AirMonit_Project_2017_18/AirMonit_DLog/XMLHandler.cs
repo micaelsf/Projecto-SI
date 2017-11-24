@@ -9,7 +9,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 
-namespace AirMonit_DLog 
+namespace AirMonit_DLog
 {
     class XMLHandler
     {

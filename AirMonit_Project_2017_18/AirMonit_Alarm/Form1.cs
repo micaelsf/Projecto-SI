@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -37,6 +38,12 @@ namespace AirMonit_Alarm
 
         private void buttonConnect_Click(object sender, EventArgs e)
         {
+            if (!xmlhandler.IsValidXmlRules)
+            {
+                MessageBox.Show("XML rules file is not valid.");
+                return;
+            }
+
             bool validIP;
 
             validIP = IPAddress.TryParse(textBoxIpAddress.Text, out ipAddress);
@@ -80,6 +87,7 @@ namespace AirMonit_Alarm
             if (dataStr == null)
             {
                 MessageBox.Show(xmlhandler.ValidationMessage);
+                return;
             }
 
             this.Invoke((MethodInvoker)delegate ()
@@ -87,8 +95,30 @@ namespace AirMonit_Alarm
                 listBoxData.Items.Insert(0, dataStr + Environment.NewLine);
             });
 
+            // if e.message arrives here, it means it is already validated
+            xmlhandler.ValidateParameters(Encoding.UTF8.GetString(e.Message));
+
+            // now every rules are validated and alarms triggered, lets publish the alarms
+            if (mClient == null || !mClient.IsConnected)
+            {
+                MessageBox.Show("Error connecting to message broker...");
+                return;
+            }
+            string outerXML = xmlhandler.GetDocAlarm();
+
+            if (outerXML == null)
+            {
+                MessageBox.Show("Created alarm is not valid");
+                return;
+            }
+
+            mClient.Publish("alarm", Encoding.UTF8.GetBytes(outerXML));
+            Debug.WriteLine("\nPUBLISHED: " + outerXML + "\n\n");
         }
 
-        
+        private void checkBoxActive_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

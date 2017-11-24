@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Local_data\trigger-rules.xml" />
+    <Content Include="Local_data\XMLAlarm.xml" />
     <Content Include="Local_data\XMLParameter.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

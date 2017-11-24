@@ -9,8 +9,8 @@ namespace AirMonit_Alarm
     class SensorData
     {
         public string Param { get; set; }
-        public int Id { get; set; }
-        public long Value { get; set; }
+        public string Id { get; set; }
+        public string Value { get; set; }
         public string Date { get; set; }
         public string Time { get; set; }
         public string City { get; set; }

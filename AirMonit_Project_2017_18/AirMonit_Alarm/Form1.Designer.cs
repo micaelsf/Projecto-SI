@@ -39,8 +39,19 @@
             this.buttonConnect = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.labelInvalidIp = new System.Windows.Forms.Label();
             this.buttonDisconnect = new System.Windows.Forms.Button();
+            this.labelInvalidIp = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.comboBoxConditions = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.labelSelectedCondition = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.checkBoxActive = new System.Windows.Forms.CheckBox();
+            this.textBoxValue = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBoxDescription = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -132,13 +143,23 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.textBoxDescription);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.textBoxValue);
+            this.groupBox1.Controls.Add(this.checkBoxActive);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.labelSelectedCondition);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.comboBoxConditions);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.groupBox1.Location = new System.Drawing.Point(550, 100);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(204, 347);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Options";
+            this.groupBox1.Text = "Rules options";
             // 
             // groupBox2
             // 
@@ -154,17 +175,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Channel configuration";
             // 
-            // labelInvalidIp
-            // 
-            this.labelInvalidIp.AutoSize = true;
-            this.labelInvalidIp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelInvalidIp.ForeColor = System.Drawing.Color.Red;
-            this.labelInvalidIp.Location = new System.Drawing.Point(296, 21);
-            this.labelInvalidIp.Name = "labelInvalidIp";
-            this.labelInvalidIp.Size = new System.Drawing.Size(91, 13);
-            this.labelInvalidIp.TabIndex = 8;
-            this.labelInvalidIp.Text = "Invalid Ip Address";
-            // 
             // buttonDisconnect
             // 
             this.buttonDisconnect.BackColor = System.Drawing.Color.Firebrick;
@@ -178,6 +188,111 @@
             this.buttonDisconnect.Text = "Disconnect";
             this.buttonDisconnect.UseVisualStyleBackColor = false;
             this.buttonDisconnect.Click += new System.EventHandler(this.buttonDisconnect_Click);
+            // 
+            // labelInvalidIp
+            // 
+            this.labelInvalidIp.AutoSize = true;
+            this.labelInvalidIp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelInvalidIp.ForeColor = System.Drawing.Color.Red;
+            this.labelInvalidIp.Location = new System.Drawing.Point(296, 21);
+            this.labelInvalidIp.Name = "labelInvalidIp";
+            this.labelInvalidIp.Size = new System.Drawing.Size(91, 13);
+            this.labelInvalidIp.TabIndex = 8;
+            this.labelInvalidIp.Text = "Invalid Ip Address";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label5.Location = new System.Drawing.Point(7, 20);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(95, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Current conditions:";
+            // 
+            // comboBoxConditions
+            // 
+            this.comboBoxConditions.FormattingEnabled = true;
+            this.comboBoxConditions.Location = new System.Drawing.Point(103, 17);
+            this.comboBoxConditions.Name = "comboBoxConditions";
+            this.comboBoxConditions.Size = new System.Drawing.Size(95, 21);
+            this.comboBoxConditions.TabIndex = 1;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label6.Location = new System.Drawing.Point(7, 59);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(98, 13);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Selected condition:";
+            // 
+            // labelSelectedCondition
+            // 
+            this.labelSelectedCondition.AutoSize = true;
+            this.labelSelectedCondition.Location = new System.Drawing.Point(111, 59);
+            this.labelSelectedCondition.Name = "labelSelectedCondition";
+            this.labelSelectedCondition.Size = new System.Drawing.Size(19, 13);
+            this.labelSelectedCondition.TabIndex = 3;
+            this.labelSelectedCondition.Text = "<>";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label8.Location = new System.Drawing.Point(19, 109);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(37, 13);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "Value:";
+            // 
+            // checkBoxActive
+            // 
+            this.checkBoxActive.AutoSize = true;
+            this.checkBoxActive.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBoxActive.Location = new System.Drawing.Point(22, 83);
+            this.checkBoxActive.Name = "checkBoxActive";
+            this.checkBoxActive.Size = new System.Drawing.Size(56, 17);
+            this.checkBoxActive.TabIndex = 8;
+            this.checkBoxActive.Text = "Active";
+            this.checkBoxActive.UseVisualStyleBackColor = true;
+            this.checkBoxActive.CheckedChanged += new System.EventHandler(this.checkBoxActive_CheckedChanged);
+            // 
+            // textBoxValue
+            // 
+            this.textBoxValue.Location = new System.Drawing.Point(60, 106);
+            this.textBoxValue.Name = "textBoxValue";
+            this.textBoxValue.Size = new System.Drawing.Size(70, 20);
+            this.textBoxValue.TabIndex = 9;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label7.Location = new System.Drawing.Point(19, 136);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(63, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Description:";
+            // 
+            // textBoxDescription
+            // 
+            this.textBoxDescription.Location = new System.Drawing.Point(22, 152);
+            this.textBoxDescription.Name = "textBoxDescription";
+            this.textBoxDescription.Size = new System.Drawing.Size(168, 20);
+            this.textBoxDescription.TabIndex = 12;
+            // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button1.Location = new System.Drawing.Point(123, 318);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "Create rules";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -195,6 +310,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "Form1";
             this.Text = "AirMonit_Alarm";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -217,6 +334,16 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label labelInvalidIp;
         private System.Windows.Forms.Button buttonDisconnect;
+        private System.Windows.Forms.TextBox textBoxDescription;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox textBoxValue;
+        private System.Windows.Forms.CheckBox checkBoxActive;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label labelSelectedCondition;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox comboBoxConditions;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -1,81 +1,81 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+﻿<?xml version="1.0" encoding="utf-8"?> 
 <conditions>
   <parameter type="NO2">
     <rule active="false" condition="greaterThan">
-      <description>NO2 must be greater than 5</description>
-      <value>5</value>
+      <description>Qualidade do NO2: Péssima</description>
+      <value>1130</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
     <rule active="false" condition="lessThan">
-      <description>NO2 must be less than 5</description>
-      <value>5</value>
+      <description>Qualidade do NO2: Boa</description>
+      <value>201</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
     <rule active="false" condition="equals">
-      <description>NO2 equals 5</description>
-      <value>5</value>
+      <description>Qualidade do NO2: Moderada</description>
+      <value>201</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
     <rule active="false" condition="between">
-      <description>NO2 must be between 5 and 10</description>
+      <description>Qualidade do NO2: Muito má</description>
       <value>-1</value>
-      <minValue>5</minValue>
-      <maxValue>10</maxValue>
+      <minValue>321</minValue>
+      <maxValue>1130</maxValue>
     </rule>
   </parameter>
   <parameter type="CO">
     <rule active="false" condition="greaterThan">
-      <description>NO2 must be greater than 5</description>
-      <value>5</value>
+      <description>Qualidade do CO: Péssima</description>
+      <value>15</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
     <rule active="false" condition="lessThan">
-      <description>NO2 must be less than 5</description>
-      <value>5</value>
+      <description>Qualidade do CO: Boa</description>
+      <value>10</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
     <rule active="false" condition="equals">
-      <description>NO2 equals 5</description>
-      <value>5</value>
+      <description>Qualidade do CO: Moderada</description>
+      <value>10</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
     <rule active="false" condition="between">
-      <description>NO2 must be between 5 and 10</description>
+      <description>Qualidade do CO: Muito má</description>
       <value>-1</value>
-      <minValue>5</minValue>
-      <maxValue>10</maxValue>
+      <minValue>14</minValue>
+      <maxValue>15</maxValue>
     </rule>
   </parameter>
   <parameter type="O3">
     <rule active="false" condition="greaterThan">
-      <description>NO2 must be greater than 5</description>
-      <value>5</value>
+      <description>Qualidade do O3: Péssima</description>
+      <value>200</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
     <rule active="false" condition="lessThan">
-      <description>NO2 must be less than 5</description>
-      <value>5</value>
+      <description>Qualidade do O3: Boa</description>
+      <value>101</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
     <rule active="false" condition="equals">
-      <description>NO2 equals 5</description>
-      <value>5</value>
+      <description>Qualidade do O3: Moderada</description>
+      <value>101</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
     <rule active="false" condition="between">
-      <description>NO2 must be between 5 and 10</description>
+      <description>Qualidade do O3: Muito má</description>
       <value>-1</value>
-      <minValue>5</minValue>
-      <maxValue>10</maxValue>
+      <minValue>161</minValue>
+      <maxValue>200</maxValue>
     </rule>
   </parameter>
 </conditions>
