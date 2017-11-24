@@ -14,6 +14,7 @@ namespace AirMonit_Alarm
     class XMLHandler
     {
         private Form1 myform;
+        public static int MAX_PARAMETERS = 3;
 
         private string xmlRulesPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\trigger-rules.xml");
         private string xmlParamSchemaPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\XMLParameterSchema.xsd");
@@ -21,6 +22,7 @@ namespace AirMonit_Alarm
         private string xmlRulesSchemaPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\trigger-rules.xsd");
         private bool isValid;
         private XmlDocument docParam;
+
         private XmlDocument docAlarm;
         private XmlDocument docRules;
 
@@ -296,6 +298,44 @@ namespace AirMonit_Alarm
                 default:
                     break;
             }
+        }
+
+        public object[] GetActiveParameters()
+        {
+            if (!ValidateXML("rules"))
+            {
+                Debug.WriteLine(ValidationMessage);
+                IsValidXmlRules = false;
+            }
+
+            XmlNodeList activeParams = docRules.SelectNodes("/conditions/parameter");
+
+            string[] parameters = new string[MAX_PARAMETERS];
+
+            for (int i = 0; i < activeParams.Count; i++)
+            {
+                parameters[i] = activeParams[i].Attributes["type"].Value;
+            }
+
+            return parameters;
+        }
+
+        public bool IsParameterActive(string parameter)
+        {
+            if (!ValidateXML("rules"))
+            {
+                Debug.WriteLine(ValidationMessage);
+                IsValidXmlRules = false;
+            }
+
+            XmlNode param = docRules.SelectSingleNode("/conditions/parameter[@type='"+ parameter + "']");
+
+            if (param.Attributes["active"].Value == "true")
+            {
+                return true;
+            }
+
+            return false;
         }
 
     }

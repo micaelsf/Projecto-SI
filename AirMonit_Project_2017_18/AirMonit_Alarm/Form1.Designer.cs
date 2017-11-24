@@ -38,20 +38,26 @@
             this.label2 = new System.Windows.Forms.Label();
             this.buttonConnect = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxParameterRules = new System.Windows.Forms.GroupBox();
+            this.labelSelectedRule = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.comboBoxActiveRules = new System.Windows.Forms.ComboBox();
+            this.textBoxRuleDescription = new System.Windows.Forms.TextBox();
+            this.textBoxRuleValue = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.checkBoxActive = new System.Windows.Forms.CheckBox();
+            this.labelSelectedParameter = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBoxParameters = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonDisconnect = new System.Windows.Forms.Button();
             this.labelInvalidIp = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.comboBoxConditions = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.labelSelectedCondition = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.checkBoxActive = new System.Windows.Forms.CheckBox();
-            this.textBoxValue = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.textBoxDescription = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            this.groupBoxParameterRules.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -143,15 +149,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.groupBoxParameterRules);
             this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.textBoxDescription);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.textBoxValue);
             this.groupBox1.Controls.Add(this.checkBoxActive);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.labelSelectedCondition);
+            this.groupBox1.Controls.Add(this.labelSelectedParameter);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.comboBoxConditions);
+            this.groupBox1.Controls.Add(this.comboBoxParameters);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.groupBox1.Location = new System.Drawing.Point(550, 100);
@@ -160,6 +163,154 @@
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Rules options";
+            // 
+            // groupBoxParameterRules
+            // 
+            this.groupBoxParameterRules.Controls.Add(this.labelSelectedRule);
+            this.groupBoxParameterRules.Controls.Add(this.label9);
+            this.groupBoxParameterRules.Controls.Add(this.label11);
+            this.groupBoxParameterRules.Controls.Add(this.comboBoxActiveRules);
+            this.groupBoxParameterRules.Controls.Add(this.textBoxRuleDescription);
+            this.groupBoxParameterRules.Controls.Add(this.textBoxRuleValue);
+            this.groupBoxParameterRules.Controls.Add(this.label8);
+            this.groupBoxParameterRules.Controls.Add(this.label7);
+            this.groupBoxParameterRules.Location = new System.Drawing.Point(10, 106);
+            this.groupBoxParameterRules.Name = "groupBoxParameterRules";
+            this.groupBoxParameterRules.Size = new System.Drawing.Size(188, 206);
+            this.groupBoxParameterRules.TabIndex = 14;
+            this.groupBoxParameterRules.TabStop = false;
+            this.groupBoxParameterRules.Text = "Parameter rules";
+            // 
+            // labelSelectedRule
+            // 
+            this.labelSelectedRule.AutoSize = true;
+            this.labelSelectedRule.Location = new System.Drawing.Point(114, 56);
+            this.labelSelectedRule.Name = "labelSelectedRule";
+            this.labelSelectedRule.Size = new System.Drawing.Size(19, 13);
+            this.labelSelectedRule.TabIndex = 16;
+            this.labelSelectedRule.Text = "<>";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label9.Location = new System.Drawing.Point(6, 23);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(65, 13);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Active rules:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label11.Location = new System.Drawing.Point(6, 56);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(102, 13);
+            this.label11.TabIndex = 15;
+            this.label11.Text = "Selected parameter:";
+            // 
+            // comboBoxActiveRules
+            // 
+            this.comboBoxActiveRules.FormattingEnabled = true;
+            this.comboBoxActiveRules.Location = new System.Drawing.Point(77, 19);
+            this.comboBoxActiveRules.Name = "comboBoxActiveRules";
+            this.comboBoxActiveRules.Size = new System.Drawing.Size(105, 21);
+            this.comboBoxActiveRules.TabIndex = 14;
+            // 
+            // textBoxRuleDescription
+            // 
+            this.textBoxRuleDescription.Location = new System.Drawing.Point(9, 124);
+            this.textBoxRuleDescription.Name = "textBoxRuleDescription";
+            this.textBoxRuleDescription.Size = new System.Drawing.Size(173, 20);
+            this.textBoxRuleDescription.TabIndex = 12;
+            // 
+            // textBoxRuleValue
+            // 
+            this.textBoxRuleValue.Location = new System.Drawing.Point(49, 79);
+            this.textBoxRuleValue.Name = "textBoxRuleValue";
+            this.textBoxRuleValue.Size = new System.Drawing.Size(70, 20);
+            this.textBoxRuleValue.TabIndex = 9;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label8.Location = new System.Drawing.Point(6, 82);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(37, 13);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "Value:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label7.Location = new System.Drawing.Point(6, 108);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(63, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Description:";
+            // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button1.Location = new System.Drawing.Point(123, 318);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "Create rules";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxActive
+            // 
+            this.checkBoxActive.AutoSize = true;
+            this.checkBoxActive.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBoxActive.Location = new System.Drawing.Point(10, 82);
+            this.checkBoxActive.Name = "checkBoxActive";
+            this.checkBoxActive.Size = new System.Drawing.Size(56, 17);
+            this.checkBoxActive.TabIndex = 8;
+            this.checkBoxActive.Text = "Active";
+            this.checkBoxActive.UseVisualStyleBackColor = true;
+            // 
+            // labelSelectedParameter
+            // 
+            this.labelSelectedParameter.AutoSize = true;
+            this.labelSelectedParameter.Location = new System.Drawing.Point(120, 56);
+            this.labelSelectedParameter.Name = "labelSelectedParameter";
+            this.labelSelectedParameter.Size = new System.Drawing.Size(19, 13);
+            this.labelSelectedParameter.TabIndex = 3;
+            this.labelSelectedParameter.Text = "<>";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label6.Location = new System.Drawing.Point(6, 56);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(102, 13);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Selected parameter:";
+            // 
+            // comboBoxParameters
+            // 
+            this.comboBoxParameters.FormattingEnabled = true;
+            this.comboBoxParameters.Location = new System.Drawing.Point(123, 17);
+            this.comboBoxParameters.Name = "comboBoxParameters";
+            this.comboBoxParameters.Size = new System.Drawing.Size(75, 21);
+            this.comboBoxParameters.TabIndex = 1;
+            this.comboBoxParameters.SelectedIndexChanged += new System.EventHandler(this.comboBoxParameters_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label5.Location = new System.Drawing.Point(7, 20);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(111, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Watching parameters:";
             // 
             // groupBox2
             // 
@@ -200,105 +351,11 @@
             this.labelInvalidIp.TabIndex = 8;
             this.labelInvalidIp.Text = "Invalid Ip Address";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label5.Location = new System.Drawing.Point(7, 20);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(95, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Current conditions:";
-            // 
-            // comboBoxConditions
-            // 
-            this.comboBoxConditions.FormattingEnabled = true;
-            this.comboBoxConditions.Location = new System.Drawing.Point(103, 17);
-            this.comboBoxConditions.Name = "comboBoxConditions";
-            this.comboBoxConditions.Size = new System.Drawing.Size(95, 21);
-            this.comboBoxConditions.TabIndex = 1;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label6.Location = new System.Drawing.Point(7, 59);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(98, 13);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Selected condition:";
-            // 
-            // labelSelectedCondition
-            // 
-            this.labelSelectedCondition.AutoSize = true;
-            this.labelSelectedCondition.Location = new System.Drawing.Point(111, 59);
-            this.labelSelectedCondition.Name = "labelSelectedCondition";
-            this.labelSelectedCondition.Size = new System.Drawing.Size(19, 13);
-            this.labelSelectedCondition.TabIndex = 3;
-            this.labelSelectedCondition.Text = "<>";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label8.Location = new System.Drawing.Point(19, 109);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(37, 13);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "Value:";
-            // 
-            // checkBoxActive
-            // 
-            this.checkBoxActive.AutoSize = true;
-            this.checkBoxActive.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBoxActive.Location = new System.Drawing.Point(22, 83);
-            this.checkBoxActive.Name = "checkBoxActive";
-            this.checkBoxActive.Size = new System.Drawing.Size(56, 17);
-            this.checkBoxActive.TabIndex = 8;
-            this.checkBoxActive.Text = "Active";
-            this.checkBoxActive.UseVisualStyleBackColor = true;
-            this.checkBoxActive.CheckedChanged += new System.EventHandler(this.checkBoxActive_CheckedChanged);
-            // 
-            // textBoxValue
-            // 
-            this.textBoxValue.Location = new System.Drawing.Point(60, 106);
-            this.textBoxValue.Name = "textBoxValue";
-            this.textBoxValue.Size = new System.Drawing.Size(70, 20);
-            this.textBoxValue.TabIndex = 9;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label7.Location = new System.Drawing.Point(19, 136);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(63, 13);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Description:";
-            // 
-            // textBoxDescription
-            // 
-            this.textBoxDescription.Location = new System.Drawing.Point(22, 152);
-            this.textBoxDescription.Name = "textBoxDescription";
-            this.textBoxDescription.Size = new System.Drawing.Size(168, 20);
-            this.textBoxDescription.TabIndex = 12;
-            // 
-            // button1
-            // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button1.Location = new System.Drawing.Point(123, 318);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "Create rules";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(767, 460);
+            this.ClientSize = new System.Drawing.Size(766, 460);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.groupBox1);
@@ -312,6 +369,8 @@
             this.Text = "AirMonit_Alarm";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBoxParameterRules.ResumeLayout(false);
+            this.groupBoxParameterRules.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -334,16 +393,21 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label labelInvalidIp;
         private System.Windows.Forms.Button buttonDisconnect;
-        private System.Windows.Forms.TextBox textBoxDescription;
+        private System.Windows.Forms.TextBox textBoxRuleDescription;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBoxValue;
+        private System.Windows.Forms.TextBox textBoxRuleValue;
         private System.Windows.Forms.CheckBox checkBoxActive;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label labelSelectedCondition;
+        private System.Windows.Forms.Label labelSelectedParameter;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBoxConditions;
+        private System.Windows.Forms.ComboBox comboBoxParameters;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox groupBoxParameterRules;
+        private System.Windows.Forms.Label labelSelectedRule;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox comboBoxActiveRules;
     }
 }
 

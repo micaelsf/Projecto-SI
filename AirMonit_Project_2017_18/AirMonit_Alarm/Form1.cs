@@ -27,13 +27,15 @@ namespace AirMonit_Alarm
         public Form1()
         {
             InitializeComponent();
+            xmlhandler = new XMLHandler(this);
+
             SensorData sensorData = new SensorData();
 
             labelInvalidIp.Visible = false;
             labelStatus.Text = "Disconnected";
             textBoxIpAddress.Text = "127.0.0.1";
 
-            xmlhandler = new XMLHandler(this);
+            comboBoxParameters.Items.AddRange(xmlhandler.GetActiveParameters()); 
         }
 
         private void buttonConnect_Click(object sender, EventArgs e)
@@ -137,11 +139,6 @@ namespace AirMonit_Alarm
             Debug.WriteLine("\nPUBLISHED: " + outerXML + "\n\n");
         }
 
-        private void checkBoxActive_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void Form1_Closing(object sender, CancelEventArgs e)
         {
             if (mClient != null && mClient.IsConnected)
@@ -151,6 +148,22 @@ namespace AirMonit_Alarm
                 mClient.Disconnect(); //Free process and process's resources
             }
             mClient = null;
+        }
+
+        private void comboBoxParameters_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            labelSelectedParameter.Text = comboBoxParameters.SelectedItem.ToString();
+
+            if (xmlhandler.IsParameterActive(comboBoxParameters.SelectedItem.ToString()))
+            {
+                checkBoxActive.CheckState = CheckState.Checked;
+                groupBoxParameterRules.Enabled = true;
+            }
+            else
+            {
+                checkBoxActive.CheckState = CheckState.Unchecked;
+                groupBoxParameterRules.Enabled = false;
+            }
         }
     }
 }

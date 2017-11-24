@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?> 
 <conditions>
-  <parameter type="NO2" active="true">
+  <parameter type="NO2" active="false">
     <rule condition="greaterThan">
       <description>Qualidade do NO2: Péssima</description>
       <value>1130</value>
