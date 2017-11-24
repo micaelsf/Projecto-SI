@@ -1,77 +1,77 @@
 ﻿<?xml version="1.0" encoding="utf-8"?> 
 <conditions>
-  <parameter type="NO2">
-    <rule active="false" condition="greaterThan">
+  <parameter type="NO2" active="true">
+    <rule condition="greaterThan">
       <description>Qualidade do NO2: Péssima</description>
       <value>1130</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule active="false" condition="lessThan">
+    <rule condition="lessThan">
       <description>Qualidade do NO2: Boa</description>
       <value>201</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule active="false" condition="equals">
+    <rule condition="equals">
       <description>Qualidade do NO2: Moderada</description>
       <value>201</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule active="false" condition="between">
+    <rule condition="between">
       <description>Qualidade do NO2: Muito má</description>
       <value>-1</value>
       <minValue>321</minValue>
       <maxValue>1130</maxValue>
     </rule>
   </parameter>
-  <parameter type="CO">
-    <rule active="false" condition="greaterThan">
+  <parameter type="CO" active="true">
+    <rule condition="greaterThan">
       <description>Qualidade do CO: Péssima</description>
       <value>15</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule active="false" condition="lessThan">
+    <rule condition="lessThan">
       <description>Qualidade do CO: Boa</description>
       <value>10</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule active="false" condition="equals">
+    <rule condition="equals">
       <description>Qualidade do CO: Moderada</description>
       <value>10</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule active="false" condition="between">
+    <rule condition="between">
       <description>Qualidade do CO: Muito má</description>
       <value>-1</value>
       <minValue>14</minValue>
       <maxValue>15</maxValue>
     </rule>
   </parameter>
-  <parameter type="O3">
-    <rule active="false" condition="greaterThan">
+  <parameter type="O3" active="true">
+    <rule condition="greaterThan">
       <description>Qualidade do O3: Péssima</description>
       <value>200</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule active="false" condition="lessThan">
+    <rule condition="lessThan">
       <description>Qualidade do O3: Boa</description>
       <value>101</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule active="false" condition="equals">
+    <rule condition="equals">
       <description>Qualidade do O3: Moderada</description>
       <value>101</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule active="false" condition="between">
+    <rule condition="between">
       <description>Qualidade do O3: Muito má</description>
       <value>-1</value>
       <minValue>161</minValue>

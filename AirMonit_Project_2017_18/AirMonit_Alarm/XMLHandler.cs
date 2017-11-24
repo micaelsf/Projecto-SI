@@ -13,6 +13,8 @@ namespace AirMonit_Alarm
 {
     class XMLHandler
     {
+        private Form1 myform;
+
         private string xmlRulesPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\trigger-rules.xml");
         private string xmlParamSchemaPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\XMLParameterSchema.xsd");
         private string xmlAlarmSchemaPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\XMLAlarmsSchema.xsd");
@@ -36,8 +38,9 @@ namespace AirMonit_Alarm
         public bool IsValidXmlRules { get; set; }
         public string ValidationMessage { get; set; }
 
-        public XMLHandler()
+        public XMLHandler(Form1 mainForm)
         {
+            this.myform = mainForm;
             docParam = new XmlDocument();
             InitXMLDocuments();
         }
@@ -45,7 +48,7 @@ namespace AirMonit_Alarm
         private void InitXMLDocuments()
         {
             docRules = new XmlDocument();
-            docRules.Load(xmlRulesSchemaPath);
+            docRules.Load(xmlRulesPath);
 
             if (!ValidateXML("rules"))
             {
@@ -91,7 +94,7 @@ namespace AirMonit_Alarm
 
         public string ParseXMLData(string xmldata)
         {
-            if (!ValidateXML("params"))
+            if (!ValidateXMLStructure(xmldata, xmlParamSchemaPath))
             {
                 Debug.WriteLine(ValidationMessage);
                 return null;
@@ -119,38 +122,38 @@ namespace AirMonit_Alarm
             string paramStr = airMonitParam.Attributes["param"].Value;
 
             // Get rules that apply to this specific param
-            XmlNodeList parameterRules = docRules.SelectNodes("/conditions/parameter[@type='" + paramStr + "']/rule[@active='true']");
+            XmlNode parameterRules = docRules.SelectSingleNode("/conditions/parameter[@type='" + paramStr + "' and @active='true']");
 
-            foreach (XmlElement rule in parameterRules)
+            foreach (XmlNode rule in parameterRules)
             {
                 checkAlarmToParam(airMonitParam, rule);
             }
         }
 
-        private void checkAlarmToParam(XmlElement parameter, XmlElement rule)
+        private void checkAlarmToParam(XmlElement parameter, XmlNode rule)
         {
-            XmlNode ruleCondition = rule.SelectSingleNode("rule[@condition]");
+            XmlNode ruleCondition = rule.Attributes["condition"];
             float ruleValue, ruleMinVal, ruleMaxVal, paramValue;
 
             // Get parameter value
             string parameterValueStr = parameter.SelectSingleNode("value").InnerText.Replace('.', ',');
 
             // Validate xml values
-            if (!float.TryParse(ruleCondition.SelectSingleNode("value").InnerText.Replace('.', ','), out ruleValue) ||
-                !float.TryParse(ruleCondition.SelectSingleNode("minValue").InnerText.Replace('.', ','), out ruleMinVal) ||
-                !float.TryParse(ruleCondition.SelectSingleNode("maxValue").InnerText.Replace('.', ','), out ruleMaxVal) ||
+            if (!float.TryParse(rule.SelectSingleNode("value").InnerText.Replace('.', ','), out ruleValue) ||
+                !float.TryParse(rule.SelectSingleNode("minValue").InnerText.Replace('.', ','), out ruleMinVal) ||
+                !float.TryParse(rule.SelectSingleNode("maxValue").InnerText.Replace('.', ','), out ruleMaxVal) ||
                 !float.TryParse(parameterValueStr, out paramValue))
             {
                 Debug.WriteLine("Error parsing parameter and rule values");
-                Debug.WriteLine("ruleValue: " + ruleCondition.SelectSingleNode("ruleValue").InnerText);
-                Debug.WriteLine("ruleMinVal: " + ruleCondition.SelectSingleNode("ruleMinVal").InnerText);
-                Debug.WriteLine("ruleMaxVal: " + ruleCondition.SelectSingleNode("ruleMaxVal").InnerText);
+                Debug.WriteLine("ruleValue: " + rule.SelectSingleNode("ruleValue").InnerText);
+                Debug.WriteLine("ruleMinVal: " + rule.SelectSingleNode("ruleMinVal").InnerText);
+                Debug.WriteLine("ruleMaxVal: " + rule.SelectSingleNode("ruleMaxVal").InnerText);
                 Debug.WriteLine("paramValue: " + parameterValueStr);
                 return;
             }
 
             // get condition name
-            string condition = ruleCondition.Name;
+            string condition = ruleCondition.Value;
 
             switch (condition)
             {
@@ -168,7 +171,7 @@ namespace AirMonit_Alarm
                     }
                     break;
 
-                case "equal":
+                case "equals":
                     if (paramValue == ruleValue)
                     {
                         triggerAlarm(parameter, rule, condition);
@@ -197,7 +200,9 @@ namespace AirMonit_Alarm
                 sensorCity.InnerText = SensorData.Instance.City;
                 description.InnerText = rule.SelectSingleNode("description").InnerText;
                 alarmDate.InnerText = DateTime.Now.ToString("yyyy'-'MM'-'dd");
-                alarmTime.InnerText = DateTime.Now.ToString("HH':'mm':'ss");
+                alarmTime.InnerText = DateTime.Now.ToString("hh':'mm':'ss");
+
+                myform.PublishAlarm(docAlarm.OuterXml);
             }
             catch (ArgumentException ex)
             {
@@ -209,7 +214,7 @@ namespace AirMonit_Alarm
             }
         }
 
-        public string GetDocAlarm()
+        public string GetDocumentAlarm()
         {
             // check if alarm is valid
             if (!ValidateXML("alarms"))
@@ -255,7 +260,7 @@ namespace AirMonit_Alarm
             return false;
         }
 
-        private bool ValidateXMLStructure(string outerXml, string xmlParamSchemaPath)
+        private bool ValidateXMLStructure(string outerXml, string xmlSchemaPath)
         {
             isValid = true;
             XmlDocument doc = new XmlDocument();
@@ -265,7 +270,7 @@ namespace AirMonit_Alarm
             {
                 doc.LoadXml(outerXml);
                 ValidationEventHandler eventHandler = new ValidationEventHandler(MyValidateMethod);
-                doc.Schemas.Add(null, xmlParamSchemaPath);
+                doc.Schemas.Add(null, xmlSchemaPath);
                 doc.Validate(eventHandler);
             }
             catch (XmlException ex)

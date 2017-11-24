@@ -13,6 +13,7 @@
         <xs:element name="rule" minOccurs="0" maxOccurs="unbounded" type="ruleType"/>
       </xs:sequence>
       <xs:attribute name="type" use="required" type="xs:string"/>
+      <xs:attribute name="active" use="required" type="xs:boolean"/>
     </xs:complexType>
 
     <xs:complexType name="ruleType">
@@ -22,7 +23,6 @@
         <xs:element name="minValue" type="xs:double"/>
         <xs:element name="maxValue" type="xs:double"/>
       </xs:sequence>
-      <xs:attribute name="active" use="required" type="xs:boolean"/>
       <xs:attribute name="condition" use="required" type="conditionType"/>
     </xs:complexType>
 

@@ -33,7 +33,7 @@ namespace AirMonit_Alarm
             labelStatus.Text = "Disconnected";
             textBoxIpAddress.Text = "127.0.0.1";
 
-            xmlhandler = new XMLHandler();
+            xmlhandler = new XMLHandler(this);
         }
 
         private void buttonConnect_Click(object sender, EventArgs e)
@@ -77,6 +77,13 @@ namespace AirMonit_Alarm
 
         private void buttonDisconnect_Click(object sender, EventArgs e)
         {
+            if (mClient != null && mClient.IsConnected)
+            {
+                labelStatus.Text = "Disconnected";
+                mClient.Unsubscribe(topics);
+                mClient.Disconnect(); //Free process and process's resources
+            }
+            mClient = null;
 
         }
 
@@ -86,7 +93,7 @@ namespace AirMonit_Alarm
 
             if (dataStr == null)
             {
-                MessageBox.Show(xmlhandler.ValidationMessage);
+                Debug.WriteLine(xmlhandler.ValidationMessage);
                 return;
             }
 
@@ -97,14 +104,16 @@ namespace AirMonit_Alarm
 
             // if e.message arrives here, it means it is already validated
             xmlhandler.ValidateParameters(Encoding.UTF8.GetString(e.Message));
+        }
 
+        public void PublishAlarm(string outerXML)
+        {
             // now every rules are validated and alarms triggered, lets publish the alarms
             if (mClient == null || !mClient.IsConnected)
             {
                 MessageBox.Show("Error connecting to message broker...");
                 return;
             }
-            string outerXML = xmlhandler.GetDocAlarm();
 
             if (outerXML == null)
             {
@@ -113,12 +122,35 @@ namespace AirMonit_Alarm
             }
 
             mClient.Publish("alarm", Encoding.UTF8.GetBytes(outerXML));
+
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(outerXML);
+
+            this.Invoke((MethodInvoker)delegate ()
+            {
+                listBoxAlarms.Items.Insert(0, 
+                    "City: " +  doc.GetElementsByTagName("AirMonitParam")[0].SelectSingleNode("city").InnerText +
+                    ", Value: " + doc.GetElementsByTagName("AirMonitParam")[0].SelectSingleNode("value").InnerText + 
+                    ", " + doc.GetElementsByTagName("description")[0].InnerText +
+                    Environment.NewLine);
+            });
             Debug.WriteLine("\nPUBLISHED: " + outerXML + "\n\n");
         }
 
         private void checkBoxActive_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_Closing(object sender, CancelEventArgs e)
+        {
+            if (mClient != null && mClient.IsConnected)
+            {
+                labelStatus.Text = "Disconnected";
+                mClient.Unsubscribe(topics);
+                mClient.Disconnect(); //Free process and process's resources
+            }
+            mClient = null;
         }
     }
 }
