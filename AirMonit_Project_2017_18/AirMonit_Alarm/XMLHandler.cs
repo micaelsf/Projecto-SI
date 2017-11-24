@@ -126,9 +126,11 @@ namespace AirMonit_Alarm
             // Get rules that apply to this specific param
             XmlNode parameterRules = docRules.SelectSingleNode("/conditions/parameter[@type='" + paramStr + "' and @active='true']");
 
-            foreach (XmlNode rule in parameterRules)
-            {
-                checkAlarmToParam(airMonitParam, rule);
+            if (parameterRules != null) {
+                foreach (XmlNode rule in parameterRules)
+                {
+                    checkAlarmToParam(airMonitParam, rule);
+                }
             }
         }
 
