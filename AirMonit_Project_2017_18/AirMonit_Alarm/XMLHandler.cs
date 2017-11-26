@@ -150,9 +150,9 @@ namespace AirMonit_Alarm
                 !float.TryParse(parameterValueStr, out paramValue))
             {
                 Debug.WriteLine("Error parsing parameter and rule values");
-                Debug.WriteLine("ruleValue: " + rule.SelectSingleNode("ruleValue").InnerText);
-                Debug.WriteLine("ruleMinVal: " + rule.SelectSingleNode("ruleMinVal").InnerText);
-                Debug.WriteLine("ruleMaxVal: " + rule.SelectSingleNode("ruleMaxVal").InnerText);
+                Debug.WriteLine("ruleValue: " + rule.SelectSingleNode("value").InnerText);
+                Debug.WriteLine("ruleMinVal: " + rule.SelectSingleNode("minValue").InnerText);
+                Debug.WriteLine("ruleMaxVal: " + rule.SelectSingleNode("maxValue").InnerText);
                 Debug.WriteLine("paramValue: " + parameterValueStr);
                 return;
             }
@@ -197,7 +197,7 @@ namespace AirMonit_Alarm
             try
             {
                 // update alarm document created initialy
-                airMonitParam.SetAttribute("param", parameter.Attributes["param"].Value);
+                this.airMonitAlarm.SelectSingleNode("AirMonitParam").Attributes["param"].Value = parameter.Attributes["param"].Value;
                 sensorId.InnerText = SensorData.Instance.Id;
                 sensorValue.InnerText = SensorData.Instance.Value;
                 sensorDate.InnerText = SensorData.Instance.Date;
@@ -417,12 +417,15 @@ namespace AirMonit_Alarm
 
             if (values[1] != null)
             {
+                ruleElem.SelectSingleNode("value").InnerText = "-1";
                 ruleElem.SelectSingleNode("minValue").InnerText = values[0];
                 ruleElem.SelectSingleNode("maxValue").InnerText = values[1];
             }
             else
             {
                 ruleElem.SelectSingleNode("value").InnerText = values[0];
+                ruleElem.SelectSingleNode("minValue").InnerText = "-1";
+                ruleElem.SelectSingleNode("maxValue").InnerText = "-1";
             }
 
             ruleElem.SelectSingleNode("description").InnerText = myform.GetConditionDescription();
@@ -445,7 +448,7 @@ namespace AirMonit_Alarm
             return conditionNode.SelectSingleNode("description").InnerText;
         }
 
-        internal object[] GetAvailableConditions(string parameter)
+        public object[] GetAvailableConditions(string parameter)
         {
             // rules === conditions
             // 1 rule != 1 condition ( 1 rule have one condition type and values)
@@ -454,7 +457,6 @@ namespace AirMonit_Alarm
             string[] conditions = new string[defaultConditions.Length - parameterRules.Count];
 
             int added = 0;
-            int indice;
             bool found = false;
             if (parameterRules.Count > 0)
             {
@@ -477,9 +479,11 @@ namespace AirMonit_Alarm
                         added++;
                     }
                 }
+
+                return conditions;
             }
 
-            return conditions;
+            return defaultConditions;
         }
 
         public bool SaveChanges()
@@ -491,16 +495,20 @@ namespace AirMonit_Alarm
 
             XmlNode conditionNode = docRules.SelectSingleNode("/conditions/parameter[@type='" + parameter + "']/rule[@condition='" + condition + "']");
 
-            if (values[1] != null)
+            if (conditionNode != null)
             {
-                conditionNode.SelectSingleNode("minValue").InnerText = values[0];
-                conditionNode.SelectSingleNode("maxValue").InnerText = values[1];
-            } else
-            {
-                conditionNode.SelectSingleNode("value").InnerText = values[0];
-            }
+                if (values[1] != null)
+                {
+                    conditionNode.SelectSingleNode("minValue").InnerText = values[0];
+                    conditionNode.SelectSingleNode("maxValue").InnerText = values[1];
+                }
+                else
+                {
+                    conditionNode.SelectSingleNode("value").InnerText = values[0];
+                }
 
-            conditionNode.SelectSingleNode("description").InnerText = description;
+                conditionNode.SelectSingleNode("description").InnerText = description;
+            }
 
             if (!ValidateXML("rules"))
             {

@@ -38,16 +38,20 @@
             this.label2 = new System.Windows.Forms.Label();
             this.buttonConnect = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.groupBoxParameterRules = new System.Windows.Forms.GroupBox();
+            this.comboBoxCreateCondition = new System.Windows.Forms.ComboBox();
+            this.buttonRemoveCondition = new System.Windows.Forms.Button();
+            this.buttonAddCondition = new System.Windows.Forms.Button();
+            this.labelTextAND = new System.Windows.Forms.Label();
             this.textBoxConditionValueMax = new System.Windows.Forms.TextBox();
             this.labelSelectedCondition = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.comboBoxActiveConditions = new System.Windows.Forms.ComboBox();
             this.textBoxConditionDescription = new System.Windows.Forms.TextBox();
             this.textBoxConditionValue = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.labelDescription = new System.Windows.Forms.Label();
             this.checkBoxActive = new System.Windows.Forms.CheckBox();
             this.labelSelectedParameter = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -56,11 +60,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonDisconnect = new System.Windows.Forms.Button();
             this.labelInvalidIp = new System.Windows.Forms.Label();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.labelTextAND = new System.Windows.Forms.Label();
-            this.buttonAddCondition = new System.Windows.Forms.Button();
-            this.buttonRemoveCondition = new System.Windows.Forms.Button();
-            this.comboBoxCreateCondition = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBoxParameterRules.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -157,7 +156,6 @@
             this.groupBox1.Controls.Add(this.buttonCancel);
             this.groupBox1.Controls.Add(this.buttonSave);
             this.groupBox1.Controls.Add(this.groupBoxParameterRules);
-            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.checkBoxActive);
             this.groupBox1.Controls.Add(this.labelSelectedParameter);
             this.groupBox1.Controls.Add(this.label6);
@@ -171,12 +169,25 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Rules options";
             // 
+            // buttonCancel
+            // 
+            this.buttonCancel.BackColor = System.Drawing.Color.LightGray;
+            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonCancel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonCancel.Location = new System.Drawing.Point(10, 318);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.TabIndex = 18;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = false;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            // 
             // buttonSave
             // 
             this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonSave.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonSave.Location = new System.Drawing.Point(100, 278);
+            this.buttonSave.Location = new System.Drawing.Point(127, 318);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(98, 23);
             this.buttonSave.TabIndex = 17;
@@ -196,21 +207,77 @@
             this.groupBoxParameterRules.Controls.Add(this.comboBoxActiveConditions);
             this.groupBoxParameterRules.Controls.Add(this.textBoxConditionDescription);
             this.groupBoxParameterRules.Controls.Add(this.textBoxConditionValue);
-            this.groupBoxParameterRules.Controls.Add(this.label7);
+            this.groupBoxParameterRules.Controls.Add(this.labelDescription);
             this.groupBoxParameterRules.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxParameterRules.Location = new System.Drawing.Point(10, 106);
             this.groupBoxParameterRules.Name = "groupBoxParameterRules";
-            this.groupBoxParameterRules.Size = new System.Drawing.Size(215, 166);
+            this.groupBoxParameterRules.Size = new System.Drawing.Size(215, 171);
             this.groupBoxParameterRules.TabIndex = 14;
             this.groupBoxParameterRules.TabStop = false;
             this.groupBoxParameterRules.Text = "Parameter rules";
+            // 
+            // comboBoxCreateCondition
+            // 
+            this.comboBoxCreateCondition.FormattingEnabled = true;
+            this.comboBoxCreateCondition.Location = new System.Drawing.Point(116, 46);
+            this.comboBoxCreateCondition.Name = "comboBoxCreateCondition";
+            this.comboBoxCreateCondition.Size = new System.Drawing.Size(93, 21);
+            this.comboBoxCreateCondition.TabIndex = 22;
+            this.comboBoxCreateCondition.SelectedIndexChanged += new System.EventHandler(this.comboBoxCreateCondition_SelectedIndexChanged);
+            // 
+            // buttonRemoveCondition
+            // 
+            this.buttonRemoveCondition.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonRemoveCondition.FlatAppearance.BorderColor = System.Drawing.Color.Firebrick;
+            this.buttonRemoveCondition.FlatAppearance.BorderSize = 0;
+            this.buttonRemoveCondition.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonRemoveCondition.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonRemoveCondition.ForeColor = System.Drawing.Color.Red;
+            this.buttonRemoveCondition.Location = new System.Drawing.Point(185, 17);
+            this.buttonRemoveCondition.Name = "buttonRemoveCondition";
+            this.buttonRemoveCondition.Size = new System.Drawing.Size(24, 24);
+            this.buttonRemoveCondition.TabIndex = 21;
+            this.buttonRemoveCondition.Text = "X";
+            this.buttonRemoveCondition.UseVisualStyleBackColor = false;
+            this.buttonRemoveCondition.Click += new System.EventHandler(this.buttonRemoveCondition_Click);
+            // 
+            // buttonAddCondition
+            // 
+            this.buttonAddCondition.BackColor = System.Drawing.Color.LimeGreen;
+            this.buttonAddCondition.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.buttonAddCondition.FlatAppearance.BorderSize = 2;
+            this.buttonAddCondition.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.buttonAddCondition.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.buttonAddCondition.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonAddCondition.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonAddCondition.ForeColor = System.Drawing.Color.White;
+            this.buttonAddCondition.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.buttonAddCondition.Location = new System.Drawing.Point(9, 46);
+            this.buttonAddCondition.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonAddCondition.Name = "buttonAddCondition";
+            this.buttonAddCondition.Size = new System.Drawing.Size(94, 22);
+            this.buttonAddCondition.TabIndex = 19;
+            this.buttonAddCondition.Text = "Add Condition";
+            this.buttonAddCondition.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.buttonAddCondition.UseVisualStyleBackColor = false;
+            this.buttonAddCondition.Click += new System.EventHandler(this.buttonAddCondition_Click);
+            // 
+            // labelTextAND
+            // 
+            this.labelTextAND.AutoSize = true;
+            this.labelTextAND.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelTextAND.Location = new System.Drawing.Point(129, 92);
+            this.labelTextAND.Name = "labelTextAND";
+            this.labelTextAND.Size = new System.Drawing.Size(25, 13);
+            this.labelTextAND.TabIndex = 18;
+            this.labelTextAND.Text = "and";
             // 
             // textBoxConditionValueMax
             // 
             this.textBoxConditionValueMax.BackColor = System.Drawing.SystemColors.ControlLight;
             this.textBoxConditionValueMax.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxConditionValueMax.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxConditionValueMax.Location = new System.Drawing.Point(146, 102);
+            this.textBoxConditionValueMax.Location = new System.Drawing.Point(153, 92);
             this.textBoxConditionValueMax.Name = "textBoxConditionValueMax";
             this.textBoxConditionValueMax.Size = new System.Drawing.Size(34, 13);
             this.textBoxConditionValueMax.TabIndex = 17;
@@ -219,7 +286,7 @@
             // labelSelectedCondition
             // 
             this.labelSelectedCondition.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelSelectedCondition.Location = new System.Drawing.Point(6, 102);
+            this.labelSelectedCondition.Location = new System.Drawing.Point(19, 92);
             this.labelSelectedCondition.Name = "labelSelectedCondition";
             this.labelSelectedCondition.Size = new System.Drawing.Size(72, 13);
             this.labelSelectedCondition.TabIndex = 16;
@@ -249,7 +316,7 @@
             // 
             this.textBoxConditionDescription.Location = new System.Drawing.Point(9, 140);
             this.textBoxConditionDescription.Name = "textBoxConditionDescription";
-            this.textBoxConditionDescription.Size = new System.Drawing.Size(173, 20);
+            this.textBoxConditionDescription.Size = new System.Drawing.Size(200, 20);
             this.textBoxConditionDescription.TabIndex = 12;
             this.textBoxConditionDescription.Leave += new System.EventHandler(this.textBoxConditionDescription_Leave);
             // 
@@ -258,32 +325,21 @@
             this.textBoxConditionValue.BackColor = System.Drawing.SystemColors.ControlLight;
             this.textBoxConditionValue.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxConditionValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxConditionValue.Location = new System.Drawing.Point(84, 102);
+            this.textBoxConditionValue.Location = new System.Drawing.Point(93, 92);
             this.textBoxConditionValue.Name = "textBoxConditionValue";
             this.textBoxConditionValue.Size = new System.Drawing.Size(34, 13);
             this.textBoxConditionValue.TabIndex = 9;
             this.textBoxConditionValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label7
+            // labelDescription
             // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label7.Location = new System.Drawing.Point(6, 124);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(63, 13);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Description:";
-            // 
-            // button1
-            // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button1.Location = new System.Drawing.Point(123, 318);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "Create rules";
-            this.button1.UseVisualStyleBackColor = true;
+            this.labelDescription.AutoSize = true;
+            this.labelDescription.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelDescription.Location = new System.Drawing.Point(6, 124);
+            this.labelDescription.Name = "labelDescription";
+            this.labelDescription.Size = new System.Drawing.Size(63, 13);
+            this.labelDescription.TabIndex = 11;
+            this.labelDescription.Text = "Description:";
             // 
             // checkBoxActive
             // 
@@ -323,7 +379,7 @@
             this.comboBoxParameters.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.comboBoxParameters.Location = new System.Drawing.Point(123, 17);
             this.comboBoxParameters.Name = "comboBoxParameters";
-            this.comboBoxParameters.Size = new System.Drawing.Size(75, 21);
+            this.comboBoxParameters.Size = new System.Drawing.Size(67, 21);
             this.comboBoxParameters.TabIndex = 1;
             this.comboBoxParameters.SelectedIndexChanged += new System.EventHandler(this.comboBoxParameters_SelectedIndexChanged);
             // 
@@ -376,74 +432,6 @@
             this.labelInvalidIp.TabIndex = 8;
             this.labelInvalidIp.Text = "Invalid Ip Address";
             // 
-            // buttonCancel
-            // 
-            this.buttonCancel.BackColor = System.Drawing.Color.LightGray;
-            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonCancel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonCancel.Location = new System.Drawing.Point(10, 278);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 18;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = false;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
-            // labelTextAND
-            // 
-            this.labelTextAND.AutoSize = true;
-            this.labelTextAND.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelTextAND.Location = new System.Drawing.Point(121, 102);
-            this.labelTextAND.Name = "labelTextAND";
-            this.labelTextAND.Size = new System.Drawing.Size(25, 13);
-            this.labelTextAND.TabIndex = 18;
-            this.labelTextAND.Text = "and";
-            // 
-            // buttonAddCondition
-            // 
-            this.buttonAddCondition.BackColor = System.Drawing.Color.LimeGreen;
-            this.buttonAddCondition.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.buttonAddCondition.FlatAppearance.BorderSize = 2;
-            this.buttonAddCondition.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.buttonAddCondition.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.buttonAddCondition.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonAddCondition.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonAddCondition.ForeColor = System.Drawing.Color.White;
-            this.buttonAddCondition.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.buttonAddCondition.Location = new System.Drawing.Point(30, 46);
-            this.buttonAddCondition.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonAddCondition.Name = "buttonAddCondition";
-            this.buttonAddCondition.Size = new System.Drawing.Size(48, 22);
-            this.buttonAddCondition.TabIndex = 19;
-            this.buttonAddCondition.Text = "Add +";
-            this.buttonAddCondition.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.buttonAddCondition.UseVisualStyleBackColor = false;
-            this.buttonAddCondition.Click += new System.EventHandler(this.buttonAddCondition_Click);
-            // 
-            // buttonRemoveCondition
-            // 
-            this.buttonRemoveCondition.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonRemoveCondition.FlatAppearance.BorderColor = System.Drawing.Color.Firebrick;
-            this.buttonRemoveCondition.FlatAppearance.BorderSize = 0;
-            this.buttonRemoveCondition.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonRemoveCondition.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonRemoveCondition.ForeColor = System.Drawing.Color.Red;
-            this.buttonRemoveCondition.Location = new System.Drawing.Point(185, 17);
-            this.buttonRemoveCondition.Name = "buttonRemoveCondition";
-            this.buttonRemoveCondition.Size = new System.Drawing.Size(24, 24);
-            this.buttonRemoveCondition.TabIndex = 21;
-            this.buttonRemoveCondition.Text = "X";
-            this.buttonRemoveCondition.UseVisualStyleBackColor = false;
-            this.buttonRemoveCondition.Click += new System.EventHandler(this.buttonRemoveCondition_Click);
-            // 
-            // comboBoxCreateCondition
-            // 
-            this.comboBoxCreateCondition.FormattingEnabled = true;
-            this.comboBoxCreateCondition.Location = new System.Drawing.Point(101, 47);
-            this.comboBoxCreateCondition.Name = "comboBoxCreateCondition";
-            this.comboBoxCreateCondition.Size = new System.Drawing.Size(79, 21);
-            this.comboBoxCreateCondition.TabIndex = 22;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -487,14 +475,13 @@
         private System.Windows.Forms.Label labelInvalidIp;
         private System.Windows.Forms.Button buttonDisconnect;
         private System.Windows.Forms.TextBox textBoxConditionDescription;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labelDescription;
         private System.Windows.Forms.TextBox textBoxConditionValue;
         private System.Windows.Forms.CheckBox checkBoxActive;
         private System.Windows.Forms.Label labelSelectedParameter;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox comboBoxParameters;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBoxParameterRules;
         private System.Windows.Forms.Label labelSelectedCondition;
         private System.Windows.Forms.Label label9;

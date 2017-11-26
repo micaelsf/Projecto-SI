@@ -1,50 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <conditions>
   <parameter type="NO2" active="true">
-    <rule condition="lessThan">
-      <description>Qualidade do NO2: Boa</description>
-      <value>201</value>
-      <minValue>-1</minValue>
-      <maxValue>-1</maxValue>
-    </rule>
-    <rule condition="equals">
-      <description>Qualidade do NO2: Moderada</description>
-      <value>201</value>
-      <minValue>-1</minValue>
-      <maxValue>-1</maxValue>
-    </rule>
-    <rule condition="greaterThan">
-      <description>No2 - OK</description>
-      <value>300</value>
-      <minValue />
-      <maxValue />
+    <rule condition="between">
+      <description>novo teste</description>
+      <value>-1</value>
+      <minValue>10</minValue>
+      <maxValue>800</maxValue>
     </rule>
   </parameter>
   <parameter type="CO" active="false">
-    <rule condition="greaterThan">
-      <description>Qualidade do CO: Péssima</description>
-      <value>15</value>
-      <minValue>-1</minValue>
-      <maxValue>-1</maxValue>
-    </rule>
-    <rule condition="lessThan">
-      <description>Qualidade do CO: Boa</description>
-      <value>10</value>
-      <minValue>-1</minValue>
-      <maxValue>-1</maxValue>
-    </rule>
-    <rule condition="equals">
-      <description>Qualidade do CO: Moderada</description>
-      <value>10</value>
-      <minValue>-1</minValue>
-      <maxValue>-1</maxValue>
-    </rule>
-    <rule condition="between">
-      <description>Qualidade do CO: Muito má</description>
-      <value>-1</value>
-      <minValue>14</minValue>
-      <maxValue>15</maxValue>
-    </rule>
   </parameter>
   <parameter type="O3" active="false">
     <rule condition="greaterThan">

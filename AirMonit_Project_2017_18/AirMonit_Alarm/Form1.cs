@@ -44,17 +44,30 @@ namespace AirMonit_Alarm
             textBoxIpAddress.Text = "127.0.0.1";
 
             comboBoxParameters.Items.AddRange(xmlhandler.GetActiveParameters());
+
+            // force activate event onIndexChanged
             comboBoxParameters.SelectedIndex = 0;
+
             textBoxConditionValueMax.Visible = false;
             labelTextAND.Visible = false;
             comboBoxCreateCondition.Visible = false;
 
             this.selectedParameter = comboBoxParameters.SelectedItem.ToString();
-            this.selectedCondition = comboBoxActiveConditions.SelectedItem.ToString();
+
+            if (comboBoxActiveConditions.Items.Count > 0)
+            {
+                ShowConditionFields();
+                this.selectedCondition = comboBoxActiveConditions.SelectedItem.ToString();
+            }
+            else
+            {
+                HideConditionFields();
+                this.selectedCondition = null;
+            }
 
             this.isCreatingRule = false;
 
-            checkBoxCheck();
+            CheckBoxCheck();
         }
 
         private void buttonConnect_Click(object sender, EventArgs e)
@@ -165,6 +178,7 @@ namespace AirMonit_Alarm
             this.Invoke((MethodInvoker)delegate ()
             {
                 listBoxAlarms.Items.Insert(0, 
+                    "[ "+ doc.GetElementsByTagName("AirMonitParam")[0].Attributes["param"].Value + " ] " +
                     "City: " +  doc.GetElementsByTagName("AirMonitParam")[0].SelectSingleNode("city").InnerText +
                     ", Value: " + doc.GetElementsByTagName("AirMonitParam")[0].SelectSingleNode("value").InnerText + 
                     ", " + doc.GetElementsByTagName("description")[0].InnerText +
@@ -190,9 +204,18 @@ namespace AirMonit_Alarm
             labelSelectedParameter.Text = this.selectedParameter;
 
             // populate current parameter active rules 
+            comboBoxActiveConditions.Text = "";
             comboBoxActiveConditions.Items.Clear();
             comboBoxActiveConditions.Items.AddRange(xmlhandler.GetActiveConditionsFrom(this.selectedParameter));
-            comboBoxActiveConditions.SelectedIndex = 0;
+            if (comboBoxActiveConditions.Items.Count > 0)
+            {
+                ShowConditionFields();
+                comboBoxActiveConditions.SelectedIndex = 0;
+            } 
+            else
+            {
+                HideConditionFields();
+            }
 
             if (xmlhandler.IsParameterActive(comboBoxParameters.SelectedItem.ToString()))
             {
@@ -228,11 +251,11 @@ namespace AirMonit_Alarm
                 return;
             }
 
-            checkBoxCheck();
-            xmlhandler.SetParameterActive(selectedParameter);
+            CheckBoxCheck();
+            xmlhandler.SetParameterActive(this.selectedParameter);
         }
 
-        private void checkBoxCheck()
+        private void CheckBoxCheck()
         {
             if (!checkBoxActive.Checked)
             {
@@ -269,13 +292,22 @@ namespace AirMonit_Alarm
             this.oldValues = this.values;
             this.oldDescription = textBoxConditionDescription.Text;
         }
-            
+
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            /*if (comboBoxActiveConditions.Items.Count == 0)
+            {
+                return;
+            }*/
+
             if (!ValidateFieldsOnSave())
             {
                 return;
             }
+
+            // update old values on save
+            this.oldValues = this.values;
+            this.oldDescription = textBoxConditionDescription.Text;
 
             if (this.isCreatingRule)
             {
@@ -283,6 +315,9 @@ namespace AirMonit_Alarm
                 {
                     MessageBox.Show("Rule successfully created");
                     RefreshRuleSection();
+                    comboBoxActiveConditions.Items.Clear();
+                    comboBoxActiveConditions.Items.AddRange(xmlhandler.GetActiveConditionsFrom(this.selectedParameter));
+                    comboBoxActiveConditions.SelectedIndex = 0;
                     return;
                 }
             }
@@ -296,14 +331,49 @@ namespace AirMonit_Alarm
 
         private void RefreshRuleSection()
         {
+            comboBoxParameters.Enabled = true;
+            checkBoxActive.Enabled = true;
             buttonSave.Text = "Save changes";
-            comboBoxActiveConditions.Enabled = true;
-            comboBoxActiveConditions.SelectedIndex = 0;
+            comboBoxActiveConditions.Show();
+            this.isCreatingRule = false;
 
-            buttonRemoveCondition.Enabled = true;
+            if (comboBoxActiveConditions.Items.Count > 0)
+            {
+                comboBoxActiveConditions.SelectedIndex = 0;
+                buttonRemoveCondition.Show();
+                comboBoxCreateCondition.Visible = false;
+                buttonAddCondition.Enabled = true;
+                return;
+            }
+
             comboBoxCreateCondition.Visible = false;
             buttonAddCondition.Enabled = true;
-            this.isCreatingRule = false;
+            
+        }
+
+        private void HideConditionFields()
+        {
+            buttonRemoveCondition.Visible = false;
+            labelTextAND.Visible = false;
+            textBoxConditionValue.Hide();
+            textBoxConditionValueMax.Hide();
+            textBoxConditionDescription.Hide();
+            labelSelectedCondition.Hide();
+            labelDescription.Hide();
+        }
+
+        private void ShowConditionFields()
+        {
+            buttonRemoveCondition.Visible = true;
+            if (this.selectedCondition == "between")
+            {
+                textBoxConditionValueMax.Show();
+                labelTextAND.Visible = true;
+            }
+            textBoxConditionValue.Show();
+            textBoxConditionDescription.Show();
+            labelSelectedCondition.Show();
+            labelDescription.Show();
         }
 
         private bool ValidateFieldsOnSave()
@@ -366,31 +436,48 @@ namespace AirMonit_Alarm
         {
             if (mClient == null || !mClient.IsConnected)
             {
-                RollbackFieldsValues();
+                
+                    RollbackFieldsValues();
             }
 
             if (isCreatingRule)
             {
                 RefreshRuleSection();
                 isCreatingRule = false;
+
+                if (comboBoxActiveConditions.Items.Count > 0)
+                {
+                    ShowConditionFields();
+                    return;
+                }
+
+                HideConditionFields();
             }
         }
 
         // rollback the fields values to the values before any change
         private void RollbackFieldsValues()
         {
-            if (this.oldValues[1] != null)
+            if (comboBoxActiveConditions.Items.Count > 0)
             {
-                textBoxConditionValueMax.Text = this.oldValues[1];
-            }
+                if (this.oldValues[1] != null)
+                {
+                    textBoxConditionValueMax.Text = this.oldValues[1];
+                }
 
-            textBoxConditionValue.Text = this.oldValues[0];
-            textBoxConditionDescription.Text = this.oldDescription;
+                textBoxConditionValue.Text = this.oldValues[0];
+                textBoxConditionDescription.Text = this.oldDescription;
+            }
         }
 
         // verify if there are any field changed
         private bool AreChangedFields()
         {
+            if (comboBoxActiveConditions.Items.Count == 0)
+            {
+                return false;
+            }
+
             return oldDescription.Trim() != textBoxConditionDescription.Text.Trim() ||
                 oldValues[0] != values[0] || oldValues[1] != values[1];
 
@@ -398,58 +485,73 @@ namespace AirMonit_Alarm
 
         private void buttonRemoveCondition_Click(object sender, EventArgs e)
         {
-            if (comboBoxActiveConditions.Items.Count > 0)
+            if (mClient != null && mClient.IsConnected)
             {
-                buttonRemoveCondition.Visible = true;
-                DialogResult result = MessageBox.Show("You want to remove the condition '" + this.selectedCondition + "' ?",
-                                            "Warning",
-                                            MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
+                MessageBox.Show("Program is running... Please turn off the alarm to remove a condition.");
+                return;
+            }
+
+            buttonRemoveCondition.Visible = true;
+            DialogResult result = MessageBox.Show("You want to remove the condition '" + this.selectedCondition + "' ?",
+                                        "Warning",
+                                        MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                xmlhandler.RemoveCondition(this.selectedParameter, this.selectedCondition);
+                MessageBox.Show("Condition successfully removed");
+                comboBoxActiveConditions.Items.Remove(this.selectedCondition);
+
+                if (comboBoxActiveConditions.Items.Count > 0)
                 {
-                    xmlhandler.RemoveCondition(this.selectedParameter, this.selectedCondition);
-                    MessageBox.Show("Condition successfully removed");
-                    comboBoxActiveConditions.Items.Remove(this.selectedCondition);
                     comboBoxActiveConditions.SelectedIndex = 0;
+                    return;
                 }
-                if (result == DialogResult.No)
-                {
-                    RollbackFieldsValues();
-                }
-            } else
+
+                comboBoxActiveConditions.Text = "";
+                HideConditionFields();
+            }
+            if (result == DialogResult.No)
             {
-                buttonRemoveCondition.Visible = false;
+                RollbackFieldsValues();
             }
         }
 
         private void buttonAddCondition_Click(object sender, EventArgs e)
         {
-            comboBoxActiveConditions.Enabled = false;
+            comboBoxParameters.Enabled = false;
+            checkBoxActive.Enabled = false;
+            comboBoxActiveConditions.Hide();
             comboBoxCreateCondition.Visible = true;
             buttonAddCondition.Enabled = false;
-            buttonRemoveCondition.Enabled = false;
 
             comboBoxCreateCondition.Items.Clear();
-            comboBoxCreateCondition.Items.AddRange(xmlhandler.GetAvailableConditions(this.selectedParameter));
 
-            if (comboBoxCreateCondition.Items.Count > 0)
+            object[] availableList = xmlhandler.GetAvailableConditions(this.selectedParameter);
+
+            this.isCreatingRule = true;
+
+            if (availableList.Length > 0)
             {
+                ShowConditionFields();
+                comboBoxCreateCondition.Items.AddRange(availableList);
                 comboBoxCreateCondition.SelectedIndex = 0;
                 string selectedConditionToCreate = comboBoxCreateCondition.SelectedItem.ToString();
                 this.selectedCondition = selectedConditionToCreate;
                 labelSelectedCondition.Text = this.selectedCondition + ":";
-
-                if (this.selectedCondition == "between")
-                {
-                    textBoxConditionValueMax.Visible = true;
-                }
+                buttonRemoveCondition.Visible = false;
             }
-            
+
+            if (comboBoxCreateCondition.Items.Count == 0)
+            {
+                labelSelectedCondition.Text = "";
+                HideConditionFields();
+                return;
+            }
 
             textBoxConditionValue.Text = "";
             textBoxConditionValueMax.Text = "";
             textBoxConditionDescription.Text = "";
             buttonSave.Text = "Create";
-            this.isCreatingRule = true;
         }
 
         public string[] GetConditionValues()
@@ -465,6 +567,22 @@ namespace AirMonit_Alarm
             }
 
             return values;
+        }
+
+        private void comboBoxCreateCondition_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.selectedCondition = comboBoxCreateCondition.SelectedItem.ToString();
+            labelSelectedCondition.Text = this.selectedCondition + ":";
+
+            if (this.selectedCondition == "between")
+            {
+                labelTextAND.Visible = true;
+                textBoxConditionValueMax.Visible = true;
+                return;
+            }
+
+            labelTextAND.Visible = false;
+            textBoxConditionValueMax.Visible = false;
         }
 
         public string GetConditionDescription()
