@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <conditions>
   <parameter type="NO2" active="true">
+    <rule condition="greaterThan">
+      <description>Qualidade do NO2: Péssima</description>
+      <value>1130</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
     <rule condition="lessThan">
       <description>Qualidade do NO2: Boa</description>
       <value>201</value>
@@ -13,11 +19,11 @@
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule condition="greaterThan">
-      <description>No2 - OK</description>
-      <value>300</value>
-      <minValue />
-      <maxValue />
+    <rule condition="between">
+      <description>Qualidade do NO2: Agradável</description>
+      <value>-1</value>
+      <minValue>0</minValue>
+      <maxValue>300</maxValue>
     </rule>
   </parameter>
   <parameter type="CO" active="false">

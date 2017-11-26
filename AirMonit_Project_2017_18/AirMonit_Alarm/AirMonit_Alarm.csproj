@@ -89,6 +89,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Local_data\trigger-rules-backup.xml" />
     <Content Include="Local_data\trigger-rules.xml" />
     <Content Include="Local_data\XMLAlarm.xml" />
     <Content Include="Local_data\XMLParameter.xml" />

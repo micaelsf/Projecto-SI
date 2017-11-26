@@ -15,6 +15,7 @@ namespace AirMonit_Alarm
     {
         private Form1 myform;
         public static int MAX_PARAMETERS = 3;
+        public static int MAX_RULES = 4;
 
         private string xmlRulesPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\trigger-rules.xml");
         private string xmlParamSchemaPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\XMLParameterSchema.xsd");
@@ -22,7 +23,6 @@ namespace AirMonit_Alarm
         private string xmlRulesSchemaPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\trigger-rules.xsd");
         private bool isValid;
         private XmlDocument docParam;
-
         private XmlDocument docAlarm;
         private XmlDocument docRules;
 
@@ -36,6 +36,8 @@ namespace AirMonit_Alarm
         private XmlElement description;
         private XmlElement alarmDate;
         private XmlElement alarmTime;
+
+        private string[] defaultConditions = {"greaterThan", "lessThan", "equals", "between" };
 
         public bool IsValidXmlRules { get; set; }
         public string ValidationMessage { get; set; }
@@ -54,7 +56,6 @@ namespace AirMonit_Alarm
 
             if (!ValidateXML("rules"))
             {
-                Debug.WriteLine(ValidationMessage);
                 IsValidXmlRules = false;
             }
 
@@ -223,7 +224,6 @@ namespace AirMonit_Alarm
             // check if alarm is valid
             if (!ValidateXML("alarms"))
             {
-                Debug.WriteLine(ValidationMessage);
                 return null;
             }
 
@@ -250,14 +250,17 @@ namespace AirMonit_Alarm
         {
             if (type == "rules")
             {
+                Debug.WriteLine(ValidationMessage);
                 return ValidateXMLStructure(docRules.OuterXml, xmlRulesSchemaPath);
             }
             else if (type == "alarms")
             {
+                Debug.WriteLine(ValidationMessage);
                 return ValidateXMLStructure(docAlarm.OuterXml, xmlAlarmSchemaPath);
             }
             else if (type == "params")
             {
+                Debug.WriteLine(ValidationMessage);
                 return ValidateXMLStructure(docParam.OuterXml, xmlParamSchemaPath);
             }
 
@@ -306,7 +309,6 @@ namespace AirMonit_Alarm
         {
             if (!ValidateXML("rules"))
             {
-                Debug.WriteLine(ValidationMessage);
                 IsValidXmlRules = false;
             }
 
@@ -324,12 +326,6 @@ namespace AirMonit_Alarm
 
         public bool IsParameterActive(string parameter)
         {
-            if (!ValidateXML("rules"))
-            {
-                Debug.WriteLine(ValidationMessage);
-                IsValidXmlRules = false;
-            }
-
             XmlNode param = docRules.SelectSingleNode("/conditions/parameter[@type='"+ parameter + "']");
 
             if (param.Attributes["active"].Value == "true")
@@ -338,6 +334,182 @@ namespace AirMonit_Alarm
             }
 
             return false;
+        }
+
+        public void SetParameterActive(string parameter)
+        {
+            XmlNode param = docRules.SelectSingleNode("/conditions/parameter[@type='" + parameter + "']");
+
+            if (param.Attributes["active"].Value == "true")
+            {
+                param.Attributes["active"].Value = "false";
+            }
+            else
+            {
+                param.Attributes["active"].Value = "true";
+            }
+        }
+
+        public object[] GetActiveConditionsFrom(string parameter)
+        {
+            // rules === conditions
+            // 1 rule != 1 condition ( 1 rule have one condition type and values)
+            XmlNodeList parameterRules = docRules.SelectNodes("/conditions/parameter[@type='" + parameter + "']/rule");
+
+            string[] conditions = new string[parameterRules.Count];
+
+            if (parameterRules.Count > 0)
+            {
+                int i = 0;
+                foreach (XmlNode rule in parameterRules)
+                {
+                    conditions[i] = rule.Attributes["condition"].Value;
+                    i++;
+                }
+            }
+
+            return conditions;
+        }
+
+        public string[] GetConditionValue(string parameter, string condition, bool isBetween)
+        {
+            XmlNode conditionNode = docRules.SelectSingleNode("/conditions/parameter[@type='" + parameter + "']/rule[@condition='"+ condition + "']");
+            string[] values = new string[2];
+
+            if (isBetween)
+            {
+                values[0] = conditionNode.SelectSingleNode("minValue").InnerText;
+                values[1] = conditionNode.SelectSingleNode("maxValue").InnerText;
+                return values;
+            }
+
+            values[0] = conditionNode.SelectSingleNode("value").InnerText;
+
+            return values;
+        }
+
+        public void RemoveCondition(string parameter, string condition)
+        {
+            XmlNode conditionNode = docRules.SelectSingleNode("/conditions/parameter[@type='" + parameter + "']/rule[@condition='" + condition + "']");
+            XmlNode parent = conditionNode.ParentNode;
+            parent.RemoveChild(conditionNode);
+
+            docRules.Save(xmlRulesPath);
+        }
+
+        public bool CreateRule(string parameter, string condition)
+        {
+            XmlNode parameterNode = docRules.SelectSingleNode("/conditions/parameter[@type='" + parameter + "']");
+            XmlElement ruleElem = docRules.CreateElement("rule");
+            ruleElem.SetAttribute("condition", condition);
+
+            XmlElement description = docRules.CreateElement("description");
+            XmlElement value = docRules.CreateElement("value");
+            XmlElement minValue = docRules.CreateElement("minValue");
+            XmlElement maxValue = docRules.CreateElement("maxValue");
+
+            ruleElem.AppendChild(description);
+            ruleElem.AppendChild(value);
+            ruleElem.AppendChild(minValue);
+            ruleElem.AppendChild(maxValue);
+
+            string[] values = myform.GetConditionValues();
+
+            if (values[1] != null)
+            {
+                ruleElem.SelectSingleNode("minValue").InnerText = values[0];
+                ruleElem.SelectSingleNode("maxValue").InnerText = values[1];
+            }
+            else
+            {
+                ruleElem.SelectSingleNode("value").InnerText = values[0];
+            }
+
+            ruleElem.SelectSingleNode("description").InnerText = myform.GetConditionDescription();
+            parameterNode.AppendChild(ruleElem);
+
+            if (!ValidateXML("rules"))
+            {
+                MessageBox.Show("The created rule is not valid!\n" + ValidationMessage);
+                return false;
+            }
+
+            docRules.Save(xmlRulesPath);
+            return true;
+        }
+
+        public string GetConditionDescription(string parameter, string condition)
+        {
+            XmlNode conditionNode = docRules.SelectSingleNode("/conditions/parameter[@type='" + parameter + "']/rule[@condition='" + condition + "']");
+
+            return conditionNode.SelectSingleNode("description").InnerText;
+        }
+
+        internal object[] GetAvailableConditions(string parameter)
+        {
+            // rules === conditions
+            // 1 rule != 1 condition ( 1 rule have one condition type and values)
+            XmlNodeList parameterRules = docRules.SelectNodes("/conditions/parameter[@type='" + parameter + "']/rule");
+
+            string[] conditions = new string[defaultConditions.Length - parameterRules.Count];
+
+            int added = 0;
+            int indice;
+            bool found = false;
+            if (parameterRules.Count > 0)
+            {
+                for (int c = 0; c < defaultConditions.Length; c++)
+                {
+                    found = false;
+
+                    for (int i = 0; i < parameterRules.Count; i++)
+                    {
+                        if (defaultConditions[c] == parameterRules[i].Attributes["condition"].Value)
+                        {
+                            found = true;
+                            i = parameterRules.Count;
+                        }
+                    }
+
+                    if (!found)
+                    {
+                        conditions[added] = defaultConditions[c];
+                        added++;
+                    }
+                }
+            }
+
+            return conditions;
+        }
+
+        public bool SaveChanges()
+        {
+            string parameter = myform.GetSelectedParameter();
+            string condition = myform.GetSelectedCondition();
+            string[] values = myform.GetConditionValues();
+            string description = myform.GetConditionDescription();
+
+            XmlNode conditionNode = docRules.SelectSingleNode("/conditions/parameter[@type='" + parameter + "']/rule[@condition='" + condition + "']");
+
+            if (values[1] != null)
+            {
+                conditionNode.SelectSingleNode("minValue").InnerText = values[0];
+                conditionNode.SelectSingleNode("maxValue").InnerText = values[1];
+            } else
+            {
+                conditionNode.SelectSingleNode("value").InnerText = values[0];
+            }
+
+            conditionNode.SelectSingleNode("description").InnerText = description;
+
+            if (!ValidateXML("rules"))
+            {
+                MessageBox.Show("trigger-rules.xml file is not valid!\n" + ValidationMessage);
+                return false;
+            }
+
+            docRules.Save(xmlRulesPath);
+            return true;
         }
 
     }
