@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirMonit_DU;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,6 +24,9 @@ namespace AitMonit_DU
             InitializeComponent();
             labelErrorDelay.Visible = false;
             labelErrorIP.Visible = false;
+            textBoxIp.Text = "127.0.0.1";
+            textBoxTime.Text = "1000";
+            labelStatus.Text = "Disconnected";
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
@@ -47,7 +51,7 @@ namespace AitMonit_DU
 
             if (hsd.Init(delay, ip))
             {
-                labelStatus.Text = "ON";
+                labelStatus.Text = "Connected";
             }
         }
 
@@ -55,9 +59,8 @@ namespace AitMonit_DU
         {
             if (hsd.Stop())
             {
-                labelStatus.Text = "OFF";
+                labelStatus.Text = "Disconnected";
             }
         }
-
     }
 }

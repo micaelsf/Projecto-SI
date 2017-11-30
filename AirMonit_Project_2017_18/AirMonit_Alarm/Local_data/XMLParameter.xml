@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AirMonitParam param="O3">
+  <id>1</id>
+  <value>0</value>
+  <date>1900-01-01</date>
+  <time>01:01:01</time>
+  <city>city1</city>
+</AirMonitParam>

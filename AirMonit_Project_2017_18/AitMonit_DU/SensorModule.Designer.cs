@@ -42,10 +42,11 @@
             // 
             // buttonStart
             // 
-            this.buttonStart.BackColor = System.Drawing.Color.Chartreuse;
+            this.buttonStart.BackColor = System.Drawing.Color.LimeGreen;
+            this.buttonStart.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonStart.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonStart.Location = new System.Drawing.Point(204, 61);
+            this.buttonStart.Location = new System.Drawing.Point(188, 49);
             this.buttonStart.Name = "buttonStart";
             this.buttonStart.Size = new System.Drawing.Size(141, 59);
             this.buttonStart.TabIndex = 0;
@@ -55,10 +56,11 @@
             // 
             // buttonStop
             // 
-            this.buttonStop.BackColor = System.Drawing.Color.Red;
+            this.buttonStop.BackColor = System.Drawing.Color.Firebrick;
+            this.buttonStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonStop.ForeColor = System.Drawing.SystemColors.Control;
-            this.buttonStop.Location = new System.Drawing.Point(204, 135);
+            this.buttonStop.Location = new System.Drawing.Point(188, 123);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(141, 60);
             this.buttonStop.TabIndex = 1;
@@ -69,7 +71,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 61);
+            this.label1.Location = new System.Drawing.Point(8, 49);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(138, 13);
             this.label1.TabIndex = 2;
@@ -78,7 +80,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 135);
+            this.label2.Location = new System.Drawing.Point(8, 123);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(78, 13);
             this.label2.TabIndex = 3;
@@ -86,14 +88,14 @@
             // 
             // textBoxIp
             // 
-            this.textBoxIp.Location = new System.Drawing.Point(27, 77);
+            this.textBoxIp.Location = new System.Drawing.Point(11, 65);
             this.textBoxIp.Name = "textBoxIp";
             this.textBoxIp.Size = new System.Drawing.Size(135, 20);
             this.textBoxIp.TabIndex = 4;
             // 
             // textBoxTime
             // 
-            this.textBoxTime.Location = new System.Drawing.Point(27, 154);
+            this.textBoxTime.Location = new System.Drawing.Point(11, 142);
             this.textBoxTime.Name = "textBoxTime";
             this.textBoxTime.Size = new System.Drawing.Size(135, 20);
             this.textBoxTime.TabIndex = 5;
@@ -101,10 +103,10 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(127, 23);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(7, 11);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 20);
+            this.label3.Size = new System.Drawing.Size(67, 20);
             this.label3.TabIndex = 6;
             this.label3.Text = "Status:";
             // 
@@ -112,18 +114,19 @@
             // 
             this.labelStatus.AutoSize = true;
             this.labelStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelStatus.Location = new System.Drawing.Point(193, 23);
+            this.labelStatus.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.labelStatus.Location = new System.Drawing.Point(80, 11);
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(44, 20);
+            this.labelStatus.Size = new System.Drawing.Size(29, 20);
             this.labelStatus.TabIndex = 7;
-            this.labelStatus.Text = "<...>";
+            this.labelStatus.Text = "<>";
             // 
             // labelErrorIP
             // 
             this.labelErrorIP.AutoSize = true;
             this.labelErrorIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelErrorIP.ForeColor = System.Drawing.Color.Red;
-            this.labelErrorIP.Location = new System.Drawing.Point(24, 100);
+            this.labelErrorIP.Location = new System.Drawing.Point(8, 88);
             this.labelErrorIP.Name = "labelErrorIP";
             this.labelErrorIP.Size = new System.Drawing.Size(92, 13);
             this.labelErrorIP.TabIndex = 8;
@@ -134,17 +137,17 @@
             this.labelErrorDelay.AutoSize = true;
             this.labelErrorDelay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelErrorDelay.ForeColor = System.Drawing.Color.Red;
-            this.labelErrorDelay.Location = new System.Drawing.Point(24, 177);
+            this.labelErrorDelay.Location = new System.Drawing.Point(8, 165);
             this.labelErrorDelay.Name = "labelErrorDelay";
-            this.labelErrorDelay.Size = new System.Drawing.Size(92, 13);
+            this.labelErrorDelay.Size = new System.Drawing.Size(88, 13);
             this.labelErrorDelay.TabIndex = 9;
-            this.labelErrorDelay.Text = "Invalid IP Address";
+            this.labelErrorDelay.Text = "Invalid delay time";
             // 
             // SensorModule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(373, 217);
+            this.ClientSize = new System.Drawing.Size(338, 192);
             this.Controls.Add(this.labelErrorDelay);
             this.Controls.Add(this.labelErrorIP);
             this.Controls.Add(this.labelStatus);
@@ -155,6 +158,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonStart);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "SensorModule";
             this.Text = "SensorModule";
             this.ResumeLayout(false);

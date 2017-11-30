@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="trigger-rules"  targetNamespace="http://tempuri.org/XMLAlarmsSchema.xsd" elementFormDefault="qualified" xmlns="http://tempuri.org/XMLAlarmsSchema.xsd" xmlns:mstns="http://tempuri.org/XMLAlarmsSchema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="conditions" type="conditionsType"/>
+    
+    <xs:complexType name="conditionsType">
+      <xs:sequence>
+        <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded" type="parameterType"/>
+      </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="parameterType">
+      <xs:sequence>
+        <xs:element name="rule" minOccurs="0" maxOccurs="unbounded" type="ruleType"/>
+      </xs:sequence>
+      <xs:attribute name="type" use="required" type="xs:string"/>
+      <xs:attribute name="active" use="required" type="xs:boolean"/>
+    </xs:complexType>
+
+    <xs:complexType name="ruleType">
+      <xs:sequence>
+        <xs:element name="description" type="xs:string"/>
+        <xs:element name="value" type="xs:double"/>
+        <xs:element name="minValue" type="xs:double"/>
+        <xs:element name="maxValue" type="xs:double"/>
+      </xs:sequence>
+      <xs:attribute name="condition" use="required" type="conditionType"/>
+    </xs:complexType>
+
+    <xs:simpleType name="conditionType">
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="greaterThan"/>
+        <xs:enumeration value="lessThan"/>
+        <xs:enumeration value="equals"/>
+        <xs:enumeration value="between"/>
+      </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
