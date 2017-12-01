@@ -41,6 +41,7 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.groupBoxParameterRules = new System.Windows.Forms.GroupBox();
+            this.labelValue = new System.Windows.Forms.Label();
             this.comboBoxCreateCondition = new System.Windows.Forms.ComboBox();
             this.buttonRemoveCondition = new System.Windows.Forms.Button();
             this.buttonAddCondition = new System.Windows.Forms.Button();
@@ -60,7 +61,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonDisconnect = new System.Windows.Forms.Button();
             this.labelInvalidIp = new System.Windows.Forms.Label();
-            this.labelValue = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBoxParameterRules.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -143,7 +143,7 @@
             this.buttonConnect.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonConnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonConnect.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonConnect.Location = new System.Drawing.Point(535, 16);
+            this.buttonConnect.Location = new System.Drawing.Point(579, 16);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(87, 22);
             this.buttonConnect.TabIndex = 7;
@@ -218,6 +218,16 @@
             this.groupBoxParameterRules.TabStop = false;
             this.groupBoxParameterRules.Text = "Parameter rules";
             // 
+            // labelValue
+            // 
+            this.labelValue.AutoSize = true;
+            this.labelValue.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelValue.Location = new System.Drawing.Point(92, 82);
+            this.labelValue.Name = "labelValue";
+            this.labelValue.Size = new System.Drawing.Size(37, 13);
+            this.labelValue.TabIndex = 23;
+            this.labelValue.Text = "Value:";
+            // 
             // comboBoxCreateCondition
             // 
             this.comboBoxCreateCondition.FormattingEnabled = true;
@@ -235,11 +245,12 @@
             this.buttonRemoveCondition.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonRemoveCondition.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonRemoveCondition.ForeColor = System.Drawing.Color.Red;
-            this.buttonRemoveCondition.Location = new System.Drawing.Point(185, 17);
+            this.buttonRemoveCondition.Location = new System.Drawing.Point(184, 16);
             this.buttonRemoveCondition.Name = "buttonRemoveCondition";
-            this.buttonRemoveCondition.Size = new System.Drawing.Size(24, 24);
+            this.buttonRemoveCondition.Size = new System.Drawing.Size(25, 25);
             this.buttonRemoveCondition.TabIndex = 21;
             this.buttonRemoveCondition.Text = "X";
+            this.buttonRemoveCondition.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.buttonRemoveCondition.UseVisualStyleBackColor = false;
             this.buttonRemoveCondition.Click += new System.EventHandler(this.buttonRemoveCondition_Click);
             // 
@@ -408,7 +419,7 @@
             this.groupBox2.Controls.Add(this.buttonConnect);
             this.groupBox2.Location = new System.Drawing.Point(16, 11);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(739, 46);
+            this.groupBox2.Size = new System.Drawing.Size(765, 46);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Channel configuration";
@@ -419,7 +430,7 @@
             this.buttonDisconnect.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonDisconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonDisconnect.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonDisconnect.Location = new System.Drawing.Point(637, 15);
+            this.buttonDisconnect.Location = new System.Drawing.Point(672, 15);
             this.buttonDisconnect.Name = "buttonDisconnect";
             this.buttonDisconnect.Size = new System.Drawing.Size(87, 23);
             this.buttonDisconnect.TabIndex = 9;
@@ -437,16 +448,6 @@
             this.labelInvalidIp.Size = new System.Drawing.Size(91, 13);
             this.labelInvalidIp.TabIndex = 8;
             this.labelInvalidIp.Text = "Invalid Ip Address";
-            // 
-            // labelValue
-            // 
-            this.labelValue.AutoSize = true;
-            this.labelValue.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelValue.Location = new System.Drawing.Point(92, 82);
-            this.labelValue.Name = "labelValue";
-            this.labelValue.Size = new System.Drawing.Size(37, 13);
-            this.labelValue.TabIndex = 23;
-            this.labelValue.Text = "Value:";
             // 
             // Form1
             // 
