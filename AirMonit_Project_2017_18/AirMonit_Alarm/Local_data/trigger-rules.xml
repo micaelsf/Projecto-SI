@@ -7,6 +7,12 @@
       <minValue>600</minValue>
       <maxValue>800</maxValue>
     </rule>
+    <rule condition="greaterThan">
+      <description>wrgqerg</description>
+      <value>154</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
   </parameter>
   <parameter type="CO" active="false">
   </parameter>

@@ -126,7 +126,7 @@
     <value>Microsoft Sans Serif, 18pt, style=Bold</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>516, 108</value>
+    <value>229, 374</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>108, 29</value>
@@ -156,7 +156,7 @@
     <value>Microsoft Sans Serif, 18pt, style=Bold</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>119, 108</value>
+    <value>218, 108</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>131, 29</value>
@@ -183,7 +183,7 @@
     <value>12, 163</value>
   </data>
   <data name="listBoxAlarmLog.Size" type="System.Drawing.Size, System.Drawing">
-    <value>344, 459</value>
+    <value>543, 199</value>
   </data>
   <data name="listBoxAlarmLog.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -204,14 +204,14 @@
     <value>True</value>
   </data>
   <data name="listBoxCityLog.Location" type="System.Drawing.Point, System.Drawing">
-    <value>362, 163</value>
+    <value>12, 406</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="listBoxCityLog.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>No</value>
   </data>
   <data name="listBoxCityLog.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 459</value>
+    <value>543, 199</value>
   </data>
   <data name="listBoxCityLog.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -229,7 +229,7 @@
     <value>3</value>
   </data>
   <data name="textBoxBrokerIP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>244, 37</value>
+    <value>112, 43</value>
   </data>
   <data name="textBoxBrokerIP.Size" type="System.Drawing.Size, System.Drawing">
     <value>182, 20</value>
@@ -253,7 +253,7 @@
     <value>Microsoft Sans Serif, 12pt, style=Bold</value>
   </data>
   <data name="btnStartStop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>446, 27</value>
+    <value>314, 33</value>
   </data>
   <data name="btnStartStop.Size" type="System.Drawing.Size, System.Drawing">
     <value>109, 36</value>
@@ -283,7 +283,7 @@
     <value>Microsoft Sans Serif, 12pt, style=Bold</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>240, 14</value>
+    <value>108, 20</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 20</value>
@@ -309,9 +309,6 @@
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
@@ -319,7 +316,7 @@
     <value>GrowAndShrink</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>790, 632</value>
+    <value>589, 632</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

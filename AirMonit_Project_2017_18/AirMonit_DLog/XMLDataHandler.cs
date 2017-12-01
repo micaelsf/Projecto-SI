@@ -11,11 +11,13 @@ using System.Xml.Schema;
 
 namespace AirMonit_DLog
 {
-    class XMLHandler
+    class XMLDataHandler
     {
         private bool isValid = true;
         private string validationMessage;
-        private string xmlSchemaPath;
+        private string xmlSchemaDataPath;
+        private string xmlshcemaAlarmPath;
+
         public string City { get; set; }
         public int O3 { get; set; }
         public int No2 { get; set; }
@@ -25,25 +27,28 @@ namespace AirMonit_DLog
 
         public string ValidationMessage { get; set; }
 
-        public XMLHandler(String xmlSchemaPath)
+        public XMLDataHandler(String xmlSchemaDataPath, string xmlshcemaAlarmPath)
         {
             doc = new XmlDocument();
-            this.xmlSchemaPath = xmlSchemaPath;
+            this.xmlSchemaDataPath = xmlSchemaDataPath;
+            this.xmlshcemaAlarmPath = xmlshcemaAlarmPath;
+
         }
 
         public string ParseXMLData(string xmldata)
         {
-            if (!ValidateXMLStructure(xmldata))
+            if (!ValidateXMLStructure(xmldata, "data"))
             {
                 Debug.WriteLine(ValidationMessage);
+                return null;
             }
 
             doc.LoadXml(xmldata);
             XmlElement root = (XmlElement)doc.SelectSingleNode("/AirMonitParam");
 
             SensorData.Instance.Param = root.Attributes["param"].Value;
-            SensorData.Instance.Id = int.Parse(root.SelectSingleNode("id").InnerText);
-            SensorData.Instance.Value = long.Parse(root.SelectSingleNode("value").InnerText);
+            SensorData.Instance.Id = root.SelectSingleNode("id").InnerText;
+            SensorData.Instance.Value = root.SelectSingleNode("value").InnerText;
             SensorData.Instance.Date = root.SelectSingleNode("date").InnerText;
             SensorData.Instance.Time = root.SelectSingleNode("time").InnerText;
             SensorData.Instance.City = root.SelectSingleNode("city").InnerText;
@@ -51,7 +56,34 @@ namespace AirMonit_DLog
             return SensorData.Instance.ToString();
         }
 
-        public bool ValidateXMLStructure(string outerXml)
+        public string ParseXMLAlarm(string xmldata)
+        {
+            if (!ValidateXMLStructure(xmldata, "alarm"))
+            {
+                Debug.WriteLine(ValidationMessage);
+                return null;
+            }
+
+            // parse the received xml data to a singleton class 
+
+            doc.LoadXml(xmldata);
+            XmlElement temporaryRoot = (XmlElement)doc.SelectSingleNode("/airMonitAlarm");
+
+            AlarmData.Instance.SensorId = temporaryRoot.SelectSingleNode("AirMonitParam/id").InnerText;
+            AlarmData.Instance.SensorCity = temporaryRoot.SelectSingleNode("AirMonitParam/city").InnerText;
+            AlarmData.Instance.SensorTime = temporaryRoot.SelectSingleNode("AirMonitParam/time").InnerText;
+            AlarmData.Instance.SensorDate = temporaryRoot.SelectSingleNode("AirMonitParam/city").InnerText;
+            AlarmData.Instance.SensorValue = temporaryRoot.SelectSingleNode("AirMonitParam/value").InnerText;
+            AlarmData.Instance.SensorParam = temporaryRoot.SelectSingleNode("AirMonitParam").Attributes["param"].Value;
+
+            AlarmData.Instance.AlarmDescription = temporaryRoot.SelectSingleNode("description").InnerText;
+            AlarmData.Instance.AlarmDate = temporaryRoot.SelectSingleNode("date").InnerText;
+            AlarmData.Instance.AlarmTime = temporaryRoot.SelectSingleNode("time").InnerText;
+
+            return AlarmData.Instance.ToString();
+        }
+
+        public bool ValidateXMLStructure(string outerXml, string topic)
         {
             isValid = true;
             XmlDocument doc = new XmlDocument();
@@ -61,7 +93,14 @@ namespace AirMonit_DLog
             {
                 doc.LoadXml(outerXml);
                 ValidationEventHandler eventHandler = new ValidationEventHandler(MyValidateMethod);
-                doc.Schemas.Add(null, xmlSchemaPath);
+                if (topic.Equals("alarm"))
+                {
+                    doc.Schemas.Add(null, xmlshcemaAlarmPath);
+                }
+                else if(topic.Equals("data")){
+                    doc.Schemas.Add(null, xmlSchemaDataPath);
+                }
+
                 doc.Validate(eventHandler);
             }
             catch (XmlException ex)

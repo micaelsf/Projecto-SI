@@ -69,10 +69,17 @@
     <Compile Include="AirMonit_DLog.Designer.cs">
       <DependentUpon>AirMonit_DLog.cs</DependentUpon>
     </Compile>
+    <Compile Include="AlarmData.cs" />
+    <Compile Include="DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="SensorData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XMLHandler.cs" />
+    <Compile Include="StoreData.cs" />
+    <Compile Include="XMLDataHandler.cs" />
     <EmbeddedResource Include="AirMonit_DLog.resx">
       <DependentUpon>AirMonit_DLog.cs</DependentUpon>
     </EmbeddedResource>
@@ -85,6 +92,23 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="Local_data\XMLAlarmsSchemaAlarm.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Local_data\XMLParameterSchemaData.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -100,16 +124,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\DBAirMonit.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\DBAirMonit_log.ldf">
-      <DependentUpon>DBAirMonit.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\dbo.AlarmLogs.sql" />
-    <Content Include="App_Data\dbo.City.sql" />
-    <Content Include="App_Data\dbo.Table.sensorData.sql" />
     <Content Include="Local_data\XMLParameter.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +137,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
