@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <conditions>
-  <parameter type="NO2" active="false">
+  <parameter type="NO2" active="true">
     <rule condition="between">
       <description>pipoca</description>
       <value>-1</value>

@@ -60,6 +60,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonDisconnect = new System.Windows.Forms.Button();
             this.labelInvalidIp = new System.Windows.Forms.Label();
+            this.labelValue = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBoxParameterRules.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -197,6 +198,7 @@
             // 
             // groupBoxParameterRules
             // 
+            this.groupBoxParameterRules.Controls.Add(this.labelValue);
             this.groupBoxParameterRules.Controls.Add(this.comboBoxCreateCondition);
             this.groupBoxParameterRules.Controls.Add(this.buttonRemoveCondition);
             this.groupBoxParameterRules.Controls.Add(this.buttonAddCondition);
@@ -266,7 +268,7 @@
             // 
             this.labelTextAND.AutoSize = true;
             this.labelTextAND.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelTextAND.Location = new System.Drawing.Point(129, 92);
+            this.labelTextAND.Location = new System.Drawing.Point(129, 101);
             this.labelTextAND.Name = "labelTextAND";
             this.labelTextAND.Size = new System.Drawing.Size(25, 13);
             this.labelTextAND.TabIndex = 18;
@@ -274,19 +276,21 @@
             // 
             // textBoxConditionValueMax
             // 
-            this.textBoxConditionValueMax.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.textBoxConditionValueMax.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxConditionValueMax.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxConditionValueMax.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxConditionValueMax.Location = new System.Drawing.Point(153, 92);
+            this.textBoxConditionValueMax.Location = new System.Drawing.Point(153, 101);
             this.textBoxConditionValueMax.Name = "textBoxConditionValueMax";
             this.textBoxConditionValueMax.Size = new System.Drawing.Size(34, 13);
             this.textBoxConditionValueMax.TabIndex = 17;
             this.textBoxConditionValueMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxConditionValueMax.Enter += new System.EventHandler(this.textBoxConditionValueMax_Enter);
+            this.textBoxConditionValueMax.Leave += new System.EventHandler(this.textBoxConditionValueMax_Leave);
             // 
             // labelSelectedCondition
             // 
             this.labelSelectedCondition.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelSelectedCondition.Location = new System.Drawing.Point(19, 92);
+            this.labelSelectedCondition.Location = new System.Drawing.Point(19, 101);
             this.labelSelectedCondition.Name = "labelSelectedCondition";
             this.labelSelectedCondition.Size = new System.Drawing.Size(72, 13);
             this.labelSelectedCondition.TabIndex = 16;
@@ -322,14 +326,16 @@
             // 
             // textBoxConditionValue
             // 
-            this.textBoxConditionValue.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.textBoxConditionValue.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxConditionValue.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxConditionValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxConditionValue.Location = new System.Drawing.Point(93, 92);
+            this.textBoxConditionValue.Location = new System.Drawing.Point(93, 101);
             this.textBoxConditionValue.Name = "textBoxConditionValue";
             this.textBoxConditionValue.Size = new System.Drawing.Size(34, 13);
             this.textBoxConditionValue.TabIndex = 9;
             this.textBoxConditionValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxConditionValue.Enter += new System.EventHandler(this.textBoxConditionValue_Enter);
+            this.textBoxConditionValue.Leave += new System.EventHandler(this.textBoxConditionValue_Leave);
             // 
             // labelDescription
             // 
@@ -432,6 +438,16 @@
             this.labelInvalidIp.TabIndex = 8;
             this.labelInvalidIp.Text = "Invalid Ip Address";
             // 
+            // labelValue
+            // 
+            this.labelValue.AutoSize = true;
+            this.labelValue.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelValue.Location = new System.Drawing.Point(92, 82);
+            this.labelValue.Name = "labelValue";
+            this.labelValue.Size = new System.Drawing.Size(37, 13);
+            this.labelValue.TabIndex = 23;
+            this.labelValue.Text = "Value:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -493,6 +509,7 @@
         private System.Windows.Forms.Button buttonAddCondition;
         private System.Windows.Forms.Button buttonRemoveCondition;
         private System.Windows.Forms.ComboBox comboBoxCreateCondition;
+        private System.Windows.Forms.Label labelValue;
     }
 }
 
