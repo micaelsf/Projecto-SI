@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <conditions>
-  <parameter type="NO2" active="true">
+  <parameter type="NO2" active="false">
     <rule condition="between">
-      <description>novo teste</description>
+      <description>pipoca</description>
       <value>-1</value>
-      <minValue>10</minValue>
+      <minValue>600</minValue>
       <maxValue>800</maxValue>
     </rule>
   </parameter>
