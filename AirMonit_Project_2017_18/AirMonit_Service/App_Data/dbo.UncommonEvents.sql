@@ -1,8 +1,9 @@
 ﻿CREATE TABLE [dbo].[UncommonEvents]
 (
-	[Id] SMALLINT NOT NULL PRIMARY KEY IDENTITY(1,1), 
-    [CityId] TINYINT NOT NULL, 
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1), 
+    [CityId] INT NOT NULL,
+    [Type] NVCHAR(50) NOT NULL, 
     [Description] NVARCHAR(200) NOT NULL, 
-    [UserId] NVARCHAR(50) NOT NULL, 
-    [Temperature] TINYINT NOT NULL
+    [UserName] NVARCHAR(50) NOT NULL, 
+    [Temperature] INT NOT NULL
 )

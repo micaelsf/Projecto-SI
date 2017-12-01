@@ -18,20 +18,21 @@ namespace AirMonit_DLog
 {
     public partial class AirMonit_DLog : Form
     {
-        MqttClient m_cClient;
-        Boolean serviceActive;
-        string[] m_strTopicsInfo = { "data", "alarm" };
+        private MqttClient m_cClient;
+        private Boolean serviceActive;
+        private string[] m_strTopicsInfo = { "data", "alarm" };
+        private XMLDataHandler handlerXml;
 
         //validacao xml
-        private string xmlSchemaPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\XMLParameterSchema.xsd");
-        private bool isValid;
-        private string validationMessage;
+        private string xmlSchemaPathData = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\XMLParameterSchemaData.xsd");
+        private string xmlSchemaPathAlarm = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\XMLAlarmsSchemaAlarm.xsd");
 
         public AirMonit_DLog()
         {
             InitializeComponent();
             serviceActive = false;
             textBoxBrokerIP.Text = "127.0.0.1";
+            handlerXml = new XMLDataHandler(xmlSchemaPathData, xmlSchemaPathAlarm);
         }
 
         private void AirMonit_DLog_Load(object sender, EventArgs e)
@@ -90,14 +91,15 @@ namespace AirMonit_DLog
 
         private void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
-            XMLHandler handlerXml = new XMLHandler(xmlSchemaPath);
+            //XMLHandler handlerXml = new XMLHandler(xmlSchemaPath);
+
             if (e.Topic.Equals(m_strTopicsInfo[1])) // alarm
             {
-                if (handlerXml.ValidateXMLStructure(Encoding.UTF8.GetString(e.Message)))
+                if (handlerXml.ValidateXMLStructure(Encoding.UTF8.GetString(e.Message), m_strTopicsInfo[1]))
                 {
                     listBoxAlarmLog.BeginInvoke(
                        (MethodInvoker)delegate {
-                           listBoxAlarmLog.Items.Insert(0, handlerXml.ParseXMLData(
+                           listBoxAlarmLog.Items.Insert(0, handlerXml.ParseXMLAlarm(
                                Encoding.UTF8.GetString(e.Message))
                                );
                        }
@@ -107,7 +109,7 @@ namespace AirMonit_DLog
             }
             if (e.Topic.Equals(m_strTopicsInfo[0])) //data
             {
-                if (handlerXml.ValidateXMLStructure(Encoding.UTF8.GetString(e.Message)))
+                if (handlerXml.ValidateXMLStructure(Encoding.UTF8.GetString(e.Message), m_strTopicsInfo[0]))
                 {
                     listBoxCityLog.BeginInvoke(
                         (MethodInvoker)delegate {
@@ -116,7 +118,7 @@ namespace AirMonit_DLog
                                 );
                         }
                     );
-                    StoreData.storeSensorData(SensorData.Instance);
+                    //StoreData.storeSensorData(SensorData.Instance);
                 }
             }
         }
@@ -126,6 +128,7 @@ namespace AirMonit_DLog
             System.Net.IPAddress parsed;
             return System.Net.IPAddress.TryParse(Address, out parsed);
         }
+
 
     }
 }

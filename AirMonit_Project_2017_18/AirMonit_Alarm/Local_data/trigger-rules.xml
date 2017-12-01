@@ -1,81 +1,45 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+﻿<?xml version="1.0" encoding="utf-8"?>
 <conditions>
-  <parameter type="NO2">
-    <rule active="false" condition="greaterThan">
-      <description>NO2 must be greater than 5</description>
-      <value>5</value>
-      <minValue>-1</minValue>
-      <maxValue>-1</maxValue>
-    </rule>
-    <rule active="false" condition="lessThan">
-      <description>NO2 must be less than 5</description>
-      <value>5</value>
-      <minValue>-1</minValue>
-      <maxValue>-1</maxValue>
-    </rule>
-    <rule active="false" condition="equals">
-      <description>NO2 equals 5</description>
-      <value>5</value>
-      <minValue>-1</minValue>
-      <maxValue>-1</maxValue>
-    </rule>
-    <rule active="false" condition="between">
-      <description>NO2 must be between 5 and 10</description>
+  <parameter type="NO2" active="true">
+    <rule condition="between">
+      <description>novo teste</description>
       <value>-1</value>
-      <minValue>5</minValue>
-      <maxValue>10</maxValue>
+      <minValue>10</minValue>
+      <maxValue>800</maxValue>
+    </rule>
+    <rule condition="greaterThan">
+      <description>wrgqerg</description>
+      <value>154</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
     </rule>
   </parameter>
-  <parameter type="CO">
-    <rule active="false" condition="greaterThan">
-      <description>NO2 must be greater than 5</description>
-      <value>5</value>
-      <minValue>-1</minValue>
-      <maxValue>-1</maxValue>
-    </rule>
-    <rule active="false" condition="lessThan">
-      <description>NO2 must be less than 5</description>
-      <value>5</value>
-      <minValue>-1</minValue>
-      <maxValue>-1</maxValue>
-    </rule>
-    <rule active="false" condition="equals">
-      <description>NO2 equals 5</description>
-      <value>5</value>
-      <minValue>-1</minValue>
-      <maxValue>-1</maxValue>
-    </rule>
-    <rule active="false" condition="between">
-      <description>NO2 must be between 5 and 10</description>
-      <value>-1</value>
-      <minValue>5</minValue>
-      <maxValue>10</maxValue>
-    </rule>
+  <parameter type="CO" active="false">
   </parameter>
-  <parameter type="O3">
-    <rule active="false" condition="greaterThan">
-      <description>NO2 must be greater than 5</description>
-      <value>5</value>
+  <parameter type="O3" active="false">
+    <rule condition="greaterThan">
+      <description>Qualidade do O3: Péssima</description>
+      <value>200</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule active="false" condition="lessThan">
-      <description>NO2 must be less than 5</description>
-      <value>5</value>
+    <rule condition="lessThan">
+      <description>Qualidade do O3: Boa</description>
+      <value>101</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule active="false" condition="equals">
-      <description>NO2 equals 5</description>
-      <value>5</value>
+    <rule condition="equals">
+      <description>Qualidade do O3: Moderada</description>
+      <value>101</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule active="false" condition="between">
-      <description>NO2 must be between 5 and 10</description>
+    <rule condition="between">
+      <description>Qualidade do O3: Muito má</description>
       <value>-1</value>
-      <minValue>5</minValue>
-      <maxValue>10</maxValue>
+      <minValue>161</minValue>
+      <maxValue>200</maxValue>
     </rule>
   </parameter>
 </conditions>

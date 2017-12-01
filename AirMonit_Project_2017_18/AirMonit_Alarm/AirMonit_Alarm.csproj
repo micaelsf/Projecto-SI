@@ -57,6 +57,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SensorData.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="XMLHandler.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -88,7 +89,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Local_data\trigger-rules-backup.xml" />
     <Content Include="Local_data\trigger-rules.xml" />
+    <Content Include="Local_data\XMLAlarm.xml" />
     <Content Include="Local_data\XMLParameter.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -8,22 +8,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AirMonit_DLog.Properties
-{
-
-
+namespace AirMonit_DLog.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=f9052a94-7978-4434-a6bf-a81f01733795.sqlserver.sequelizer.com;Persist" +
+            " Security Info=True;User ID=ohlovroogavvbfcd;Password=bcrvrBqT3LsF4cTUvzoAqLHgoR" +
+            "BQGy33AnosJ7EfaPMowbLnpeCK7MZxBkgG8HmC")]
+        public string AppHarborConnectionString {
+            get {
+                return ((string)(this["AppHarborConnectionString"]));
             }
         }
     }
