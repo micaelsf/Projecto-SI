@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxSingleCitySelectCity = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button1 = new System.Windows.Forms.Button();
@@ -51,8 +51,8 @@
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerAlarmBetweenDateEnd = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerAlarmBetweenDateBegin = new System.Windows.Forms.DateTimePicker();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,6 +70,8 @@
             this.RA_paramType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RA_paramValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RA_description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateTimeRaisedAlarms = new System.Windows.Forms.DateTimePicker();
+            this.label6 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
@@ -107,7 +109,7 @@
             this.tabPage1.Controls.Add(this.chart1);
             this.tabPage1.Controls.Add(this.button2);
             this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.comboBox1);
+            this.tabPage1.Controls.Add(this.comboBoxSingleCitySelectCity);
             this.tabPage1.Location = new System.Drawing.Point(4, 34);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -117,16 +119,16 @@
             // 
             // chart1
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chart1.Legends.Add(legend5);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(74, 86);
             this.chart1.Name = "chart1";
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chart1.Series.Add(series5);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chart1.Series.Add(series3);
             this.chart1.Size = new System.Drawing.Size(689, 300);
             this.chart1.TabIndex = 4;
             this.chart1.Text = "chart1";
@@ -150,19 +152,19 @@
             this.label2.Text = "Select city:";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // comboBox1
+            // comboBoxSingleCitySelectCity
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.comboBoxSingleCitySelectCity.FormattingEnabled = true;
+            this.comboBoxSingleCitySelectCity.Items.AddRange(new object[] {
             "Lisboa",
             "Leiria",
             "Porto",
             "Coimbra"});
-            this.comboBox1.Location = new System.Drawing.Point(836, 301);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
-            this.comboBox1.TabIndex = 0;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBoxSingleCitySelectCity.Location = new System.Drawing.Point(836, 301);
+            this.comboBoxSingleCitySelectCity.Name = "comboBoxSingleCitySelectCity";
+            this.comboBoxSingleCitySelectCity.Size = new System.Drawing.Size(121, 24);
+            this.comboBoxSingleCitySelectCity.TabIndex = 0;
+            this.comboBoxSingleCitySelectCity.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // tabPage2
             // 
@@ -178,16 +180,16 @@
             // 
             // chart2
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chart2.Legends.Add(legend6);
+            chartArea4.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart2.Legends.Add(legend4);
             this.chart2.Location = new System.Drawing.Point(69, 58);
             this.chart2.Name = "chart2";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.chart2.Series.Add(series6);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chart2.Series.Add(series4);
             this.chart2.Size = new System.Drawing.Size(832, 357);
             this.chart2.TabIndex = 1;
             this.chart2.Text = "chart2";
@@ -205,6 +207,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label6);
+            this.tabPage3.Controls.Add(this.dateTimeRaisedAlarms);
             this.tabPage3.Controls.Add(this.label5);
             this.tabPage3.Controls.Add(this.comboBoxCities);
             this.tabPage3.Controls.Add(this.dataGridViewRaisedAlarms);
@@ -215,6 +219,7 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Raised Alarms";
             this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
             // 
             // label5
             // 
@@ -254,8 +259,8 @@
             this.tabPage4.Controls.Add(this.dataGridView2);
             this.tabPage4.Controls.Add(this.label4);
             this.tabPage4.Controls.Add(this.label3);
-            this.tabPage4.Controls.Add(this.dateTimePicker2);
-            this.tabPage4.Controls.Add(this.dateTimePicker1);
+            this.tabPage4.Controls.Add(this.dateTimePickerAlarmBetweenDateEnd);
+            this.tabPage4.Controls.Add(this.dateTimePickerAlarmBetweenDateBegin);
             this.tabPage4.Location = new System.Drawing.Point(4, 34);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -291,19 +296,19 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "Begin Date:";
             // 
-            // dateTimePicker2
+            // dateTimePickerAlarmBetweenDateEnd
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(578, 20);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 22);
-            this.dateTimePicker2.TabIndex = 1;
+            this.dateTimePickerAlarmBetweenDateEnd.Location = new System.Drawing.Point(578, 20);
+            this.dateTimePickerAlarmBetweenDateEnd.Name = "dateTimePickerAlarmBetweenDateEnd";
+            this.dateTimePickerAlarmBetweenDateEnd.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePickerAlarmBetweenDateEnd.TabIndex = 1;
             // 
-            // dateTimePicker1
+            // dateTimePickerAlarmBetweenDateBegin
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(197, 20);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 22);
-            this.dateTimePicker1.TabIndex = 0;
+            this.dateTimePickerAlarmBetweenDateBegin.Location = new System.Drawing.Point(197, 20);
+            this.dateTimePickerAlarmBetweenDateBegin.Name = "dateTimePickerAlarmBetweenDateBegin";
+            this.dateTimePickerAlarmBetweenDateBegin.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePickerAlarmBetweenDateBegin.TabIndex = 0;
             // 
             // tabPage5
             // 
@@ -435,6 +440,22 @@
             this.RA_description.HeaderText = "Description";
             this.RA_description.Name = "RA_description";
             // 
+            // dateTimeRaisedAlarms
+            // 
+            this.dateTimeRaisedAlarms.Location = new System.Drawing.Point(522, 385);
+            this.dateTimeRaisedAlarms.Name = "dateTimeRaisedAlarms";
+            this.dateTimeRaisedAlarms.Size = new System.Drawing.Size(200, 22);
+            this.dateTimeRaisedAlarms.TabIndex = 3;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(412, 386);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(104, 17);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "Choose a date:";
+            // 
             // FormAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -483,7 +504,7 @@
         private System.Windows.Forms.DataGridView dataGridViewRaisedAlarms;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxSingleCitySelectCity;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
@@ -491,8 +512,8 @@
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dateTimePickerAlarmBetweenDateEnd;
+        private System.Windows.Forms.DateTimePicker dateTimePickerAlarmBetweenDateBegin;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.DataGridView dataGridView3;
@@ -507,6 +528,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn RA_paramType;
         private System.Windows.Forms.DataGridViewTextBoxColumn RA_paramValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn RA_description;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DateTimePicker dateTimeRaisedAlarms;
     }
 }
 

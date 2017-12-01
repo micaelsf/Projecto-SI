@@ -74,11 +74,10 @@ namespace AirMonit_Admin
         {
             string selectedCity = comboBoxCities.SelectedItem.ToString();
 
-            List<AlarmLog> alarms = getDailyAlarmsByCity(selectedCity, "2017-12-19");
-
+            List<AlarmLog> alarms = getDailyAlarmsByCity(selectedCity, dateTimeRaisedAlarms.ToString());
+            dataGridViewRaisedAlarms.ReadOnly = true;
             dataGridViewRaisedAlarms.Rows.Clear();
 
-            int i = 0;
             foreach(AlarmLog alarm in alarms)
             {
                 int index = dataGridViewRaisedAlarms.Rows.Add();
@@ -112,5 +111,9 @@ namespace AirMonit_Admin
             return temporaryList;
         }
 
+        private void tabPage3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
