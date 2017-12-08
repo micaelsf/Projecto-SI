@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace AirMonit_DLog
 {
-    class SensorData
+    public class SensorData
     {
         public string Param { get; set; }
-        public string Id { get; set; }
-        public string Value { get; set; }
+        public int Id { get; set; }
+        public int Value { get; set; }
         public string Date { get; set; }
         public string Time { get; set; }
         public string City { get; set; }

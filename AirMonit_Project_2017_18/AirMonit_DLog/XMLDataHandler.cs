@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -23,12 +24,14 @@ namespace AirMonit_DLog
         public int No2 { get; set; }
         public int CO { get; set; }
 
+        private StoreData storeData;
         private XmlDocument doc;
 
         public string ValidationMessage { get; set; }
 
         public XMLDataHandler(String xmlSchemaDataPath, string xmlshcemaAlarmPath)
         {
+            storeData = new StoreData();
             doc = new XmlDocument();
             this.xmlSchemaDataPath = xmlSchemaDataPath;
             this.xmlshcemaAlarmPath = xmlshcemaAlarmPath;
@@ -46,12 +49,21 @@ namespace AirMonit_DLog
             doc.LoadXml(xmldata);
             XmlElement root = (XmlElement)doc.SelectSingleNode("/AirMonitParam");
 
-            SensorData.Instance.Param = root.Attributes["param"].Value;
-            SensorData.Instance.Id = root.SelectSingleNode("id").InnerText;
-            SensorData.Instance.Value = root.SelectSingleNode("value").InnerText;
-            SensorData.Instance.Date = root.SelectSingleNode("date").InnerText;
-            SensorData.Instance.Time = root.SelectSingleNode("time").InnerText;
-            SensorData.Instance.City = root.SelectSingleNode("city").InnerText;
+            try
+            {
+                SensorData.Instance.Param = root.Attributes["param"].Value;
+                SensorData.Instance.Id = int.Parse(root.SelectSingleNode("id").InnerText);
+                SensorData.Instance.Value = int.Parse(root.SelectSingleNode("value").InnerText);
+                SensorData.Instance.Date = root.SelectSingleNode("date").InnerText;
+                SensorData.Instance.Time = root.SelectSingleNode("time").InnerText;
+                SensorData.Instance.City = root.SelectSingleNode("city").InnerText;
+            } catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            
+
+            storeData.StoreSensorData(SensorData.Instance);
 
             return SensorData.Instance.ToString();
         }
@@ -79,6 +91,8 @@ namespace AirMonit_DLog
             AlarmData.Instance.AlarmDescription = temporaryRoot.SelectSingleNode("description").InnerText;
             AlarmData.Instance.AlarmDate = temporaryRoot.SelectSingleNode("date").InnerText;
             AlarmData.Instance.AlarmTime = temporaryRoot.SelectSingleNode("time").InnerText;
+
+            storeData.StoreSensorData(AlarmData.Instance);
 
             return AlarmData.Instance.ToString();
         }

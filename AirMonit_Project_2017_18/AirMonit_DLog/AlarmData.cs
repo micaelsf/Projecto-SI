@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AirMonit_DLog
 {
-    class AlarmData
+    public class AlarmData
     {
         public string SensorParam { get; set; }
         public string SensorId { get; set; }

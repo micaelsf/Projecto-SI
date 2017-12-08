@@ -320,7 +320,6 @@
             // 
             // comboBoxActiveConditions
             // 
-            this.comboBoxActiveConditions.FormattingEnabled = true;
             this.comboBoxActiveConditions.Location = new System.Drawing.Point(101, 19);
             this.comboBoxActiveConditions.Name = "comboBoxActiveConditions";
             this.comboBoxActiveConditions.Size = new System.Drawing.Size(79, 21);
