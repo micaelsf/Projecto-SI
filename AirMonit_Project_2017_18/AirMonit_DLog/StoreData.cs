@@ -39,6 +39,7 @@ namespace AirMonit_DLog
                 newSensorDataRow.CityId = cityId;
                 newSensorDataRow.DateTime = DateTime.Parse(sensorData.Date + " " + sensorData.Time);
                 newSensorDataRow.SensorId = sensorData.Id;
+                newSensorDataRow.SensorDataUID = sensorData.SensorDataUID;
 
                 // Add the row to the SensorData table
                 this.appHarborDataSet.SensorData.Rows.Add(newSensorDataRow);
@@ -61,7 +62,7 @@ namespace AirMonit_DLog
             {
                 newAlarmDataRow.Description = alarmData.AlarmDescription;
                 newAlarmDataRow.Date_Time = DateTime.Parse(alarmData.AlarmDate + " " + alarmData.AlarmTime);
-                newAlarmDataRow.SensorDataId = int.Parse(alarmData.SensorId);
+                newAlarmDataRow.SensorDataUID = alarmData.SensorDataUID;
 
                 // Add the row to the AlarmLogs table
                 this.appHarborDataSet.AlarmLogs.Rows.Add(newAlarmDataRow);

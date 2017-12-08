@@ -61,14 +61,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\DBAirMonit.mdf" />
-    <Content Include="App_Data\DBAirMonit_log.ldf">
-      <DependentUpon>DBAirMonit.mdf</DependentUpon>
-    </Content>
-    <Content Include="App_Data\dbo.AlarmLogs.sql" />
-    <Content Include="App_Data\dbo.Citys.sql" />
-    <Content Include="App_Data\dbo.SensorData.sql" />
-    <Content Include="App_Data\dbo.UncommonEvents.sql" />
     <Content Include="Service1.svc" />
     <Content Include="Web.config" />
   </ItemGroup>

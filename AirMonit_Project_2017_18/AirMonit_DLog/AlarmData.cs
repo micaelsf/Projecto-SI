@@ -14,6 +14,7 @@ namespace AirMonit_DLog
         public string SensorDate { get; set; }
         public string SensorTime { get; set; }
         public string SensorCity { get; set; }
+        public string SensorDataUID { get; set; }
 
         public string AlarmDate { get; set; }
         public string AlarmTime { get; set; }
@@ -40,8 +41,8 @@ namespace AirMonit_DLog
         {
             return
                 "Sensor Param: " + SensorParam +
-                ", Description: " + AlarmDescription +
-                ", Date Time: " + AlarmDate + " at " + AlarmTime;
+                ", Date Time: " + AlarmDate + " at " + AlarmTime +
+                ", Description: " + AlarmDescription;
         }
     }
 }

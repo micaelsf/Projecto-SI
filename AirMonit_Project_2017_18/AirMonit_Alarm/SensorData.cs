@@ -14,6 +14,7 @@ namespace AirMonit_Alarm
         public string Date { get; set; }
         public string Time { get; set; }
         public string City { get; set; }
+        public string SensorDataUID { get; set; }
 
         private static SensorData instance;
 

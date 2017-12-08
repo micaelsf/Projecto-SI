@@ -19,11 +19,6 @@ namespace AirMonit_DLog
         private string xmlSchemaDataPath;
         private string xmlshcemaAlarmPath;
 
-        public string City { get; set; }
-        public int O3 { get; set; }
-        public int No2 { get; set; }
-        public int CO { get; set; }
-
         private StoreData storeData;
         private XmlDocument doc;
 
@@ -57,6 +52,7 @@ namespace AirMonit_DLog
                 SensorData.Instance.Date = root.SelectSingleNode("date").InnerText;
                 SensorData.Instance.Time = root.SelectSingleNode("time").InnerText;
                 SensorData.Instance.City = root.SelectSingleNode("city").InnerText;
+                SensorData.Instance.SensorDataUID = root.SelectSingleNode("sensorDataUID").InnerText;
             } catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
@@ -87,12 +83,13 @@ namespace AirMonit_DLog
             AlarmData.Instance.SensorDate = temporaryRoot.SelectSingleNode("AirMonitParam/city").InnerText;
             AlarmData.Instance.SensorValue = temporaryRoot.SelectSingleNode("AirMonitParam/value").InnerText;
             AlarmData.Instance.SensorParam = temporaryRoot.SelectSingleNode("AirMonitParam").Attributes["param"].Value;
+            AlarmData.Instance.SensorDataUID = temporaryRoot.SelectSingleNode("AirMonitParam/sensorDataUID").InnerText;
 
             AlarmData.Instance.AlarmDescription = temporaryRoot.SelectSingleNode("description").InnerText;
             AlarmData.Instance.AlarmDate = temporaryRoot.SelectSingleNode("date").InnerText;
             AlarmData.Instance.AlarmTime = temporaryRoot.SelectSingleNode("time").InnerText;
 
-            storeData.StoreSensorData(AlarmData.Instance);
+            storeData.StoreAlarmData(AlarmData.Instance);
 
             return AlarmData.Instance.ToString();
         }

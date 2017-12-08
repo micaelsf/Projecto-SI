@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
 using uPLibrary.Networking.M2Mqtt;
@@ -27,6 +25,7 @@ namespace AirMonit_DU
         private XmlElement sensorDate;
         private XmlElement sensorTime;
         private XmlElement sensorCity;
+        private XmlElement sensorDataUID;
 
         private string validationMessage;
 
@@ -44,6 +43,7 @@ namespace AirMonit_DU
             sensorDate = doc.CreateElement("date");
             sensorTime = doc.CreateElement("time");
             sensorCity = doc.CreateElement("city");
+            sensorDataUID = doc.CreateElement("sensorDataUID");
 
             airMonitParam.SetAttribute("param", "");
             airMonitParam.AppendChild(sensorId);
@@ -51,6 +51,7 @@ namespace AirMonit_DU
             airMonitParam.AppendChild(sensorDate);
             airMonitParam.AppendChild(sensorTime);
             airMonitParam.AppendChild(sensorCity);
+            airMonitParam.AppendChild(sensorDataUID);
 
             doc.AppendChild(airMonitParam);
         }
@@ -91,6 +92,20 @@ namespace AirMonit_DU
 
         private void TransformData(string message)
         {
+            SHA256 mySHA256 = SHA256.Create();
+            byte[] hashValue;
+
+            // Compute message hash
+            hashValue = mySHA256.ComputeHash(Encoding.UTF8.GetBytes(message));
+
+            // convert hash to hexadecimal
+            StringBuilder hexHash = new StringBuilder(hashValue.Length * 2);
+            foreach (byte b in hashValue)
+            {
+                hexHash.AppendFormat("{0:x2}", b);
+            }
+
+            // split message
             string[] splitedSensorData = message.Split(';');
 
             airMonitParam.SetAttribute("param", splitedSensorData[1].Trim());
@@ -123,6 +138,7 @@ namespace AirMonit_DU
             sensorTime.InnerText = hourStr + ":" + splitedTime[1] + ":" + splitedTime[2];
 
             sensorCity.InnerText = splitedSensorData[4].Trim();
+            sensorDataUID.InnerText = hexHash.ToString();
 
             Debug.WriteLine(message);
 

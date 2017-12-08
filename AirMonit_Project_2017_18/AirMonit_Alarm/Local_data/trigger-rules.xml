@@ -2,21 +2,21 @@
 <conditions>
   <parameter type="NO2" active="true">
     <rule condition="between">
-      <description>pipoca</description>
+      <description>Qualidade do ar: Muito má</description>
       <value>-1</value>
       <minValue>600</minValue>
       <maxValue>800</maxValue>
     </rule>
-    <rule condition="greaterThan">
-      <description>wrgqerg</description>
-      <value>154</value>
+    <rule condition="lessThan">
+      <description>Qualidade do ar: Boa</description>
+      <value>200</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
   </parameter>
   <parameter type="CO" active="false">
   </parameter>
-  <parameter type="O3" active="false">
+  <parameter type="O3" active="true">
     <rule condition="greaterThan">
       <description>Qualidade do O3: Péssima</description>
       <value>200</value>

@@ -24,28 +24,24 @@ namespace AirMonit_DLog
         private XMLDataHandler handlerXml;
 
         //validacao xml
-        private string xmlSchemaPathData = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\XMLParameterSchemaData.xsd");
-        private string xmlSchemaPathAlarm = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\XMLAlarmsSchemaAlarm.xsd");
+        private string xmlSchemaPathData = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\XMLParameterSchema.xsd");
+        private string xmlSchemaPathAlarm = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Local_data\XMLAlarmsSchema.xsd");
 
         public AirMonit_DLog()
         {
             InitializeComponent();
             serviceActive = false;
+            labelStatus.Text = "Disconnected";
             textBoxBrokerIP.Text = "127.0.0.1";
             handlerXml = new XMLDataHandler(xmlSchemaPathData, xmlSchemaPathAlarm);
-        }
-
-        private void AirMonit_DLog_Load(object sender, EventArgs e)
-        {
-            //just for some inicial show off purpose
-           // listBoxAlarmLog.Items.Add("alarm");
-            //listBoxCityLog.Items.Insert(0, "city");
         }
 
         private void btnStartStop_Click(object sender, EventArgs e)
         {
             String brokerIP = textBoxBrokerIP.Text;
-            if (!IsIpAddressValid(brokerIP))
+            IPAddress ipAddress;
+
+            if (!IPAddress.TryParse(brokerIP, out ipAddress))
             {
                 MessageBox.Show("Please insert valid IP", "Invalid IP", MessageBoxButtons.OK,
                             MessageBoxIcon.Warning);
@@ -54,7 +50,7 @@ namespace AirMonit_DLog
 
             if (!serviceActive)
             { // activa o serviço
-                m_cClient = new MqttClient(brokerIP);
+                m_cClient = new MqttClient(ipAddress.ToString());
                 m_cClient.Connect(Guid.NewGuid().ToString());
 
                 if (!m_cClient.IsConnected)
@@ -64,14 +60,13 @@ namespace AirMonit_DLog
                 }
 
                 serviceActive = true;
+                labelStatus.Text = "Connected";
                 btnStartStop.Text = "Stop";
-                btnStartStop.ForeColor = Color.Red;
+                btnStartStop.ForeColor = Color.White;
+                btnStartStop.BackColor = Color.Firebrick;
 
-                //Specify events we are interest on
                 //New Msg Arrived
                 m_cClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
-                //This client's subscription operation id done
-               // m_cClient.MqttMsgSubscribed += client_MqttMsgSubscribed;
 
                 //Subscribe to topics
                 byte[] qosLevels = { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE,
@@ -85,14 +80,14 @@ namespace AirMonit_DLog
                 m_cClient.Disconnect();
                 serviceActive = false;
                 btnStartStop.Text = "Start";
-                btnStartStop.ForeColor = Color.Green;
+                labelStatus.Text = "Disconnected";
+                btnStartStop.ForeColor = Color.White;
+                btnStartStop.BackColor = Color.LimeGreen;
             }
         }
 
         private void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
-            //XMLHandler handlerXml = new XMLHandler(xmlSchemaPath);
-
             if (e.Topic.Equals(m_strTopicsInfo[1])) // alarm
             {
                 if (handlerXml.ValidateXMLStructure(Encoding.UTF8.GetString(e.Message), m_strTopicsInfo[1]))
@@ -104,7 +99,6 @@ namespace AirMonit_DLog
                                );
                        }
                    );
-                    ///listBoxAlarmLog.Items.Insert(0, Encoding.UTF8.GetString(e.Message));
                 }
             }
             if (e.Topic.Equals(m_strTopicsInfo[0])) //data
@@ -118,18 +112,9 @@ namespace AirMonit_DLog
                                 );
                         }
                     );
-                    //StoreData.storeSensorData(SensorData.Instance);
                 }
             }
         }
-
-        public bool IsIpAddressValid(string Address)
-        {
-            System.Net.IPAddress parsed;
-            return System.Net.IPAddress.TryParse(Address, out parsed);
-        }
-
-
     }
 }
  
