@@ -37,18 +37,22 @@
             this.textBoxBrokerIP = new System.Windows.Forms.TextBox();
             this.btnStartStop = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.labelStatus = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
-            this.label1.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label1.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label1.Name = "label1";
             // 
             // label2
             // 
             resources.ApplyResources(this.label2, "label2");
-            this.label2.ForeColor = System.Drawing.Color.Red;
+            this.label2.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label2.Name = "label2";
             // 
             // listBoxAlarmLog
@@ -70,25 +74,46 @@
             // 
             // btnStartStop
             // 
+            this.btnStartStop.BackColor = System.Drawing.Color.LimeGreen;
             resources.ApplyResources(this.btnStartStop, "btnStartStop");
-            this.btnStartStop.ForeColor = System.Drawing.Color.Green;
+            this.btnStartStop.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnStartStop.Name = "btnStartStop";
-            this.btnStartStop.UseVisualStyleBackColor = true;
+            this.btnStartStop.UseVisualStyleBackColor = false;
             this.btnStartStop.Click += new System.EventHandler(this.btnStartStop_Click);
             // 
             // label3
             // 
             resources.ApplyResources(this.label3, "label3");
-            this.label3.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label3.Name = "label3";
+            // 
+            // labelStatus
+            // 
+            resources.ApplyResources(this.labelStatus, "labelStatus");
+            this.labelStatus.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.labelStatus.Name = "labelStatus";
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.textBoxBrokerIP);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.TabStop = false;
             // 
             // AirMonit_DLog
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.labelStatus);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnStartStop);
-            this.Controls.Add(this.textBoxBrokerIP);
             this.Controls.Add(this.listBoxCityLog);
             this.Controls.Add(this.listBoxAlarmLog);
             this.Controls.Add(this.label2);
@@ -97,7 +122,8 @@
             this.MaximizeBox = false;
             this.Name = "AirMonit_DLog";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Load += new System.EventHandler(this.AirMonit_DLog_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -111,6 +137,9 @@
         private System.Windows.Forms.TextBox textBoxBrokerIP;
         private System.Windows.Forms.Button btnStartStop;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

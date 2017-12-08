@@ -12,7 +12,8 @@ namespace AirMonit_Service
     [ServiceContract]
     public interface IAccessingData
     {
-
+        [OperationContract]
+        void StoreSensorData();
         [OperationContract]
         City getInfoMinEachHour(string city, string dateTime);
         [OperationContract]

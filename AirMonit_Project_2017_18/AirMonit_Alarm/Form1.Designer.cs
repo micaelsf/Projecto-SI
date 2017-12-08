@@ -114,9 +114,10 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 84);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(13, 80);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(77, 13);
+            this.label4.Size = new System.Drawing.Size(100, 17);
             this.label4.TabIndex = 6;
             this.label4.Text = "Data received:";
             // 
@@ -131,9 +132,10 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 272);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(13, 268);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(88, 13);
+            this.label2.Size = new System.Drawing.Size(120, 17);
             this.label2.TabIndex = 6;
             this.label2.Text = "Triggered alarms:";
             // 
@@ -143,7 +145,7 @@
             this.buttonConnect.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonConnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonConnect.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonConnect.Location = new System.Drawing.Point(535, 16);
+            this.buttonConnect.Location = new System.Drawing.Point(579, 16);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(87, 22);
             this.buttonConnect.TabIndex = 7;
@@ -246,11 +248,12 @@
             this.buttonRemoveCondition.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonRemoveCondition.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonRemoveCondition.ForeColor = System.Drawing.Color.Red;
-            this.buttonRemoveCondition.Location = new System.Drawing.Point(185, 19);
+            this.buttonRemoveCondition.Location = new System.Drawing.Point(184, 16);
             this.buttonRemoveCondition.Name = "buttonRemoveCondition";
-            this.buttonRemoveCondition.Size = new System.Drawing.Size(24, 22);
+            this.buttonRemoveCondition.Size = new System.Drawing.Size(25, 25);
             this.buttonRemoveCondition.TabIndex = 21;
             this.buttonRemoveCondition.Text = "X";
+            this.buttonRemoveCondition.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.buttonRemoveCondition.UseVisualStyleBackColor = false;
             this.buttonRemoveCondition.Click += new System.EventHandler(this.buttonRemoveCondition_Click);
             // 
@@ -423,7 +426,7 @@
             this.groupBox2.Controls.Add(this.buttonConnect);
             this.groupBox2.Location = new System.Drawing.Point(16, 11);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(739, 46);
+            this.groupBox2.Size = new System.Drawing.Size(765, 46);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Channel configuration";
@@ -434,7 +437,7 @@
             this.buttonDisconnect.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonDisconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonDisconnect.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonDisconnect.Location = new System.Drawing.Point(637, 15);
+            this.buttonDisconnect.Location = new System.Drawing.Point(672, 15);
             this.buttonDisconnect.Name = "buttonDisconnect";
             this.buttonDisconnect.Size = new System.Drawing.Size(87, 23);
             this.buttonDisconnect.TabIndex = 9;
@@ -457,7 +460,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(786, 460);
+            this.ClientSize = new System.Drawing.Size(786, 457);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.groupBox1);

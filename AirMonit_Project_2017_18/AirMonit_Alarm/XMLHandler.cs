@@ -33,6 +33,7 @@ namespace AirMonit_Alarm
         private XmlElement sensorDate;
         private XmlElement sensorTime;
         private XmlElement sensorCity;
+        private XmlElement sensorDataUID;
         private XmlElement description;
         private XmlElement alarmDate;
         private XmlElement alarmTime;
@@ -73,6 +74,7 @@ namespace AirMonit_Alarm
             sensorDate = docAlarm.CreateElement("date");
             sensorTime = docAlarm.CreateElement("time");
             sensorCity = docAlarm.CreateElement("city");
+            sensorDataUID = docAlarm.CreateElement("sensorDataUID");
 
             airMonitParam.SetAttribute("param", "");
             airMonitParam.AppendChild(sensorId);
@@ -80,6 +82,7 @@ namespace AirMonit_Alarm
             airMonitParam.AppendChild(sensorDate);
             airMonitParam.AppendChild(sensorTime);
             airMonitParam.AppendChild(sensorCity);
+            airMonitParam.AppendChild(sensorDataUID);
 
             // append parameter structure to alarm document
             airMonitAlarm.AppendChild(airMonitParam);
@@ -114,6 +117,7 @@ namespace AirMonit_Alarm
             SensorData.Instance.Date = temporaryRoot.SelectSingleNode("date").InnerText;
             SensorData.Instance.Time = temporaryRoot.SelectSingleNode("time").InnerText;
             SensorData.Instance.City = temporaryRoot.SelectSingleNode("city").InnerText;
+            SensorData.Instance.SensorDataUID = temporaryRoot.SelectSingleNode("sensorDataUID").InnerText;
 
             return SensorData.Instance.ToString();
         }
@@ -203,6 +207,7 @@ namespace AirMonit_Alarm
                 sensorDate.InnerText = SensorData.Instance.Date;
                 sensorTime.InnerText = SensorData.Instance.Time;
                 sensorCity.InnerText = SensorData.Instance.City;
+                sensorDataUID.InnerText = SensorData.Instance.SensorDataUID;
                 description.InnerText = rule.SelectSingleNode("description").InnerText;
                 alarmDate.InnerText = DateTime.Now.ToString("yyyy'-'MM'-'dd");
                 alarmTime.InnerText = DateTime.Now.ToString("hh':'mm':'ss");
