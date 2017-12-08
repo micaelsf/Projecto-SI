@@ -21,11 +21,9 @@ namespace AirMonit_Admin
         {
             InitializeComponent();
             comboBoxCities.Items.AddRange(cities);
-        }
-
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
-
+            checkBoxCO.Checked = true;
+            checkBoxNO2.Checked = true;
+            checkBoxO3.Checked = true;
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -52,13 +50,13 @@ namespace AirMonit_Admin
         {
             List<string> checkedParameters = new List<string>();
 
-            if (checkBox1.Checked)
+            if (checkBoxNO2.Checked)
                 checkedParameters.Add("NO2");
 
-            if (checkBox2.Checked)
+            if (checkBoxCO.Checked)
                 checkedParameters.Add("CO");
 
-            if (checkBox3.Checked)
+            if (checkBoxO3.Checked)
                 checkedParameters.Add("O3");
 
             return checkedParameters;
@@ -74,20 +72,18 @@ namespace AirMonit_Admin
         {
             string selectedCity = comboBoxCities.SelectedItem.ToString();
 
-            List<AlarmLog> alarms = getDailyAlarmsByCity(selectedCity, dateTimeRaisedAlarms.ToString());
-            dataGridViewRaisedAlarms.ReadOnly = true;
-            dataGridViewRaisedAlarms.Rows.Clear();
+            dataGridRefresh(getDailyAlarmsByCity(selectedCity, dateTimeRaisedAlarms.Value.ToString()));
 
-            foreach(AlarmLog alarm in alarms)
+            /*foreach (AlarmLog alarm in alarms)
             {
                 int index = dataGridViewRaisedAlarms.Rows.Add();
                 DataGridViewRow row = dataGridViewRaisedAlarms.Rows[index];
 
-                row.Cells["RA_id"].Value = alarm.Id;
-                row.Cells["RA_paramType"].Value = alarm.ParamType;
-                row.Cells["RA_paramValue"].Value = alarm.ParamValue;
-                row.Cells["RA_description"].Value = alarm.Description;
-            }
+               // row.Cells["RA_id"].Value = alarm.Id;
+               // row.Cells["RA_paramType"].Value = alarm.ParamType;
+               // row.Cells["RA_paramValue"].Value = alarm.ParamValue;
+              //  row.Cells["RA_description"].Value = alarm.Description;
+            }*/
 
         }
 
@@ -111,9 +107,65 @@ namespace AirMonit_Admin
             return temporaryList;
         }
 
+        
         private void tabPage3_Click(object sender, EventArgs e)
         {
+            string selectedCity = comboBoxCities.SelectedItem.ToString();
+            dataGridRefresh(getDailyAlarmsByCity(selectedCity, dateTimeRaisedAlarms.Value.ToString()));
+        }
+        private void checkBoxCO_CheckedChanged(object sender, EventArgs e)
+        {
+            dataGridFilterParam();
+        }
 
+        private void checkBoxO3_CheckedChanged(object sender, EventArgs e)
+        {
+            dataGridFilterParam();
+        }
+
+        private void checkBoxNO2_CheckedChanged(object sender, EventArgs e)
+        {
+            dataGridFilterParam();
+        }
+
+        private void dataGridFilterParam()
+        {
+            foreach (DataGridViewRow row in dataGridViewRaisedAlarms.Rows)
+            {
+                string s = row.Cells[3].Value.ToString();
+
+                if (checkBoxO3.Checked && s.StartsWith(checkBoxO3.Text, true, null))
+                {
+                    dataGridSetRowVisibilitie(row, true);
+                }
+                else if (checkBoxNO2.Checked && s.StartsWith(checkBoxNO2.Text, true, null))
+                {
+                    dataGridSetRowVisibilitie(row, true);
+                }
+                else if (checkBoxCO.Checked && s.StartsWith(checkBoxCO.Text, true, null))
+                {
+                    dataGridSetRowVisibilitie(row, true);
+                }
+                else
+                {
+                    dataGridSetRowVisibilitie(row, false);
+                }
+            }
+        }
+
+        private void dataGridSetRowVisibilitie(DataGridViewRow row, bool visibilitie)
+        {
+            CurrencyManager currencyManager1 = (CurrencyManager)BindingContext[dataGridViewRaisedAlarms.DataSource];
+            currencyManager1.SuspendBinding();
+            row.Visible = visibilitie;
+            currencyManager1.ResumeBinding();
+        }
+
+        private void dataGridRefresh(List<AlarmLog> alarms)
+        {
+            dataGridViewRaisedAlarms.DataSource = null;
+            dataGridViewRaisedAlarms.Refresh();
+            dataGridViewRaisedAlarms.DataSource = alarms;
         }
     }
 }

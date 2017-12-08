@@ -13,6 +13,18 @@
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
+    <rule condition="lessThan">
+      <description>43444</description>
+      <value>11</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
+    <rule condition="equals">
+      <description>454yw45y</description>
+      <value>454</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
   </parameter>
   <parameter type="CO" active="false">
   </parameter>

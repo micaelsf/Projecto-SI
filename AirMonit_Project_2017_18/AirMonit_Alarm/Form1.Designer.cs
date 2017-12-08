@@ -41,6 +41,7 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.groupBoxParameterRules = new System.Windows.Forms.GroupBox();
+            this.labelValue = new System.Windows.Forms.Label();
             this.comboBoxCreateCondition = new System.Windows.Forms.ComboBox();
             this.buttonRemoveCondition = new System.Windows.Forms.Button();
             this.buttonAddCondition = new System.Windows.Forms.Button();
@@ -60,7 +61,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonDisconnect = new System.Windows.Forms.Button();
             this.labelInvalidIp = new System.Windows.Forms.Label();
-            this.labelValue = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBoxParameterRules.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -218,8 +218,19 @@
             this.groupBoxParameterRules.TabStop = false;
             this.groupBoxParameterRules.Text = "Parameter rules";
             // 
+            // labelValue
+            // 
+            this.labelValue.AutoSize = true;
+            this.labelValue.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelValue.Location = new System.Drawing.Point(92, 82);
+            this.labelValue.Name = "labelValue";
+            this.labelValue.Size = new System.Drawing.Size(37, 13);
+            this.labelValue.TabIndex = 23;
+            this.labelValue.Text = "Value:";
+            // 
             // comboBoxCreateCondition
             // 
+            this.comboBoxCreateCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCreateCondition.FormattingEnabled = true;
             this.comboBoxCreateCondition.Location = new System.Drawing.Point(116, 46);
             this.comboBoxCreateCondition.Name = "comboBoxCreateCondition";
@@ -235,9 +246,9 @@
             this.buttonRemoveCondition.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonRemoveCondition.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonRemoveCondition.ForeColor = System.Drawing.Color.Red;
-            this.buttonRemoveCondition.Location = new System.Drawing.Point(185, 17);
+            this.buttonRemoveCondition.Location = new System.Drawing.Point(185, 19);
             this.buttonRemoveCondition.Name = "buttonRemoveCondition";
-            this.buttonRemoveCondition.Size = new System.Drawing.Size(24, 24);
+            this.buttonRemoveCondition.Size = new System.Drawing.Size(24, 22);
             this.buttonRemoveCondition.TabIndex = 21;
             this.buttonRemoveCondition.Text = "X";
             this.buttonRemoveCondition.UseVisualStyleBackColor = false;
@@ -309,10 +320,13 @@
             // 
             // comboBoxActiveConditions
             // 
-            this.comboBoxActiveConditions.FormattingEnabled = true;
+            this.comboBoxActiveConditions.CausesValidation = false;
+            this.comboBoxActiveConditions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxActiveConditions.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.comboBoxActiveConditions.Location = new System.Drawing.Point(101, 19);
             this.comboBoxActiveConditions.Name = "comboBoxActiveConditions";
             this.comboBoxActiveConditions.Size = new System.Drawing.Size(79, 21);
+            this.comboBoxActiveConditions.Sorted = true;
             this.comboBoxActiveConditions.TabIndex = 14;
             this.comboBoxActiveConditions.SelectedIndexChanged += new System.EventHandler(this.comboBoxActiveRules_SelectedIndexChanged);
             // 
@@ -381,11 +395,12 @@
             // 
             // comboBoxParameters
             // 
+            this.comboBoxParameters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxParameters.FormattingEnabled = true;
             this.comboBoxParameters.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.comboBoxParameters.Location = new System.Drawing.Point(123, 17);
             this.comboBoxParameters.Name = "comboBoxParameters";
-            this.comboBoxParameters.Size = new System.Drawing.Size(67, 21);
+            this.comboBoxParameters.Size = new System.Drawing.Size(100, 21);
             this.comboBoxParameters.TabIndex = 1;
             this.comboBoxParameters.SelectedIndexChanged += new System.EventHandler(this.comboBoxParameters_SelectedIndexChanged);
             // 
@@ -437,16 +452,6 @@
             this.labelInvalidIp.Size = new System.Drawing.Size(91, 13);
             this.labelInvalidIp.TabIndex = 8;
             this.labelInvalidIp.Text = "Invalid Ip Address";
-            // 
-            // labelValue
-            // 
-            this.labelValue.AutoSize = true;
-            this.labelValue.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelValue.Location = new System.Drawing.Point(92, 82);
-            this.labelValue.Name = "labelValue";
-            this.labelValue.Size = new System.Drawing.Size(37, 13);
-            this.labelValue.TabIndex = 23;
-            this.labelValue.Text = "Value:";
             // 
             // Form1
             // 
@@ -501,7 +506,6 @@
         private System.Windows.Forms.GroupBox groupBoxParameterRules;
         private System.Windows.Forms.Label labelSelectedCondition;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBoxActiveConditions;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.TextBox textBoxConditionValueMax;
         private System.Windows.Forms.Button buttonCancel;
@@ -510,6 +514,7 @@
         private System.Windows.Forms.Button buttonRemoveCondition;
         private System.Windows.Forms.ComboBox comboBoxCreateCondition;
         private System.Windows.Forms.Label labelValue;
+        private System.Windows.Forms.ComboBox comboBoxActiveConditions;
     }
 }
 
