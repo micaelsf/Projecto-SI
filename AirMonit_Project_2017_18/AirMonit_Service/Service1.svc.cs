@@ -4,16 +4,11 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
-
 
 namespace AirMonit_Service
 {
-
-    public static class DatabaseTableConstant  //Constantes para os nomes das tabelas, para quando inserimos parametros nas queries (FROM ...)
+    //Constantes para os nomes das tabelas, para quando inserimos parametros nas queries (FROM ...)
+    public static class DatabaseTableConstant  
     {
         public const string tableAlarms = "AlarmLogs";
         public const string tableCity = "Cities";
@@ -36,6 +31,11 @@ namespace AirMonit_Service
             int linesReturned = -1;
             string query = string.Format(@"INSERT INTO {0} (CityId, Type, Description, UserName, Temperature, DateTime) 
                             VALUES (@cityId, @type, @description, @username, @temperature, @dateTime)", DatabaseTableConstant.tableUncommonEvents);
+
+            if (userInfo.Username == null || userInfo.Username.Trim().Count() == 0)
+            {
+                return -1;
+            }
 
             int cityId = fetchCityIdFromName(userInfo.CityName);
 
@@ -75,11 +75,16 @@ namespace AirMonit_Service
             string query = string.Format(@"SELECT al.Description, al.DateTime, s.Param, s.Value 
                         FROM {0} al JOIN {1} s ON al.SensorDataUID = s.SensorDataUID 
                         WHERE LEFT(@fulldate, 10) = @date AND CityId = @cityId ORDER BY 2 DESC", DatabaseTableConstant.tableAlarms, DatabaseTableConstant.tableSensorData);
+
             List<AlarmLog> dataAlarms = new List<AlarmLog>();
             
             string[] splitedDate = (dateTime + "").Split(' ');
             string date = splitedDate[0];
-            Debug.WriteLine(date);
+
+            if (dateTime == null)
+            {
+                return null;
+            }
 
             int cityId = fetchCityIdFromName(cityName);
 
@@ -99,22 +104,21 @@ namespace AirMonit_Service
                 {
                     connection.Open();
 
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        AlarmLog alarm = new AlarmLog
+                        while (reader.Read())
                         {
-                            Description = (string) reader["Description"],
-                            DateTime = (DateTime) reader["DateTime"],
-                            Parameter = (string) reader["Param"],
-                            Value = (int) reader["Value"]
-                        };
+                            AlarmLog alarm = new AlarmLog
+                            {
+                                Description = (string)reader["Description"],
+                                DateTime = (DateTime)reader["DateTime"],
+                                Parameter = (string)reader["Param"],
+                                Value = (int)reader["Value"]
+                            };
 
-                        dataAlarms.Add(alarm);
+                            dataAlarms.Add(alarm);
+                        }
                     }
-
-                    reader.Close();
                 }
                 catch (Exception e)
                 {
@@ -131,6 +135,11 @@ namespace AirMonit_Service
             bool allcity = false;
             int cityId = -1;
 
+            if (startDate == null || endDate == null || startDate > endDate)
+            {
+                return null;
+            }
+
             if (cityName == null)
             {
                 query = string.Format(@"
@@ -163,11 +172,6 @@ namespace AirMonit_Service
 
             List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
 
-            if (startDate > endDate)
-            {
-                return null;
-            }
-
             using (connection)
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -184,21 +188,20 @@ namespace AirMonit_Service
                 {
                     connection.Open();
 
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                        while (reader.Read())
                         {
-                            Value = int.Parse(reader["Average"] + ""),
-                            Date = reader["Day"] + "",
-                            City = reader["City"] + "",
+                            InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                            {
+                                Value = int.Parse(reader["Average"] + ""),
+                                Date = reader["Day"] + "",
+                                City = reader["City"] + "",
+                            };
+
+                            listValues.Add(infoBetweenDate);
                         };
-
-                        listValues.Add(infoBetweenDate);
-                    };
-
-                    reader.Close();
+                    }
                 }
                 catch (Exception e)
                 {
@@ -215,6 +218,11 @@ namespace AirMonit_Service
             bool allcity = false;
             int cityId = -1;
 
+            if (startDate == null || endDate == null || startDate > endDate)
+            {
+                return null;
+            }
+
             if (cityName == null)
             {
                 query = string.Format(@"
@@ -247,11 +255,6 @@ namespace AirMonit_Service
 
             List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
 
-            if (startDate > endDate)
-            {
-                return null;
-            }
-
             using (connection)
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -268,21 +271,20 @@ namespace AirMonit_Service
                 {
                     connection.Open();
 
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                        while (reader.Read())
                         {
-                            Value = int.Parse(reader["Maximum"] + ""),
-                            Date = reader["Day"] + "",
-                            City = reader["City"] + "",
+                            InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                            {
+                                Value = int.Parse(reader["Maximum"] + ""),
+                                Date = reader["Day"] + "",
+                                City = reader["City"] + "",
+                            };
+
+                            listValues.Add(infoBetweenDate);
                         };
-
-                        listValues.Add(infoBetweenDate);
-                    };
-
-                    reader.Close();
+                    }
                 }
                 catch (Exception e)
                 {
@@ -298,6 +300,11 @@ namespace AirMonit_Service
             string query;
             bool allcity = false;
             int cityId = -1;
+
+            if (startDate == null || endDate == null || startDate > endDate)
+            {
+                return null;
+            }
 
             if (cityName == null)
             {
@@ -331,11 +338,6 @@ namespace AirMonit_Service
 
             List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
 
-            if (startDate > endDate)
-            {
-                return null;
-            }
-
             using (connection)
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -352,296 +354,288 @@ namespace AirMonit_Service
                 {
                     connection.Open();
 
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                        while (reader.Read())
                         {
-                            Value = int.Parse(reader["Minimum"] + ""),
-                            Date = reader["Day"] + "",
-                            City = reader["City"] + "",
+                            InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                            {
+                                Value = int.Parse(reader["Minimum"] + ""),
+                                Date = reader["Day"] + "",
+                                City = reader["City"] + "",
+                            };
+
+                            listValues.Add(infoBetweenDate);
                         };
-
-                        listValues.Add(infoBetweenDate);
-                    };
-
-                    reader.Close();
+                    }
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine("Error while fetching max for each day: " + e.Message);
+                    Debug.WriteLine("Error while fetching min for each day: " + e.Message);
+                }
+            }
+
+            return listValues;
+        }
+   
+        public List<InfoBetweenDate> getInfoAvgEachHour(string parameter, string cityName, DateTime dateTime)
+        {
+            string query;
+            bool allcity = false;
+            int cityId = -1;
+
+            if (dateTime == null)
+            {
+                return null;
+            }
+
+            if (cityName == null)
+            {
+               
+                query = string.Format(@"
+                    SELECT AVG(Value) AS Average,  
+                        (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108), 2) + ':00:00') as Hour,
+                        City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CONVERT(varchar, DateTime, 23) = @datetime
+                    GROUP BY (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108),2) + ':00:00'), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                    SELECT AVG(Value) AS Average,  
+                        (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108), 2) + ':00:00') as Hour,
+                        City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CityId = @cityId AND CONVERT(varchar, DateTime, 23) = @datetime
+                    GROUP BY (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108),2) + ':00:00'), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
+                {
+                    return null;
+                }
+            }
+
+            List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
+
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("userParam", parameter.ToUpper());
+                if (!allcity)
+                {
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
+                command.Parameters.AddWithValue("datetime", dateTime.ToString("yyyy-MM-dd") + "");
+
+                try
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                            {
+                                Value = int.Parse(reader["Average"] + ""),
+                                Date = reader["Hour"] + "",
+                                City = reader["City"] + "",
+                            };
+
+                            listValues.Add(infoBetweenDate);
+                        };
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error while fetching avg for each hour: " + e.Message);
                 }
             }
 
             return listValues;
         }
 
-        public City getInfoAvgEachDay(string city, DateTime dateTime)
+        public List<InfoBetweenDate> getInfoMaxEachHour(string parameter, string cityName, DateTime dateTime)
         {
-            City avgInfo = null;
+            string query;
+            bool allcity = false;
+            int cityId = -1;
 
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-
-            try
+            if (dateTime == null)
             {
-                SqlCommand command = new SqlCommand("SELECT  AVG(NO2), AVG(CO), AVG(O3) FROM " + DatabaseTableConstant.tableAlarms + " WHERE date_time = @date", connection);
-                command.Parameters.AddWithValue("@date", dateTime);     //MESMO PROBLEMA COM AS DATAS 
+                return null;
+            }
 
-                SqlDataReader reader = command.ExecuteReader();
+            if (cityName == null)
+            {
 
-                while (reader.Read())
+                query = string.Format(@"
+                    SELECT MAX(Value) AS Maximum,  
+                        (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108), 2) + ':00:00') as Hour,
+                        City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CONVERT(varchar, DateTime, 23) = @datetime
+                    GROUP BY (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108),2) + ':00:00'), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                    SELECT MAX(Value) AS Maximum,  
+                        (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108), 2) + ':00:00') as Hour,
+                        City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CityId = @cityId AND CONVERT(varchar, DateTime, 23) = @datetime
+                    GROUP BY (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108),2) + ':00:00'), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
                 {
-                    avgInfo = new City
-                    {
-                    /*    Id = (int)reader["Id"],
-                        CityName = (string)reader["City_Name"],
-                        Date_Time = (DateTime)reader["Date_Time"],
-                        NO2 = (int)reader["NO2"],
-                        CO = (int)reader["CO"],
-                        O3 = (int)reader["O3"]*/
-                    };
-                };
-                reader.Close();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Error while fetching avg for each day: " + e.Message);
+                    return null;
+                }
             }
 
-            connection.Close();
-
-            return avgInfo;
-        }
-
-        public City getInfoMinEachDay(string city, DateTime dateTime)
-        {
-            City minInfo = null;
-
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-
-            try
-            {
-                SqlCommand command = new SqlCommand("SELECT  MIN(NO2), MIN(CO), MIN(O3) FROM " + DatabaseTableConstant.tableAlarms + " WHERE date_time = @date", connection);
-                command.Parameters.AddWithValue("@date", dateTime);     //MESMO PROBLEMA COM AS DATAS 
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    minInfo = new City
-                    {
-                     /*   Id = (int)reader["Id"],
-                        CityName = (string)reader["City_Name"],
-                        Date_Time = (DateTime)reader["Date_Time"],
-                        NO2 = (int)reader["NO2"],
-                        CO = (int)reader["CO"],
-                        O3 = (int)reader["O3"]*/
-                    };
-                };
-                reader.Close();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Error while fetching avg for each day: " + e.Message);
-            }
-
-            connection.Close();
-
-            return minInfo;
-        }
-
-        public City getInfoMaxEachDay(string city, DateTime dateTime)
-        {
-            City maxInfo = null;
-
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-
-            try
-            {
-                SqlCommand command = new SqlCommand("SELECT  MAX(NO2), MAX(CO), MAX(O3) FROM " + DatabaseTableConstant.tableAlarms + " WHERE date_time = @date", connection);
-                command.Parameters.AddWithValue("@date", dateTime);     //MESMO PROBLEMA COM AS DATAS 
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    maxInfo = new City
-                    {
-                     /*   Id = (int)reader["Id"],
-                        CityName = (string)reader["City_Name"],
-                        Date_Time = (DateTime)reader["Date_Time"],
-                        NO2 = (int)reader["NO2"],
-                        CO = (int)reader["CO"],
-                        O3 = (int)reader["O3"]*/
-                    };
-                };
-                reader.Close();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Error while fetching avg for each day: " + e.Message);
-            }
-
-            connection.Close();
-
-            return maxInfo;
-        }
-
-
-        public List<InfoBetweenDate> getInfoAvgEachHour(string Parameter, string city, DateTime dateTime)
-        {
             List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
-            int cityIdFetched = -1;
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-            try
+
+            using (connection)
             {
-                cityIdFetched = fetchCityIdFromName(city);
-                if (cityIdFetched == -1)
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("userParam", parameter.ToUpper());
+                if (!allcity)
                 {
-                    throw new Exception("Couldn't fetch city ID from city name. Wrong city name perhaps?");
-                } //thrown new exception for no city ID found
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
+                command.Parameters.AddWithValue("datetime", dateTime.ToString("yyyy-MM-dd") + "");
 
-                SqlCommand command = new SqlCommand("SELECT AVG(Value), DateTime" +
-                                                    "FROM @tableName " +
-                                                    "WHERE UPPER(PARAM) = UPPER(@userParam) AND" +
-                                                    "cityId = @cityIdFetched AND " +
-                                                    "DateTime = @date" + //Só dados do dia selecionado 
-                                                    "GROUP BY TO_CHAR(DateTime, 'HH24')" + //Group by horas do dia exemplo: 11h30, 11h31, 11h45 é tudo considerado 11h
-                                                    "ORDER BY 2", connection);
-                command.Parameters.AddWithValue("tableName", DatabaseTableConstant.tableSensorData);
-                command.Parameters.AddWithValue("userParam", Parameter);
-                command.Parameters.AddWithValue("cityIdFetched", cityIdFetched);
-                command.Parameters.AddWithValue("@date", dateTime); //COMO RESOLVER INCONGROÊNCIAS NAS DATAS ?????
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
+                try
                 {
-                    InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        Value = (int)reader["AVG(Value)"],
-                        Date = reader["DateTime"] + "",
-                    };
-                    listValues.Add(infoBetweenDate);
-                };
-                reader.Close();
+                        while (reader.Read())
+                        {
+                            InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                            {
+                                Value = int.Parse(reader["Maximum"] + ""),
+                                Date = reader["Hour"] + "",
+                                City = reader["City"] + "",
+                            };
+
+                            listValues.Add(infoBetweenDate);
+                        };
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error while fetching max for each hour: " + e.Message);
+                }
             }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Error while fetching avg for each hour: + ", e);
-            }
-            connection.Close();
+
             return listValues;
         }
 
-        public List<InfoBetweenDate> getInfoMaxEachHour(string Parameter, string city, DateTime dateTime)
+        public List<InfoBetweenDate> getInfoMinEachHour(string parameter, string cityName, DateTime dateTime)
         {
+            string query;
+            bool allcity = false;
+            int cityId = -1;
+
+            if (dateTime == null)
+            {
+                return null;
+            }
+
+            if (cityName == null)
+            {
+
+                query = string.Format(@"
+                    SELECT MIN(Value) AS Minimum,  
+                        (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108), 2) + ':00:00') as Hour,
+                        City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CONVERT(varchar, DateTime, 23) = @datetime
+                    GROUP BY (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108),2) + ':00:00'), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                    SELECT MIN(Value) AS Minimum,  
+                        (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108), 2) + ':00:00') as Hour,
+                        City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CityId = @cityId AND CONVERT(varchar, DateTime, 23) = @datetime
+                    GROUP BY (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108),2) + ':00:00'), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
+                {
+                    return null;
+                }
+            }
+
             List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
-            int cityIdFetched = -1;
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-            try
+
+            using (connection)
             {
-                cityIdFetched = fetchCityIdFromName(city);
-                if (cityIdFetched == -1)
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("userParam", parameter.ToUpper());
+                if (!allcity)
                 {
-                    throw new Exception("Couldn't fetch city ID from city name. Wrong city name perhaps?");
-                } //thrown new exception for no city ID found
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
+                command.Parameters.AddWithValue("datetime", dateTime.ToString("yyyy-MM-dd") + "");
 
-                SqlCommand command = new SqlCommand("SELECT MAX(Value), DateTime" +
-                                                    "FROM @tableName " +
-                                                    "WHERE UPPER(PARAM) = UPPER(@userParam) AND" +
-                                                    "cityId = @cityIdFetched AND " +
-                                                    "DateTime = @date" + //Só dados do dia selecionado 
-                                                    "GROUP BY TO_CHAR(DateTime, 'HH24')" + //Group by horas do dia exemplo: 11h30, 11h31, 11h45 é tudo considerado 11h
-                                                    "ORDER BY 2", connection);
-                command.Parameters.AddWithValue("tableName", DatabaseTableConstant.tableSensorData);
-                command.Parameters.AddWithValue("userParam", Parameter);
-                command.Parameters.AddWithValue("cityIdFetched", cityIdFetched);
-                command.Parameters.AddWithValue("@date", dateTime); //COMO RESOLVER INCONGROÊNCIAS NAS DATAS ?????
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
+                try
                 {
-                    InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        Value = (int)reader["MAX(Value)"],
-                        Date = reader["DateTime"] + "",
-                    };
-                    listValues.Add(infoBetweenDate);
-                };
-                reader.Close();
+                        while (reader.Read())
+                        {
+                            InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                            {
+                                Value = int.Parse(reader["Minimum"] + ""),
+                                Date = reader["Hour"] + "",
+                                City = reader["City"] + "",
+                            };
+
+                            listValues.Add(infoBetweenDate);
+                        };
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error while fetching min for each hour: " + e.Message);
+                }
             }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Error while fetching max for each hour: + ", e);
-            }
-            connection.Close();
+
             return listValues;
         }
 
-        public List<InfoBetweenDate> getInfoMinEachHour(string Parameter, string city, DateTime dateTime)
-        {
-            List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
-            int cityIdFetched = -1;
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-            try
-            {
-                cityIdFetched = fetchCityIdFromName(city);
-                if (cityIdFetched == -1)
-                {
-                    throw new Exception("Couldn't fetch city ID from city name. Wrong city name perhaps?");
-                } //thrown new exception for no city ID found
 
-                SqlCommand command = new SqlCommand("SELECT MIN(Value), DateTime" +
-                                                    "FROM @tableName " +
-                                                    "WHERE UPPER(PARAM) = UPPER(@userParam) AND" +
-                                                    "cityId = @cityIdFetched AND " +
-                                                    "DateTime = @date" + //Só dados do dia selecionado 
-                                                    "GROUP BY TO_CHAR(DateTime, 'HH24')" + //Group by horas do dia exemplo: 11h30, 11h31, 11h45 é tudo considerado 11h
-                                                    "ORDER BY 2", connection);
-                command.Parameters.AddWithValue("tableName", DatabaseTableConstant.tableSensorData);
-                command.Parameters.AddWithValue("userParam", Parameter);
-                command.Parameters.AddWithValue("cityIdFetched", cityIdFetched);
-                command.Parameters.AddWithValue("@date", dateTime); //COMO RESOLVER INCONGROÊNCIAS NAS DATAS ?????
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    InfoBetweenDate infoBetweenDate = new InfoBetweenDate
-                    {
-                        Value = (int)reader["MIN(Value)"],
-                        Date = reader["DateTime"] + "",
-                    };
-                    listValues.Add(infoBetweenDate);
-                };
-                reader.Close();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Error while fetching min for each hour: + ", e);
-            }
-            connection.Close();
-            return listValues;
-        }
-
-        //***********************************TO DO **************************************************************************************************************************
-        //   - Em todas as funções, validar e testar                                                                               *
-        //   - Garantir a uniformização das datas     
-        //   - Connection String atribuida. Funcional ? 
-        //*******************************************************************************************************************************************************************
-
-        // * Util function
-
-        public int fetchCityIdFromName(string cityName)
+        // UTIL FUNCTION
+        private int fetchCityIdFromName(string cityName)
         {
             string query = string.Format(@"SELECT id FROM {0} WHERE City_Name = @cityName", DatabaseTableConstant.tableCity);
             int cityIdFromDB = -1;

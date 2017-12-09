@@ -27,13 +27,6 @@ namespace AirMonit_Service
         List<InfoBetweenDate> getInfoAvgBetweenDates(string Parameter, string city, DateTime startDate, DateTime endDate);
 
         [OperationContract]
-        City getInfoMinEachDay(string city, DateTime dateTime);
-        [OperationContract]
-        City getInfoMaxEachDay(string city, DateTime dateTime);
-        [OperationContract]
-        City getInfoAvgEachDay(string city, DateTime dateTime);
-
-        [OperationContract]
         List<AlarmLog> getDailyAlarmsByCity(string city, DateTime dateTime);
 
     }
