@@ -14,7 +14,13 @@
       <maxValue>-1</maxValue>
     </rule>
   </parameter>
-  <parameter type="CO" active="false">
+  <parameter type="CO" active="true">
+    <rule condition="greaterThan">
+      <description>Qualidade do CO: Má</description>
+      <value>11</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
   </parameter>
   <parameter type="O3" active="true">
     <rule condition="greaterThan">
