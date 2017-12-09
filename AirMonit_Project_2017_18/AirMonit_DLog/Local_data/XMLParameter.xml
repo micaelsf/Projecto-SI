@@ -5,4 +5,5 @@
     <date></date>
     <time></time>
     <city></city>
+    <sensorDataUID></sensorDataUID>
 </AirMonitParam>  

@@ -24,8 +24,45 @@ namespace AirMonit_Service
     public class AirMonit_Service : IAccessingData, IStoreData
     {
 
+        private string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["appHarborConnect"].ConnectionString;
+        private SqlConnection connection;
+        //String connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["connectionDBProducts"].ConnectionString;
 
-        String connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["connectionDBProducts"].ConnectionString;
+        public AirMonit_Service()
+        {
+            connection = new SqlConnection(connectionString);
+            //StoreSensorData();
+        }
+
+        public void StoreSensorData()
+        {
+            string queryStr =
+                @"INSERT INTO SensorData (Param,Value,CityId,DateTime,SensorId) 
+                 VALUES(@param,@value,@city,@dateTime,@sensorId)";
+            int linesReturned = -1;
+
+            using (connection)
+            {
+                using (var command = new SqlCommand(queryStr, connection))
+                {
+                    command.Parameters.AddWithValue("@param", "NO2");
+                    command.Parameters.AddWithValue("@value", 200);
+                    command.Parameters.AddWithValue("@city", 1);
+                    command.Parameters.AddWithValue("@dateTime", "2017-11-06 12:12:33");
+                    command.Parameters.AddWithValue("@sensorId", 3);
+
+                    try
+                    {
+                        connection.Open();
+                        linesReturned = command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                }
+            }
+        }
 
         public List<AlarmLog> getDailyAlarmsByCity(string cityParam, string dateDay)
         {
@@ -101,7 +138,7 @@ namespace AirMonit_Service
                 reader.Close();
             } catch(Exception e)
             {
-                Console.WriteLine("Error while fetching avg for each day")
+                Console.WriteLine("Error while fetching avg for each day");
             }
              
              connection.Close();
@@ -144,7 +181,7 @@ namespace AirMonit_Service
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error while fetching avg for each day")
+                Console.WriteLine("Error while fetching avg for each day");
             }
 
             connection.Close();

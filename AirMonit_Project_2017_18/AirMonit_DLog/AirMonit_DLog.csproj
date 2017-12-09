@@ -51,6 +51,7 @@
       <HintPath>..\packages\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -70,10 +71,10 @@
       <DependentUpon>AirMonit_DLog.cs</DependentUpon>
     </Compile>
     <Compile Include="AlarmData.cs" />
-    <Compile Include="DataSet1.Designer.cs">
+    <Compile Include="AppHarborDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet1.xsd</DependentUpon>
+      <DependentUpon>AppHarborDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="SensorData.cs" />
     <Compile Include="Program.cs" />
@@ -92,16 +93,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="DataSet1.xsc">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
+    <None Include="AppHarborDataSet.xsc">
+      <DependentUpon>AppHarborDataSet.xsd</DependentUpon>
     </None>
-    <None Include="DataSet1.xsd">
+    <None Include="AppHarborDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+      <LastGenOutput>AppHarborDataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="DataSet1.xss">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
+    <None Include="AppHarborDataSet.xss">
+      <DependentUpon>AppHarborDataSet.xsd</DependentUpon>
     </None>
     <None Include="Local_data\XMLAlarmsSchemaAlarm.xsd">
       <SubType>Designer</SubType>
@@ -121,7 +122,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Local_data\XMLParameter.xml" />

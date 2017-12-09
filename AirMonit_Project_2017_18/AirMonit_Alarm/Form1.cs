@@ -360,6 +360,7 @@ namespace AirMonit_Alarm
             textBoxConditionDescription.Hide();
             labelSelectedCondition.Hide();
             labelDescription.Hide();
+            labelValue.Hide();
         }
 
         private void ShowConditionFields()
@@ -374,6 +375,7 @@ namespace AirMonit_Alarm
             textBoxConditionDescription.Show();
             labelSelectedCondition.Show();
             labelDescription.Show();
+            labelValue.Show();
         }
 
         private bool ValidateFieldsOnSave()
@@ -415,7 +417,7 @@ namespace AirMonit_Alarm
 
             if (mClient != null && mClient.IsConnected)
             {
-                MessageBox.Show("Program is running... Please turn off the alarm to edit your conditions.");
+                MessageBox.Show("Program is running... Please disconnect the alarm to edit your conditions.");
                 return false;
             }
 
@@ -585,6 +587,26 @@ namespace AirMonit_Alarm
             textBoxConditionValueMax.Visible = false;
         }
 
+        private void textBoxConditionValue_Enter(object sender, EventArgs e)
+        {
+            textBoxConditionValue.BackColor = Color.FromName("HighLight");
+        }
+
+        private void textBoxConditionValue_Leave(object sender, EventArgs e)
+        {
+            textBoxConditionValue.BackColor = Color.FromName("ActiveCaption");
+        }
+
+        private void textBoxConditionValueMax_Enter(object sender, EventArgs e)
+        {
+            textBoxConditionValueMax.BackColor = Color.FromName("HighLight");
+        }
+
+        private void textBoxConditionValueMax_Leave(object sender, EventArgs e)
+        {
+            textBoxConditionValueMax.BackColor = Color.FromName("ActiveCaption");
+        }
+
         public string GetConditionDescription()
         {
             return textBoxConditionDescription.Text;
@@ -599,5 +621,6 @@ namespace AirMonit_Alarm
         {
             return this.selectedCondition;
         }
+
     }
 }

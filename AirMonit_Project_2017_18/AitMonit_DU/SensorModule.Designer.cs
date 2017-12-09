@@ -1,4 +1,6 @@
-﻿namespace AitMonit_DU
+﻿using AirMonit_DU;
+
+namespace AitMonit_DU
 {
     partial class SensorModule
     {
@@ -17,6 +19,7 @@
             {
                 components.Dispose();
             }
+            hsd.Stop();
             base.Dispose(disposing);
         }
 

@@ -2,21 +2,33 @@
 <conditions>
   <parameter type="NO2" active="true">
     <rule condition="between">
-      <description>novo teste</description>
+      <description>Qualidade do ar: Muito má</description>
       <value>-1</value>
-      <minValue>10</minValue>
+      <minValue>600</minValue>
       <maxValue>800</maxValue>
     </rule>
-    <rule condition="greaterThan">
-      <description>wrgqerg</description>
-      <value>154</value>
+    <rule condition="lessThan">
+      <description>Qualidade do ar: Boa</description>
+      <value>200</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
+    <rule condition="lessThan">
+      <description>43444</description>
+      <value>11</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
+    <rule condition="equals">
+      <description>454yw45y</description>
+      <value>454</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
   </parameter>
   <parameter type="CO" active="false">
   </parameter>
-  <parameter type="O3" active="false">
+  <parameter type="O3" active="true">
     <rule condition="greaterThan">
       <description>Qualidade do O3: Péssima</description>
       <value>200</value>

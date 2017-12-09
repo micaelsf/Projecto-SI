@@ -9,6 +9,7 @@
       <xs:element name="date" type="xs:date"/>
       <xs:element name="time" type="xs:time"/>
       <xs:element name="city" type="xs:string"/>
+      <xs:element name="sensorDataUID" type="xs:string"/>
     </xs:sequence>
     <xs:attribute name="param" type="params" use="required" />
   </xs:complexType>
