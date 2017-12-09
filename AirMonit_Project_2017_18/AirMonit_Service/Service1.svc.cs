@@ -127,22 +127,41 @@ namespace AirMonit_Service
 
         public List<InfoBetweenDate> getInfoAvgBetweenDates(string parameter, string cityName, DateTime startDate, DateTime endDate)
         {
-            string query = string.Format(@"
-                    SELECT AVG(Value) as Average, CONVERT(varchar, DateTime, 23) as Day
-                    FROM {0}
+            string query;
+            bool allcity = false;
+            int cityId = -1;
+
+            if (cityName == null)
+            {
+                query = string.Format(@"
+                    SELECT AVG(Value) as Average, CONVERT(varchar, DateTime, 23) as Day, City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam 
+                    AND DateTime >= @startDate AND DateTime <= @endDate
+                    GROUP BY CONVERT(varchar, DateTime, 23), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                    SELECT AVG(Value) as Average, CONVERT(varchar, DateTime, 23) as Day, City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
                     WHERE Param = @userParam AND CityId = @cityId 
                     AND DateTime >= @startDate AND DateTime <= @endDate
-                    GROUP BY CONVERT(varchar, DateTime, 23)
-                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData);
+                    GROUP BY CONVERT(varchar, DateTime, 23), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
+                {
+                    return null;
+                }
+            }
 
             List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
-
-            int cityId = fetchCityIdFromName(cityName);
-
-            if (cityId == -1)
-            {
-                return null;
-            }
 
             if (startDate > endDate)
             {
@@ -154,7 +173,10 @@ namespace AirMonit_Service
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("userParam", parameter.ToUpper());
-                command.Parameters.AddWithValue("cityId", cityId);
+                if (!allcity)
+                {
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
                 command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd") + "");
                 command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd HH:mm:ss") + "");
 
@@ -170,6 +192,7 @@ namespace AirMonit_Service
                         {
                             Value = int.Parse(reader["Average"] + ""),
                             Date = reader["Day"] + "",
+                            City = reader["City"] + "",
                         };
 
                         listValues.Add(infoBetweenDate);
@@ -188,22 +211,41 @@ namespace AirMonit_Service
 
         public List<InfoBetweenDate> getInfoMaxBetweenDates(string parameter, string cityName, DateTime startDate, DateTime endDate)
         {
-            string query = string.Format(@"
-                    SELECT MAX(Value) as Maximum, CONVERT(varchar, DateTime, 23) as Day
-                    FROM {0}
+            string query;
+            bool allcity = false;
+            int cityId = -1;
+
+            if (cityName == null)
+            {
+                query = string.Format(@"
+                    SELECT MAX(Value) as Maximum, CONVERT(varchar, DateTime, 23) as Day, City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam 
+                    AND DateTime >= @startDate AND DateTime <= @endDate
+                    GROUP BY CONVERT(varchar, DateTime, 23), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                    SELECT MAX(Value) as Maximum, CONVERT(varchar, DateTime, 23) as Day, City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
                     WHERE Param = @userParam AND CityId = @cityId 
                     AND DateTime >= @startDate AND DateTime <= @endDate
-                    GROUP BY CONVERT(varchar, DateTime, 23)
-                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData);
+                    GROUP BY CONVERT(varchar, DateTime, 23), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
+                {
+                    return null;
+                }
+            }
 
             List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
-
-            int cityId = fetchCityIdFromName(cityName);
-
-            if (cityId == -1)
-            {
-                return null;
-            }
 
             if (startDate > endDate)
             {
@@ -215,7 +257,10 @@ namespace AirMonit_Service
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("userParam", parameter.ToUpper());
-                command.Parameters.AddWithValue("cityId", cityId);
+                if (!allcity)
+                {
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
                 command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd") + "");
                 command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd HH:mm:ss") + "");
 
@@ -231,6 +276,7 @@ namespace AirMonit_Service
                         {
                             Value = int.Parse(reader["Maximum"] + ""),
                             Date = reader["Day"] + "",
+                            City = reader["City"] + "",
                         };
 
                         listValues.Add(infoBetweenDate);
@@ -249,22 +295,41 @@ namespace AirMonit_Service
 
         public List<InfoBetweenDate> getInfoMinBetweenDates(string parameter, string cityName, DateTime startDate, DateTime endDate)
         {
-            string query = string.Format(@"
-                    SELECT MIN(Value) as Minimum, CONVERT(varchar, DateTime, 23) as Day
-                    FROM {0}
+            string query;
+            bool allcity = false;
+            int cityId = -1;
+
+            if (cityName == null)
+            {
+                query = string.Format(@"
+                    SELECT MIN(Value) AS Minimum, CONVERT(varchar, DateTime, 23) AS Day, City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam 
+                    AND DateTime >= @startDate AND DateTime <= @endDate
+                    GROUP BY CONVERT(varchar, DateTime, 23), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                    SELECT MIN(Value) as Minimum, CONVERT(varchar, DateTime, 23) as Day, City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
                     WHERE Param = @userParam AND CityId = @cityId 
                     AND DateTime >= @startDate AND DateTime <= @endDate
-                    GROUP BY CONVERT(varchar, DateTime, 23)
-                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData);
+                    GROUP BY CONVERT(varchar, DateTime, 23), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
+                {
+                    return null;
+                }
+            }
 
             List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
-
-            int cityId = fetchCityIdFromName(cityName);
-
-            if (cityId == -1)
-            {
-                return null;
-            }
 
             if (startDate > endDate)
             {
@@ -276,7 +341,10 @@ namespace AirMonit_Service
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("userParam", parameter.ToUpper());
-                command.Parameters.AddWithValue("cityId", cityId);
+                if (!allcity)
+                {
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
                 command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd") + "");
                 command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd HH:mm:ss") + "");
 
@@ -292,6 +360,7 @@ namespace AirMonit_Service
                         {
                             Value = int.Parse(reader["Minimum"] + ""),
                             Date = reader["Day"] + "",
+                            City = reader["City"] + "",
                         };
 
                         listValues.Add(infoBetweenDate);

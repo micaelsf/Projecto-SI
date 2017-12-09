@@ -82,6 +82,8 @@ namespace AirMonit_Service
         public int Value { get; set; }
         [DataMember]
         public string Date { get; set; }
+        [DataMember]
+        public string City { get; set; }
     }
 
     [DataContract]
