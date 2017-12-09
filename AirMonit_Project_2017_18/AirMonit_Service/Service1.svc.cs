@@ -8,7 +8,7 @@ using System.Linq;
 namespace AirMonit_Service
 {
     //Constantes para os nomes das tabelas, para quando inserimos parametros nas queries (FROM ...)
-    public static class DatabaseTableConstant  
+    public static class DatabaseTableConstant
     {
         public const string tableAlarms = "AlarmLogs";
         public const string tableCity = "Cities";
@@ -16,7 +16,7 @@ namespace AirMonit_Service
         public const string tableUncommonEvents = "UncommonEvents";
     }
 
-    public class AirMonit_Service : IAccessingData, IStoreData
+    public class AirMonit_Service : IAirMonit_AccessingData, IAirMonit_StoreData
     {
         private string connectionString = ConfigurationManager.ConnectionStrings["appHarborConnect"].ConnectionString;
         private SqlConnection connection;
@@ -74,12 +74,13 @@ namespace AirMonit_Service
         {
             string query = string.Format(@"SELECT al.Description, al.DateTime, s.Param, s.Value 
                         FROM {0} al JOIN {1} s ON al.SensorDataUID = s.SensorDataUID 
-                        WHERE LEFT(@fulldate, 10) = @date AND CityId = @cityId ORDER BY 2 DESC", DatabaseTableConstant.tableAlarms, DatabaseTableConstant.tableSensorData);
+                        WHERE CONVERT(varchar, al.DateTime, 23) = @date 
+                        AND CityId = @cityId 
+                        ORDER BY 2 DESC", DatabaseTableConstant.tableAlarms, DatabaseTableConstant.tableSensorData);
 
             List<AlarmLog> dataAlarms = new List<AlarmLog>();
-            
-            string[] splitedDate = (dateTime + "").Split(' ');
-            string date = splitedDate[0];
+
+            string date = dateTime.ToString("yyyy-MM-dd");
 
             if (dateTime == null)
             {
@@ -96,7 +97,6 @@ namespace AirMonit_Service
             using (connection)
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("fulldate", dateTime.ToString("yyyy-MM-dd HH:mm::ss"));
                 command.Parameters.AddWithValue("date", date);
                 command.Parameters.AddWithValue("cityId", cityId);
 
@@ -181,8 +181,8 @@ namespace AirMonit_Service
                 {
                     command.Parameters.AddWithValue("cityId", cityId);
                 }
-                command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd") + "");
-                command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd HH:mm:ss") + "");
+                command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd 00:00:00"));
+                command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd 23:59:59"));
 
                 try
                 {
@@ -208,7 +208,7 @@ namespace AirMonit_Service
                     Debug.WriteLine("Error while fetching avg for each day: " + e.Message);
                 }
             }
-            
+
             return listValues;
         }
 
@@ -264,8 +264,8 @@ namespace AirMonit_Service
                 {
                     command.Parameters.AddWithValue("cityId", cityId);
                 }
-                command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd") + "");
-                command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd HH:mm:ss") + "");
+                command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd 00:00:00"));
+                command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd 23:59:59"));
 
                 try
                 {
@@ -347,8 +347,8 @@ namespace AirMonit_Service
                 {
                     command.Parameters.AddWithValue("cityId", cityId);
                 }
-                command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd") + "");
-                command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd HH:mm:ss") + "");
+                command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd 00:00:00"));
+                command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd 23:59:59"));
 
                 try
                 {
@@ -377,7 +377,7 @@ namespace AirMonit_Service
 
             return listValues;
         }
-   
+
         public List<InfoBetweenDate> getInfoAvgEachHour(string parameter, string cityName, DateTime dateTime)
         {
             string query;
@@ -391,7 +391,7 @@ namespace AirMonit_Service
 
             if (cityName == null)
             {
-               
+
                 query = string.Format(@"
                     SELECT AVG(Value) AS Average,  
                         (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108), 2) + ':00:00') as Hour,
@@ -639,7 +639,7 @@ namespace AirMonit_Service
         {
             string query = string.Format(@"SELECT id FROM {0} WHERE City_Name = @cityName", DatabaseTableConstant.tableCity);
             int cityIdFromDB = -1;
-            
+
             SqlCommand command = new SqlCommand(query, connection);
 
             command.Parameters.AddWithValue("cityName", cityName.First().ToString().ToUpper() + cityName.Substring(1));
@@ -648,7 +648,7 @@ namespace AirMonit_Service
             {
                 connection.Open();
 
-                cityIdFromDB = (int) command.ExecuteScalar();
+                cityIdFromDB = (int)command.ExecuteScalar();
                 Debug.WriteLine("ID of city: " + cityIdFromDB);
 
             }
@@ -658,7 +658,7 @@ namespace AirMonit_Service
             }
 
             connection.Close();
-            
+
             return cityIdFromDB;
         }
     }

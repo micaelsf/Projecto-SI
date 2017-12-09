@@ -10,7 +10,7 @@ namespace AirMonit_Service
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IAccessingData" in both code and config file together.
     [ServiceContract]
-    public interface IAccessingData
+    public interface IAirMonit_AccessingData
     {
         [OperationContract]
         List<InfoBetweenDate> getInfoMinEachHour(string Parameter, string city, DateTime dateTime);
@@ -32,7 +32,7 @@ namespace AirMonit_Service
     }
 
     [ServiceContract]
-    public interface IStoreData
+    public interface IAirMonit_StoreData
     {
         [OperationContract]
         int storeUncommonEvent(UncommonEvents userInfo);
@@ -77,15 +77,6 @@ namespace AirMonit_Service
         public string Date { get; set; }
         [DataMember]
         public string City { get; set; }
-    }
-
-    [DataContract]
-    public class City
-    {
-        [DataMember]
-        public int Id { get; set; }
-        [DataMember]
-        public string CityName { get; set; }
     }
 
     [DataContract]
