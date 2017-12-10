@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.checkBoxNO2 = new System.Windows.Forms.CheckBox();
             this.checkBoxCO = new System.Windows.Forms.CheckBox();
             this.checkBoxO3 = new System.Windows.Forms.CheckBox();
@@ -44,17 +44,15 @@
             this.dataGridViewUncommonEvents = new System.Windows.Forms.DataGridView();
             this.tabPageAlarmBetweenDates = new System.Windows.Forms.TabPage();
             this.dataGridViewAlarmsBetweenDates = new System.Windows.Forms.DataGridView();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.dateTimePickerAlarmBetweenDateEnd = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePickerAlarmBetweenDateBegin = new System.Windows.Forms.DateTimePicker();
+            this.labelEndDate = new System.Windows.Forms.Label();
+            this.dateTimePickerAlarmDateEnd = new System.Windows.Forms.DateTimePicker();
             this.tabPageRaisedAlarm = new System.Windows.Forms.TabPage();
             this.labelRaisedAlarmsDate = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.labelRaisedAlarmsCityName = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.labelChooseDate = new System.Windows.Forms.Label();
-            this.dateTimeRaisedAlarms = new System.Windows.Forms.DateTimePicker();
+            this.dateTimeMainPicker = new System.Windows.Forms.DateTimePicker();
             this.labelCities = new System.Windows.Forms.Label();
             this.comboBoxCities = new System.Windows.Forms.ComboBox();
             this.dataGridViewRaisedAlarms = new System.Windows.Forms.DataGridView();
@@ -67,6 +65,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxSingleCitySelectCity = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.labelDateStart = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.labelCityOrCities = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.labelDateEnd = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.tabPageUncommonEvents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUncommonEvents)).BeginInit();
@@ -87,7 +91,7 @@
             this.checkBoxNO2.Checked = true;
             this.checkBoxNO2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxNO2.Enabled = false;
-            this.checkBoxNO2.Location = new System.Drawing.Point(733, 178);
+            this.checkBoxNO2.Location = new System.Drawing.Point(733, 225);
             this.checkBoxNO2.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxNO2.Name = "checkBoxNO2";
             this.checkBoxNO2.Size = new System.Drawing.Size(48, 17);
@@ -102,7 +106,7 @@
             this.checkBoxCO.Checked = true;
             this.checkBoxCO.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxCO.Enabled = false;
-            this.checkBoxCO.Location = new System.Drawing.Point(733, 199);
+            this.checkBoxCO.Location = new System.Drawing.Point(733, 246);
             this.checkBoxCO.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxCO.Name = "checkBoxCO";
             this.checkBoxCO.Size = new System.Drawing.Size(41, 17);
@@ -117,7 +121,7 @@
             this.checkBoxO3.Checked = true;
             this.checkBoxO3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxO3.Enabled = false;
-            this.checkBoxO3.Location = new System.Drawing.Point(733, 220);
+            this.checkBoxO3.Location = new System.Drawing.Point(733, 267);
             this.checkBoxO3.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxO3.Name = "checkBoxO3";
             this.checkBoxO3.Size = new System.Drawing.Size(40, 17);
@@ -129,7 +133,7 @@
             // labelParameters
             // 
             this.labelParameters.AutoSize = true;
-            this.labelParameters.Location = new System.Drawing.Point(730, 162);
+            this.labelParameters.Location = new System.Drawing.Point(730, 209);
             this.labelParameters.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelParameters.Name = "labelParameters";
             this.labelParameters.Size = new System.Drawing.Size(63, 13);
@@ -177,11 +181,13 @@
             // 
             // tabPageAlarmBetweenDates
             // 
-            this.tabPageAlarmBetweenDates.Controls.Add(this.dataGridViewAlarmsBetweenDates);
-            this.tabPageAlarmBetweenDates.Controls.Add(this.label4);
+            this.tabPageAlarmBetweenDates.Controls.Add(this.labelDateEnd);
+            this.tabPageAlarmBetweenDates.Controls.Add(this.label8);
+            this.tabPageAlarmBetweenDates.Controls.Add(this.labelDateStart);
             this.tabPageAlarmBetweenDates.Controls.Add(this.label3);
-            this.tabPageAlarmBetweenDates.Controls.Add(this.dateTimePickerAlarmBetweenDateEnd);
-            this.tabPageAlarmBetweenDates.Controls.Add(this.dateTimePickerAlarmBetweenDateBegin);
+            this.tabPageAlarmBetweenDates.Controls.Add(this.labelCityOrCities);
+            this.tabPageAlarmBetweenDates.Controls.Add(this.label5);
+            this.tabPageAlarmBetweenDates.Controls.Add(this.dataGridViewAlarmsBetweenDates);
             this.tabPageAlarmBetweenDates.Location = new System.Drawing.Point(4, 34);
             this.tabPageAlarmBetweenDates.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageAlarmBetweenDates.Name = "tabPageAlarmBetweenDates";
@@ -195,50 +201,32 @@
             // dataGridViewAlarmsBetweenDates
             // 
             this.dataGridViewAlarmsBetweenDates.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewAlarmsBetweenDates.Location = new System.Drawing.Point(0, 40);
+            this.dataGridViewAlarmsBetweenDates.Location = new System.Drawing.Point(0, 31);
             this.dataGridViewAlarmsBetweenDates.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridViewAlarmsBetweenDates.Name = "dataGridViewAlarmsBetweenDates";
             this.dataGridViewAlarmsBetweenDates.RowTemplate.Height = 24;
-            this.dataGridViewAlarmsBetweenDates.Size = new System.Drawing.Size(723, 337);
+            this.dataGridViewAlarmsBetweenDates.Size = new System.Drawing.Size(723, 346);
             this.dataGridViewAlarmsBetweenDates.TabIndex = 4;
             // 
-            // label4
+            // labelEndDate
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(368, 16);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(55, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "End Date:";
+            this.labelEndDate.AutoSize = true;
+            this.labelEndDate.Location = new System.Drawing.Point(730, 113);
+            this.labelEndDate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelEndDate.Name = "labelEndDate";
+            this.labelEndDate.Size = new System.Drawing.Size(55, 13);
+            this.labelEndDate.TabIndex = 3;
+            this.labelEndDate.Text = "End Date:";
             // 
-            // label3
+            // dateTimePickerAlarmDateEnd
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(82, 16);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(63, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Begin Date:";
-            // 
-            // dateTimePickerAlarmBetweenDateEnd
-            // 
-            this.dateTimePickerAlarmBetweenDateEnd.Location = new System.Drawing.Point(434, 16);
-            this.dateTimePickerAlarmBetweenDateEnd.Margin = new System.Windows.Forms.Padding(2);
-            this.dateTimePickerAlarmBetweenDateEnd.Name = "dateTimePickerAlarmBetweenDateEnd";
-            this.dateTimePickerAlarmBetweenDateEnd.Size = new System.Drawing.Size(151, 20);
-            this.dateTimePickerAlarmBetweenDateEnd.TabIndex = 1;
-            this.dateTimePickerAlarmBetweenDateEnd.ValueChanged += new System.EventHandler(this.DateTimePickerAlarmBetweenDateBegin_ValueChanged);
-            // 
-            // dateTimePickerAlarmBetweenDateBegin
-            // 
-            this.dateTimePickerAlarmBetweenDateBegin.Location = new System.Drawing.Point(148, 16);
-            this.dateTimePickerAlarmBetweenDateBegin.Margin = new System.Windows.Forms.Padding(2);
-            this.dateTimePickerAlarmBetweenDateBegin.Name = "dateTimePickerAlarmBetweenDateBegin";
-            this.dateTimePickerAlarmBetweenDateBegin.Size = new System.Drawing.Size(151, 20);
-            this.dateTimePickerAlarmBetweenDateBegin.TabIndex = 0;
-            this.dateTimePickerAlarmBetweenDateBegin.ValueChanged += new System.EventHandler(this.DateTimePickerAlarmBetweenDateBegin_ValueChanged);
+            this.dateTimePickerAlarmDateEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePickerAlarmDateEnd.Location = new System.Drawing.Point(734, 128);
+            this.dateTimePickerAlarmDateEnd.Margin = new System.Windows.Forms.Padding(2);
+            this.dateTimePickerAlarmDateEnd.Name = "dateTimePickerAlarmDateEnd";
+            this.dateTimePickerAlarmDateEnd.Size = new System.Drawing.Size(90, 20);
+            this.dateTimePickerAlarmDateEnd.TabIndex = 1;
+            this.dateTimePickerAlarmDateEnd.ValueChanged += new System.EventHandler(this.DateTimePickerAlarmBetweenDateBegin_ValueChanged);
             // 
             // tabPageRaisedAlarm
             // 
@@ -308,21 +296,21 @@
             this.labelChooseDate.TabIndex = 4;
             this.labelChooseDate.Text = "Choose a date:";
             // 
-            // dateTimeRaisedAlarms
+            // dateTimeMainPicker
             // 
-            this.dateTimeRaisedAlarms.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimeRaisedAlarms.Location = new System.Drawing.Point(733, 82);
-            this.dateTimeRaisedAlarms.Margin = new System.Windows.Forms.Padding(2);
-            this.dateTimeRaisedAlarms.Name = "dateTimeRaisedAlarms";
-            this.dateTimeRaisedAlarms.Size = new System.Drawing.Size(91, 20);
-            this.dateTimeRaisedAlarms.TabIndex = 3;
-            this.dateTimeRaisedAlarms.ValueChanged += new System.EventHandler(this.dateTimeRaisedAlarms_ValueChanged);
+            this.dateTimeMainPicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimeMainPicker.Location = new System.Drawing.Point(733, 82);
+            this.dateTimeMainPicker.Margin = new System.Windows.Forms.Padding(2);
+            this.dateTimeMainPicker.Name = "dateTimeMainPicker";
+            this.dateTimeMainPicker.Size = new System.Drawing.Size(91, 20);
+            this.dateTimeMainPicker.TabIndex = 3;
+            this.dateTimeMainPicker.ValueChanged += new System.EventHandler(this.dateTimeRaisedAlarms_ValueChanged);
             // 
             // labelCities
             // 
             this.labelCities.AutoSize = true;
             this.labelCities.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCities.Location = new System.Drawing.Point(730, 113);
+            this.labelCities.Location = new System.Drawing.Point(730, 160);
             this.labelCities.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelCities.Name = "labelCities";
             this.labelCities.Size = new System.Drawing.Size(40, 15);
@@ -332,13 +320,12 @@
             // comboBoxCities
             // 
             this.comboBoxCities.FormattingEnabled = true;
-            this.comboBoxCities.Location = new System.Drawing.Point(733, 130);
+            this.comboBoxCities.Location = new System.Drawing.Point(733, 177);
             this.comboBoxCities.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxCities.Name = "comboBoxCities";
             this.comboBoxCities.Size = new System.Drawing.Size(92, 21);
             this.comboBoxCities.TabIndex = 1;
-            this.comboBoxCities.SelectedIndexChanged += new System.EventHandler(this.TabRaisedAlarms_Enter);
-            this.comboBoxCities.TextUpdate += new System.EventHandler(this.comboBoxCities_TextUpdate);
+            this.comboBoxCities.SelectedIndexChanged += new System.EventHandler(this.comboBoxCities_SelectedIndexChanged);
             // 
             // dataGridViewRaisedAlarms
             // 
@@ -369,17 +356,17 @@
             // 
             // chart2
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart2.Legends.Add(legend3);
+            chartArea9.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea9);
+            legend9.Name = "Legend1";
+            this.chart2.Legends.Add(legend9);
             this.chart2.Location = new System.Drawing.Point(52, 47);
             this.chart2.Margin = new System.Windows.Forms.Padding(2);
             this.chart2.Name = "chart2";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart2.Series.Add(series3);
+            series9.ChartArea = "ChartArea1";
+            series9.Legend = "Legend1";
+            series9.Name = "Series1";
+            this.chart2.Series.Add(series9);
             this.chart2.Size = new System.Drawing.Size(624, 290);
             this.chart2.TabIndex = 1;
             this.chart2.Text = "chart2";
@@ -414,17 +401,17 @@
             // 
             // chartSingleCity
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chartSingleCity.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chartSingleCity.Legends.Add(legend4);
+            chartArea10.Name = "ChartArea1";
+            this.chartSingleCity.ChartAreas.Add(chartArea10);
+            legend10.Name = "Legend1";
+            this.chartSingleCity.Legends.Add(legend10);
             this.chartSingleCity.Location = new System.Drawing.Point(56, 70);
             this.chartSingleCity.Margin = new System.Windows.Forms.Padding(2);
             this.chartSingleCity.Name = "chartSingleCity";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chartSingleCity.Series.Add(series4);
+            series10.ChartArea = "ChartArea1";
+            series10.Legend = "Legend1";
+            series10.Name = "Series1";
+            this.chartSingleCity.Series.Add(series10);
             this.chartSingleCity.Size = new System.Drawing.Size(517, 244);
             this.chartSingleCity.TabIndex = 4;
             this.chartSingleCity.Text = "chart1";
@@ -480,6 +467,66 @@
             this.tabControl1.Size = new System.Drawing.Size(731, 415);
             this.tabControl1.TabIndex = 0;
             // 
+            // labelDateStart
+            // 
+            this.labelDateStart.AutoSize = true;
+            this.labelDateStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDateStart.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.labelDateStart.Location = new System.Drawing.Point(214, 11);
+            this.labelDateStart.Name = "labelDateStart";
+            this.labelDateStart.Size = new System.Drawing.Size(51, 15);
+            this.labelDateStart.TabIndex = 12;
+            this.labelDateStart.Text = "<date>";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(188, 13);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(33, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "From:";
+            // 
+            // labelCityOrCities
+            // 
+            this.labelCityOrCities.AutoSize = true;
+            this.labelCityOrCities.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCityOrCities.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.labelCityOrCities.Location = new System.Drawing.Point(52, 11);
+            this.labelCityOrCities.Name = "labelCityOrCities";
+            this.labelCityOrCities.Size = new System.Drawing.Size(44, 15);
+            this.labelCityOrCities.TabIndex = 10;
+            this.labelCityOrCities.Text = "<city>";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(2, 13);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Alarms at ";
+            // 
+            // labelDateEnd
+            // 
+            this.labelDateEnd.AutoSize = true;
+            this.labelDateEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDateEnd.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.labelDateEnd.Location = new System.Drawing.Point(320, 11);
+            this.labelDateEnd.Name = "labelDateEnd";
+            this.labelDateEnd.Size = new System.Drawing.Size(51, 15);
+            this.labelDateEnd.TabIndex = 14;
+            this.labelDateEnd.Text = "<date>";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(304, 13);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(19, 13);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "to:";
+            // 
             // FormAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -487,12 +534,14 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(836, 415);
             this.Controls.Add(this.labelParameters);
+            this.Controls.Add(this.labelEndDate);
             this.Controls.Add(this.checkBoxO3);
             this.Controls.Add(this.checkBoxCO);
+            this.Controls.Add(this.dateTimePickerAlarmDateEnd);
             this.Controls.Add(this.checkBoxNO2);
             this.Controls.Add(this.comboBoxCities);
             this.Controls.Add(this.labelCities);
-            this.Controls.Add(this.dateTimeRaisedAlarms);
+            this.Controls.Add(this.dateTimeMainPicker);
             this.Controls.Add(this.labelChooseDate);
             this.Controls.Add(this.tabControl1);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -536,16 +585,14 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TabPage tabPageRaisedAlarm;
         private System.Windows.Forms.Label labelChooseDate;
-        private System.Windows.Forms.DateTimePicker dateTimeRaisedAlarms;
+        private System.Windows.Forms.DateTimePicker dateTimeMainPicker;
         private System.Windows.Forms.Label labelCities;
         private System.Windows.Forms.ComboBox comboBoxCities;
         private System.Windows.Forms.DataGridView dataGridViewRaisedAlarms;
         private System.Windows.Forms.TabPage tabPageAlarmBetweenDates;
         private System.Windows.Forms.DataGridView dataGridViewAlarmsBetweenDates;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DateTimePicker dateTimePickerAlarmBetweenDateEnd;
-        private System.Windows.Forms.DateTimePicker dateTimePickerAlarmBetweenDateBegin;
+        private System.Windows.Forms.Label labelEndDate;
+        private System.Windows.Forms.DateTimePicker dateTimePickerAlarmDateEnd;
         private System.Windows.Forms.TabPage tabPageUncommonEvents;
         private System.Windows.Forms.DataGridView dataGridViewUncommonEvents;
         private System.Windows.Forms.TabPage tabPageAbout;
@@ -553,6 +600,12 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label labelRaisedAlarmsCityName;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labelDateEnd;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label labelDateStart;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelCityOrCities;
+        private System.Windows.Forms.Label label5;
     }
 }
 

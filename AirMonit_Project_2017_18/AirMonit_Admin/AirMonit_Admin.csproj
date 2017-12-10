@@ -79,6 +79,9 @@
     <None Include="Connected Services\AitMonitService\AirMonit_Admin.AitMonitService.InfoBetweenDate.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\AitMonitService\AirMonit_Admin.AitMonitService.UncommonEvents.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\AitMonitService\AirMonit_Service.wsdl" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

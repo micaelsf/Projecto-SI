@@ -117,10 +117,41 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="getDailyAlarmsByCityBetweenDates">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="city" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
+            <xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getDailyAlarmsByCityBetweenDatesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/AirMonit_Service" minOccurs="0" name="getDailyAlarmsByCityBetweenDatesResult" nillable="true" type="q8:ArrayOfAlarmLog" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getUncommonEvents">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="city" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="dateTime" type="xs:dateTime" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getUncommonEventsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/AirMonit_Service" minOccurs="0" name="getUncommonEventsResult" nillable="true" type="q9:ArrayOfUncommonEvents" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="storeUncommonEvent">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/AirMonit_Service" minOccurs="0" name="userInfo" nillable="true" type="q8:UncommonEvents" />
+            <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/AirMonit_Service" minOccurs="0" name="userInfo" nillable="true" type="q10:UncommonEvents" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -203,6 +234,12 @@
         </xs:sequence>
       </xs:complexType>
       <xs:element name="AlarmLog" nillable="true" type="tns:AlarmLog" />
+      <xs:complexType name="ArrayOfUncommonEvents">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="UncommonEvents" nillable="true" type="tns:UncommonEvents" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfUncommonEvents" nillable="true" type="tns:ArrayOfUncommonEvents" />
       <xs:complexType name="UncommonEvents">
         <xs:sequence>
           <xs:element minOccurs="0" name="CityName" nillable="true" type="xs:string" />
@@ -258,6 +295,18 @@
   <wsdl:message name="IAirMonit_AccessingData_getDailyAlarmsByCity_OutputMessage">
     <wsdl:part name="parameters" element="tns:getDailyAlarmsByCityResponse" />
   </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getDailyAlarmsByCityBetweenDates_InputMessage">
+    <wsdl:part name="parameters" element="tns:getDailyAlarmsByCityBetweenDates" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getDailyAlarmsByCityBetweenDates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getDailyAlarmsByCityBetweenDatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getUncommonEvents_InputMessage">
+    <wsdl:part name="parameters" element="tns:getUncommonEvents" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getUncommonEvents_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getUncommonEventsResponse" />
+  </wsdl:message>
   <wsdl:message name="IAirMonit_StoreData_storeUncommonEvent_InputMessage">
     <wsdl:part name="parameters" element="tns:storeUncommonEvent" />
   </wsdl:message>
@@ -292,6 +341,14 @@
     <wsdl:operation name="getDailyAlarmsByCity">
       <wsdl:input wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCity" message="tns:IAirMonit_AccessingData_getDailyAlarmsByCity_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCityResponse" message="tns:IAirMonit_AccessingData_getDailyAlarmsByCity_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getDailyAlarmsByCityBetweenDates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCityBetweenDates" message="tns:IAirMonit_AccessingData_getDailyAlarmsByCityBetweenDates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCityBetweenDatesResponse" message="tns:IAirMonit_AccessingData_getDailyAlarmsByCityBetweenDates_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getUncommonEvents">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getUncommonEvents" message="tns:IAirMonit_AccessingData_getUncommonEvents_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getUncommonEventsResponse" message="tns:IAirMonit_AccessingData_getUncommonEvents_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IAirMonit_StoreData">
@@ -358,6 +415,24 @@
     </wsdl:operation>
     <wsdl:operation name="getDailyAlarmsByCity">
       <soap:operation soapAction="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDailyAlarmsByCityBetweenDates">
+      <soap:operation soapAction="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCityBetweenDates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUncommonEvents">
+      <soap:operation soapAction="http://tempuri.org/IAirMonit_AccessingData/getUncommonEvents" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

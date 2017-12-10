@@ -353,6 +353,20 @@ namespace AirMonit_Admin.AitMonitService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCity", ReplyAction="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCityResponse")]
         System.Threading.Tasks.Task<AirMonit_Admin.AitMonitService.AlarmLog[]> getDailyAlarmsByCityAsync(string city, System.DateTime dateTime);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCityBetweenDates", ReplyAction="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCityBetweenDatesRespon" +
+            "se")]
+        AirMonit_Admin.AitMonitService.AlarmLog[] getDailyAlarmsByCityBetweenDates(string city, System.DateTime startDate, System.DateTime endDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCityBetweenDates", ReplyAction="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCityBetweenDatesRespon" +
+            "se")]
+        System.Threading.Tasks.Task<AirMonit_Admin.AitMonitService.AlarmLog[]> getDailyAlarmsByCityBetweenDatesAsync(string city, System.DateTime startDate, System.DateTime endDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAirMonit_AccessingData/getUncommonEvents", ReplyAction="http://tempuri.org/IAirMonit_AccessingData/getUncommonEventsResponse")]
+        AirMonit_Admin.AitMonitService.UncommonEvents[] getUncommonEvents(string city, System.DateTime dateTime);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAirMonit_AccessingData/getUncommonEvents", ReplyAction="http://tempuri.org/IAirMonit_AccessingData/getUncommonEventsResponse")]
+        System.Threading.Tasks.Task<AirMonit_Admin.AitMonitService.UncommonEvents[]> getUncommonEventsAsync(string city, System.DateTime dateTime);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -436,6 +450,22 @@ namespace AirMonit_Admin.AitMonitService {
         
         public System.Threading.Tasks.Task<AirMonit_Admin.AitMonitService.AlarmLog[]> getDailyAlarmsByCityAsync(string city, System.DateTime dateTime) {
             return base.Channel.getDailyAlarmsByCityAsync(city, dateTime);
+        }
+        
+        public AirMonit_Admin.AitMonitService.AlarmLog[] getDailyAlarmsByCityBetweenDates(string city, System.DateTime startDate, System.DateTime endDate) {
+            return base.Channel.getDailyAlarmsByCityBetweenDates(city, startDate, endDate);
+        }
+        
+        public System.Threading.Tasks.Task<AirMonit_Admin.AitMonitService.AlarmLog[]> getDailyAlarmsByCityBetweenDatesAsync(string city, System.DateTime startDate, System.DateTime endDate) {
+            return base.Channel.getDailyAlarmsByCityBetweenDatesAsync(city, startDate, endDate);
+        }
+        
+        public AirMonit_Admin.AitMonitService.UncommonEvents[] getUncommonEvents(string city, System.DateTime dateTime) {
+            return base.Channel.getUncommonEvents(city, dateTime);
+        }
+        
+        public System.Threading.Tasks.Task<AirMonit_Admin.AitMonitService.UncommonEvents[]> getUncommonEventsAsync(string city, System.DateTime dateTime) {
+            return base.Channel.getUncommonEventsAsync(city, dateTime);
         }
     }
     
