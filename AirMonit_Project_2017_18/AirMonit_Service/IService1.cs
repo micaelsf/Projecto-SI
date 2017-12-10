@@ -28,6 +28,12 @@ namespace AirMonit_Service
 
         [OperationContract]
         List<AlarmLog> getDailyAlarmsByCity(string city, DateTime dateTime);
+        [OperationContract]
+        List<AlarmLog> getDailyAlarmsByCityBetweenDates(string city, DateTime startDate, DateTime endDate);
+
+        [OperationContract]
+        List<UncommonEvents> getUncommonEvents(string city, DateTime dateTime);
+
 
     }
 

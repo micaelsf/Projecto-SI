@@ -48,7 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlarmLog_.cs" />
     <Compile Include="Connected Services\AitMonitService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

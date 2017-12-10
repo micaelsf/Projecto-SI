@@ -71,6 +71,89 @@ namespace AirMonit_Service
             return linesReturned;
         }
 
+        public List<UncommonEvents> getUncommonEvents(string cityName, DateTime dateTime)
+        {
+            string query;
+            bool allcity = false;
+            int cityId = -1;
+
+            if (dateTime == null)
+            {
+                return null;
+            }
+
+            if (cityName == null)
+            {
+                query = string.Format(@"
+                        SELECT City_Name, Type, DateTime, Temperature, UserName, Description 
+                        FROM {0} uevt JOIN {1} ct ON uevt.CityId = ct.Id
+                        WHERE CONVERT(varchar, DateTime, 23) = @date 
+                        ORDER BY 3 DESC", DatabaseTableConstant.tableUncommonEvents, DatabaseTableConstant.tableCity);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                        SELECT City_Name, Type, DateTime, Temperature, UserName, Description 
+                        FROM {0} uevt JOIN {1} ct ON uevt.CityId = ct.Id
+                        WHERE CONVERT(varchar, DateTime, 23) = @date 
+                        AND CityId = @cityId 
+                        ORDER BY 3 DESC", DatabaseTableConstant.tableUncommonEvents, DatabaseTableConstant.tableCity);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
+                {
+                    return null;
+                }
+            }
+
+            List<UncommonEvents> events = new List<UncommonEvents>();
+
+            string date = dateTime.ToString("yyyy-MM-dd");
+
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("date", date);
+                if (!allcity)
+                {
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
+
+                try
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            UncommonEvents event_ = new UncommonEvents
+                            {
+                                CityName = reader["City_Name"] + "",
+                                Type = reader["Type"] + "",
+                                DateTime = (DateTime)reader["DateTime"],
+                                Temperature = float.Parse(reader["Temperature"] + ""),
+                                Username = reader["UserName"] + "",
+                                Description = reader["Description"] + ""
+                            };
+
+                            events.Add(event_);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine((e.ToString()));
+                }
+
+                return events;
+            }
+        }
+
         public List<AlarmLog> getDailyAlarmsByCity(string cityName, DateTime dateTime)
         {
             string query = string.Format(@"
@@ -112,10 +195,88 @@ namespace AirMonit_Service
                         {
                             AlarmLog alarm = new AlarmLog
                             {
-                                Description = (string)reader["Description"],
+                                Description = reader["Description"] + "",
                                 DateTime = (DateTime)reader["DateTime"],
-                                Parameter = (string)reader["Param"],
-                                Value = (int)reader["Value"]
+                                Parameter = reader["Param"] + "",
+                                Value = int.Parse(reader["Value"] + "")
+                            };
+
+                            dataAlarms.Add(alarm);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine((e.ToString()));
+                }
+
+                return dataAlarms;
+            }
+        }
+
+        public List<AlarmLog> getDailyAlarmsByCityBetweenDates(string cityName, DateTime startDate, DateTime endDate)
+        {
+            string query;
+            bool allcity = false;
+            int cityId = -1;
+
+            if (startDate == null || endDate == null || startDate > endDate)
+            {
+                return null;
+            }
+
+            if (cityName == null)
+            {
+                query = string.Format(@"
+                    SELECT al.Description, al.DateTime, s.Param, s.Value 
+                    FROM {0} al JOIN {1} s ON al.SensorDataUID = s.SensorDataUID 
+                    WHERE al.DateTime >= @startDate AND al.DateTime <= @endDate
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableAlarms, DatabaseTableConstant.tableSensorData);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                    SELECT al.Description, al.DateTime, s.Param, s.Value 
+                    FROM {0} al JOIN {1} s ON al.SensorDataUID = s.SensorDataUID 
+                    WHERE CityId = @cityId AND al.DateTime >= @startDate AND al.DateTime <= @endDate
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableAlarms, DatabaseTableConstant.tableSensorData);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
+                {
+                    return null;
+                }
+            }
+
+            List<AlarmLog> dataAlarms = new List<AlarmLog>();
+
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                if (!allcity)
+                {
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
+                command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd 00:00:00"));
+                command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd 23:59:59"));
+
+                try
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            AlarmLog alarm = new AlarmLog
+                            {
+                                Description = reader["Description"] + "",
+                                DateTime = (DateTime)reader["DateTime"],
+                                Parameter = reader["Param"] + "",
+                                Value = int.Parse(reader["Value"] + "")
                             };
 
                             dataAlarms.Add(alarm);

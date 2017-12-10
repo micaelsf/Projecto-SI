@@ -4,7 +4,7 @@
     <rule condition="between">
       <description>Qualidade do ar: Muito má</description>
       <value>-1</value>
-      <minValue>600</minValue>
+      <minValue>400</minValue>
       <maxValue>800</maxValue>
     </rule>
     <rule condition="lessThan">
@@ -26,6 +26,12 @@
       <value>11</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
+    </rule>
+    <rule condition="between">
+      <description>Qualidade do ar: Razoável</description>
+      <value>-1</value>
+      <minValue>2</minValue>
+      <maxValue>10</maxValue>
     </rule>
   </parameter>
   <parameter type="O3" active="true">
