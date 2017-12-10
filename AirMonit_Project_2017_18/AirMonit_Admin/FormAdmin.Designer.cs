@@ -28,12 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.checkBoxNO2 = new System.Windows.Forms.CheckBox();
             this.checkBoxCO = new System.Windows.Forms.CheckBox();
             this.checkBoxO3 = new System.Windows.Forms.CheckBox();
@@ -55,8 +53,8 @@
             this.comboBoxCities = new System.Windows.Forms.ComboBox();
             this.dataGridViewRaisedAlarms = new System.Windows.Forms.DataGridView();
             this.tabPageAllCities = new System.Windows.Forms.TabPage();
-            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.button1 = new System.Windows.Forms.Button();
+            this.chartAllCities = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.buttonChartAllCities = new System.Windows.Forms.Button();
             this.tabPageSingleCity = new System.Windows.Forms.TabPage();
             this.chartSingleCity = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.buttonChart = new System.Windows.Forms.Button();
@@ -71,7 +69,7 @@
             this.tabPageRaisedAlarm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRaisedAlarms)).BeginInit();
             this.tabPageAllCities.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartAllCities)).BeginInit();
             this.tabPageSingleCity.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartSingleCity)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -308,8 +306,8 @@
             // 
             // tabPageAllCities
             // 
-            this.tabPageAllCities.Controls.Add(this.chart2);
-            this.tabPageAllCities.Controls.Add(this.button1);
+            this.tabPageAllCities.Controls.Add(this.chartAllCities);
+            this.tabPageAllCities.Controls.Add(this.buttonChartAllCities);
             this.tabPageAllCities.Location = new System.Drawing.Point(4, 34);
             this.tabPageAllCities.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageAllCities.Name = "tabPageAllCities";
@@ -319,34 +317,31 @@
             this.tabPageAllCities.Text = "All Cities";
             this.tabPageAllCities.UseVisualStyleBackColor = true;
             // 
-            // chart2
+            // chartAllCities
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart2.Legends.Add(legend2);
-            this.chart2.Location = new System.Drawing.Point(52, 47);
-            this.chart2.Margin = new System.Windows.Forms.Padding(2);
-            this.chart2.Name = "chart2";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart2.Series.Add(series2);
-            this.chart2.Size = new System.Drawing.Size(624, 290);
-            this.chart2.TabIndex = 1;
-            this.chart2.Text = "chart2";
+            chartArea3.Name = "ChartAllCities";
+            this.chartAllCities.ChartAreas.Add(chartArea3);
+            legend3.Name = "Statical information All Cities";
+            this.chartAllCities.Legends.Add(legend3);
+            this.chartAllCities.Location = new System.Drawing.Point(52, 47);
+            this.chartAllCities.Margin = new System.Windows.Forms.Padding(2);
+            this.chartAllCities.Name = "chartAllCities";
+            this.chartAllCities.Size = new System.Drawing.Size(624, 290);
+            this.chartAllCities.TabIndex = 1;
+            this.chartAllCities.Text = "chart All Cities";
             // 
-            // button1
+            // buttonChartAllCities
             // 
-            this.button1.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button1.Location = new System.Drawing.Point(344, 342);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(78, 19);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Show Plot";
-            this.button1.UseVisualStyleBackColor = false;
+            this.buttonChartAllCities.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.buttonChartAllCities.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonChartAllCities.Location = new System.Drawing.Point(344, 342);
+            this.buttonChartAllCities.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonChartAllCities.Name = "buttonChartAllCities";
+            this.buttonChartAllCities.Size = new System.Drawing.Size(78, 19);
+            this.buttonChartAllCities.TabIndex = 0;
+            this.buttonChartAllCities.Text = "Show Plot";
+            this.buttonChartAllCities.UseVisualStyleBackColor = false;
+            this.buttonChartAllCities.Click += new System.EventHandler(this.ButtonChartAllCities_Click);
             // 
             // tabPageSingleCity
             // 
@@ -366,20 +361,16 @@
             // 
             // chartSingleCity
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartSingleCity.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartSingleCity.Legends.Add(legend1);
+            chartArea4.Name = "chartSingleCity";
+            this.chartSingleCity.ChartAreas.Add(chartArea4);
+            legend4.Name = "Statical information Single City";
+            this.chartSingleCity.Legends.Add(legend4);
             this.chartSingleCity.Location = new System.Drawing.Point(56, 70);
             this.chartSingleCity.Margin = new System.Windows.Forms.Padding(2);
             this.chartSingleCity.Name = "chartSingleCity";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartSingleCity.Series.Add(series1);
             this.chartSingleCity.Size = new System.Drawing.Size(517, 244);
             this.chartSingleCity.TabIndex = 4;
-            this.chartSingleCity.Text = "chart1";
+            this.chartSingleCity.Text = "Single City";
             // 
             // buttonChart
             // 
@@ -457,7 +448,7 @@
             this.tabPageRaisedAlarm.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRaisedAlarms)).EndInit();
             this.tabPageAllCities.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartAllCities)).EndInit();
             this.tabPageSingleCity.ResumeLayout(false);
             this.tabPageSingleCity.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartSingleCity)).EndInit();
@@ -480,8 +471,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxSingleCitySelectCity;
         private System.Windows.Forms.TabPage tabPageAllCities;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartAllCities;
+        private System.Windows.Forms.Button buttonChartAllCities;
         private System.Windows.Forms.TabPage tabPageRaisedAlarm;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DateTimePicker dateTimeRaisedAlarms;

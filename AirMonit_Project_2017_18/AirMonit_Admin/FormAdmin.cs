@@ -230,11 +230,14 @@ namespace AirMonit_Admin
         {
             foreach (TabPage tbp in tabControl1.TabPages)
             {
-                foreach (Control ctrl in tabControl1.SelectedTab.Controls)    
+                if (tbp.Name == tabControl1.SelectedTab.Name)
                 {
-                    if (ctrl is DataGridView)
+                    foreach (Control ctrl in tbp.Controls)
                     {
-                        return (DataGridView)ctrl;
+                        if (ctrl is DataGridView)
+                        {
+                            return (DataGridView)ctrl;
+                        }
                     }
                 }
             }
@@ -269,22 +272,81 @@ namespace AirMonit_Admin
         private void ButtonChart_Click(object sender, EventArgs e)
         {
             chartSingleCity.Series.Clear();
+            int periodicity;
+            periodicity = 24; //semana 7 ou dia 24
 
-            chartSingleCity.Series.Add("City");
-            chartSingleCity.Series.Add("Alarms");
+            if (checkBoxNO2.Checked == true)
+            {
+                chartSingleCity.Series.Add("NO2");
+                chartSingleCity.Series["NO2"].SetDefault(true);
+                chartSingleCity.Series["NO2"].Enabled = true;
+            }
 
-            chartSingleCity.Series["City"].SetDefault(true);
-            chartSingleCity.Series["City"].Enabled = true;
+            if (checkBoxCO.Checked == true)
+            {
+                chartSingleCity.Series.Add("CO");
+                chartSingleCity.Series["CO"].SetDefault(true);
+                chartSingleCity.Series["CO"].Enabled = true;
+            }
+
+            if (checkBoxO3.Checked == true)
+            {
+                chartSingleCity.Series.Add("O3");
+                chartSingleCity.Series["O3"].SetDefault(true);
+                chartSingleCity.Series["O3"].Enabled = true;
+            }
+
+
             chartSingleCity.Visible = true;
 
- 
-            chartSingleCity.Series["City"].Points.AddXY(1, 10);
-            chartSingleCity.Series["City"].Points.AddXY(2, 9);
-            chartSingleCity.Series["City"].Points.AddXY(3, 8);
+            for (int i = 0; i <= periodicity; i++)
+            {
+                if(checkBoxCO.Checked == true)
+                {
+                    chartSingleCity.Series["NO2"].Points.AddXY(1, 1250+i);
+                }
 
+                if (checkBoxCO.Checked == true)
+                {
+                    chartSingleCity.Series["CO"].Points.AddXY(2, 500+i);
+                }
+
+                if (checkBoxCO.Checked == true)
+                {
+                    chartSingleCity.Series["O3"].Points.AddXY(3, 800+i);
+                }
+
+            }
 
             chartSingleCity.Show();
         }
 
+        private void ButtonChartAllCities_Click(object sender, EventArgs e)
+        {
+            chartAllCities.Series.Clear();
+
+            chartAllCities.Series.Add("NO2");
+            chartAllCities.Series.Add("CO");
+            chartAllCities.Series.Add("O3");
+
+
+            chartAllCities.Series["NO2"].SetDefault(true);
+            chartAllCities.Series["NO2"].Enabled = true;
+
+            chartAllCities.Series["CO"].SetDefault(true);
+            chartAllCities.Series["CO"].Enabled = true;
+
+            chartAllCities.Series["O3"].SetDefault(true);
+            chartAllCities.Series["O3"].Enabled = true;
+
+            chartAllCities.Visible = true;
+
+            chartAllCities.Series["NO2"].Points.AddXY(1, 1250);
+            chartAllCities.Series["CO"].Points.AddXY(2, 500);
+            chartAllCities.Series["O3"].Points.AddXY(3, 800);
+
+
+            chartAllCities.Show();
+        }
     }
 }
