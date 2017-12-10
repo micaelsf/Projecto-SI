@@ -133,18 +133,19 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="getUncommonEvents">
+      <xs:element name="getUncommonEventsBetweenDates">
         <xs:complexType>
           <xs:sequence>
-            <xs:element minOccurs="0" name="city" nillable="true" type="xs:string" />
-            <xs:element minOccurs="0" name="dateTime" type="xs:dateTime" />
+            <xs:element minOccurs="0" name="cityName" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
+            <xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="getUncommonEventsResponse">
+      <xs:element name="getUncommonEventsBetweenDatesResponse">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/AirMonit_Service" minOccurs="0" name="getUncommonEventsResult" nillable="true" type="q9:ArrayOfUncommonEvents" />
+            <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/AirMonit_Service" minOccurs="0" name="getUncommonEventsBetweenDatesResult" nillable="true" type="q9:ArrayOfUncommonEvents" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -227,6 +228,7 @@
       <xs:element name="ArrayOfAlarmLog" nillable="true" type="tns:ArrayOfAlarmLog" />
       <xs:complexType name="AlarmLog">
         <xs:sequence>
+          <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="DateTime" type="xs:dateTime" />
           <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Parameter" nillable="true" type="xs:string" />
@@ -301,11 +303,11 @@
   <wsdl:message name="IAirMonit_AccessingData_getDailyAlarmsByCityBetweenDates_OutputMessage">
     <wsdl:part name="parameters" element="tns:getDailyAlarmsByCityBetweenDatesResponse" />
   </wsdl:message>
-  <wsdl:message name="IAirMonit_AccessingData_getUncommonEvents_InputMessage">
-    <wsdl:part name="parameters" element="tns:getUncommonEvents" />
+  <wsdl:message name="IAirMonit_AccessingData_getUncommonEventsBetweenDates_InputMessage">
+    <wsdl:part name="parameters" element="tns:getUncommonEventsBetweenDates" />
   </wsdl:message>
-  <wsdl:message name="IAirMonit_AccessingData_getUncommonEvents_OutputMessage">
-    <wsdl:part name="parameters" element="tns:getUncommonEventsResponse" />
+  <wsdl:message name="IAirMonit_AccessingData_getUncommonEventsBetweenDates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getUncommonEventsBetweenDatesResponse" />
   </wsdl:message>
   <wsdl:message name="IAirMonit_StoreData_storeUncommonEvent_InputMessage">
     <wsdl:part name="parameters" element="tns:storeUncommonEvent" />
@@ -346,9 +348,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCityBetweenDates" message="tns:IAirMonit_AccessingData_getDailyAlarmsByCityBetweenDates_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCityBetweenDatesResponse" message="tns:IAirMonit_AccessingData_getDailyAlarmsByCityBetweenDates_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="getUncommonEvents">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getUncommonEvents" message="tns:IAirMonit_AccessingData_getUncommonEvents_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getUncommonEventsResponse" message="tns:IAirMonit_AccessingData_getUncommonEvents_OutputMessage" />
+    <wsdl:operation name="getUncommonEventsBetweenDates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getUncommonEventsBetweenDates" message="tns:IAirMonit_AccessingData_getUncommonEventsBetweenDates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getUncommonEventsBetweenDatesResponse" message="tns:IAirMonit_AccessingData_getUncommonEventsBetweenDates_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IAirMonit_StoreData">
@@ -431,8 +433,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getUncommonEvents">
-      <soap:operation soapAction="http://tempuri.org/IAirMonit_AccessingData/getUncommonEvents" style="document" />
+    <wsdl:operation name="getUncommonEventsBetweenDates">
+      <soap:operation soapAction="http://tempuri.org/IAirMonit_AccessingData/getUncommonEventsBetweenDates" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

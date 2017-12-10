@@ -32,7 +32,7 @@ namespace AirMonit_Service
         List<AlarmLog> getDailyAlarmsByCityBetweenDates(string city, DateTime startDate, DateTime endDate);
 
         [OperationContract]
-        List<UncommonEvents> getUncommonEvents(string city, DateTime dateTime);
+        List<UncommonEvents> getUncommonEventsBetweenDates(string cityName, DateTime startDate, DateTime endDate);
 
 
     }
@@ -66,6 +66,8 @@ namespace AirMonit_Service
     {
         [DataMember]
         public string Description { get; set; }
+        [DataMember]
+        public string City { get; set; }
         [DataMember]
         public DateTime DateTime { get; set; }
         [DataMember]

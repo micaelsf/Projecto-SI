@@ -100,6 +100,9 @@ namespace AirMonit_Admin.AitMonitService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime DateTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -118,6 +121,19 @@ namespace AirMonit_Admin.AitMonitService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string City {
+            get {
+                return this.CityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CityField, value) != true)) {
+                    this.CityField = value;
+                    this.RaisePropertyChanged("City");
+                }
             }
         }
         
@@ -362,11 +378,11 @@ namespace AirMonit_Admin.AitMonitService {
             "se")]
         System.Threading.Tasks.Task<AirMonit_Admin.AitMonitService.AlarmLog[]> getDailyAlarmsByCityBetweenDatesAsync(string city, System.DateTime startDate, System.DateTime endDate);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAirMonit_AccessingData/getUncommonEvents", ReplyAction="http://tempuri.org/IAirMonit_AccessingData/getUncommonEventsResponse")]
-        AirMonit_Admin.AitMonitService.UncommonEvents[] getUncommonEvents(string city, System.DateTime dateTime);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAirMonit_AccessingData/getUncommonEventsBetweenDates", ReplyAction="http://tempuri.org/IAirMonit_AccessingData/getUncommonEventsBetweenDatesResponse")]
+        AirMonit_Admin.AitMonitService.UncommonEvents[] getUncommonEventsBetweenDates(string cityName, System.DateTime startDate, System.DateTime endDate);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAirMonit_AccessingData/getUncommonEvents", ReplyAction="http://tempuri.org/IAirMonit_AccessingData/getUncommonEventsResponse")]
-        System.Threading.Tasks.Task<AirMonit_Admin.AitMonitService.UncommonEvents[]> getUncommonEventsAsync(string city, System.DateTime dateTime);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAirMonit_AccessingData/getUncommonEventsBetweenDates", ReplyAction="http://tempuri.org/IAirMonit_AccessingData/getUncommonEventsBetweenDatesResponse")]
+        System.Threading.Tasks.Task<AirMonit_Admin.AitMonitService.UncommonEvents[]> getUncommonEventsBetweenDatesAsync(string cityName, System.DateTime startDate, System.DateTime endDate);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -460,12 +476,12 @@ namespace AirMonit_Admin.AitMonitService {
             return base.Channel.getDailyAlarmsByCityBetweenDatesAsync(city, startDate, endDate);
         }
         
-        public AirMonit_Admin.AitMonitService.UncommonEvents[] getUncommonEvents(string city, System.DateTime dateTime) {
-            return base.Channel.getUncommonEvents(city, dateTime);
+        public AirMonit_Admin.AitMonitService.UncommonEvents[] getUncommonEventsBetweenDates(string cityName, System.DateTime startDate, System.DateTime endDate) {
+            return base.Channel.getUncommonEventsBetweenDates(cityName, startDate, endDate);
         }
         
-        public System.Threading.Tasks.Task<AirMonit_Admin.AitMonitService.UncommonEvents[]> getUncommonEventsAsync(string city, System.DateTime dateTime) {
-            return base.Channel.getUncommonEventsAsync(city, dateTime);
+        public System.Threading.Tasks.Task<AirMonit_Admin.AitMonitService.UncommonEvents[]> getUncommonEventsBetweenDatesAsync(string cityName, System.DateTime startDate, System.DateTime endDate) {
+            return base.Channel.getUncommonEventsBetweenDatesAsync(cityName, startDate, endDate);
         }
     }
     

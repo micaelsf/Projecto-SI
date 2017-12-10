@@ -71,13 +71,13 @@ namespace AirMonit_Service
             return linesReturned;
         }
 
-        public List<UncommonEvents> getUncommonEvents(string cityName, DateTime dateTime)
+        public List<UncommonEvents> getUncommonEventsBetweenDates(string cityName, DateTime startDate, DateTime endDate)
         {
             string query;
             bool allcity = false;
             int cityId = -1;
 
-            if (dateTime == null)
+            if (startDate == null || endDate == null || startDate > endDate)
             {
                 return null;
             }
@@ -87,7 +87,7 @@ namespace AirMonit_Service
                 query = string.Format(@"
                         SELECT City_Name, Type, DateTime, Temperature, UserName, Description 
                         FROM {0} uevt JOIN {1} ct ON uevt.CityId = ct.Id
-                        WHERE CONVERT(varchar, DateTime, 23) = @date 
+                        WHERE DateTime >= @startDate AND DateTime <= @endDate
                         ORDER BY 3 DESC", DatabaseTableConstant.tableUncommonEvents, DatabaseTableConstant.tableCity);
 
                 allcity = true;
@@ -97,7 +97,7 @@ namespace AirMonit_Service
                 query = string.Format(@"
                         SELECT City_Name, Type, DateTime, Temperature, UserName, Description 
                         FROM {0} uevt JOIN {1} ct ON uevt.CityId = ct.Id
-                        WHERE CONVERT(varchar, DateTime, 23) = @date 
+                        WHERE DateTime >= @startDate AND .DateTime <= @endDate
                         AND CityId = @cityId 
                         ORDER BY 3 DESC", DatabaseTableConstant.tableUncommonEvents, DatabaseTableConstant.tableCity);
 
@@ -111,13 +111,12 @@ namespace AirMonit_Service
 
             List<UncommonEvents> events = new List<UncommonEvents>();
 
-            string date = dateTime.ToString("yyyy-MM-dd");
-
             using (connection)
             {
                 SqlCommand command = new SqlCommand(query, connection);
 
-                command.Parameters.AddWithValue("date", date);
+                command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd 00:00:00"));
+                command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd 23:59:59"));
                 if (!allcity)
                 {
                     command.Parameters.AddWithValue("cityId", cityId);
@@ -228,20 +227,22 @@ namespace AirMonit_Service
             if (cityName == null)
             {
                 query = string.Format(@"
-                    SELECT al.Description, al.DateTime, s.Param, s.Value 
+                    SELECT al.Description, al.DateTime, s.Param, s.Value, City_Name
                     FROM {0} al JOIN {1} s ON al.SensorDataUID = s.SensorDataUID 
+                    JOIN {2} c ON c.Id = s.CityId
                     WHERE al.DateTime >= @startDate AND al.DateTime <= @endDate
-                    ORDER BY 2 DESC", DatabaseTableConstant.tableAlarms, DatabaseTableConstant.tableSensorData);
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableAlarms, DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
 
                 allcity = true;
             }
             else
             {
                 query = string.Format(@"
-                    SELECT al.Description, al.DateTime, s.Param, s.Value 
+                    SELECT al.Description, al.DateTime, s.Param, s.Value, City_Name
                     FROM {0} al JOIN {1} s ON al.SensorDataUID = s.SensorDataUID 
+                    JOIN {2} c ON c.Id = s.CityId
                     WHERE CityId = @cityId AND al.DateTime >= @startDate AND al.DateTime <= @endDate
-                    ORDER BY 2 DESC", DatabaseTableConstant.tableAlarms, DatabaseTableConstant.tableSensorData);
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableAlarms, DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
 
                 cityId = fetchCityIdFromName(cityName);
 
@@ -271,8 +272,9 @@ namespace AirMonit_Service
                     {
                         while (reader.Read())
                         {
-                            AlarmLog alarm = new AlarmLog
+                            AlarmLog alarm  = new AlarmLog
                             {
+                                City = reader["City_Name"] + "",
                                 Description = reader["Description"] + "",
                                 DateTime = (DateTime)reader["DateTime"],
                                 Parameter = reader["Param"] + "",
