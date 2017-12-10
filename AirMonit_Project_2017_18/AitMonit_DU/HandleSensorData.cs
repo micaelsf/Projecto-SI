@@ -113,29 +113,12 @@ namespace AirMonit_DU
             sensorValue.InnerText = splitedSensorData[2].Trim();
 
             string[] splitedDateTime = splitedSensorData[3].Split(' ');
-            string[] splitedTime = splitedDateTime[1].Split(':');
 
-            // handle hours to match correct format HH:MM:SS 
-            int hour = 0;
-            string hourStr = splitedTime[0];
-
-            try
-            {
-                int.TryParse(splitedTime[0], out hour);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.ToString());
-            }
-
-            if (hour < 10 && hourStr.Length == 1)
-            {
-                hourStr = "0" + splitedTime[0];
-            }
-            // end handling hours
+            // handle hours to match correct format HH:mm:ss 
+            DateTime dt = Convert.ToDateTime(splitedSensorData[3]);
 
             sensorDate.InnerText = splitedDateTime[0].Trim();
-            sensorTime.InnerText = hourStr + ":" + splitedTime[1] + ":" + splitedTime[2];
+            sensorTime.InnerText = dt.ToString("HH:mm:ss");
 
             sensorCity.InnerText = splitedSensorData[4].Trim();
             sensorDataUID.InnerText = hexHash.ToString();

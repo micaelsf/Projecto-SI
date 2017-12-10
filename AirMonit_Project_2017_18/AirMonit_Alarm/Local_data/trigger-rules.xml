@@ -4,7 +4,7 @@
     <rule condition="between">
       <description>Qualidade do ar: Muito má</description>
       <value>-1</value>
-      <minValue>600</minValue>
+      <minValue>400</minValue>
       <maxValue>800</maxValue>
     </rule>
     <rule condition="lessThan">
@@ -13,20 +13,26 @@
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule condition="lessThan">
-      <description>43444</description>
-      <value>11</value>
-      <minValue>-1</minValue>
-      <maxValue>-1</maxValue>
-    </rule>
     <rule condition="equals">
-      <description>454yw45y</description>
-      <value>454</value>
+      <description>Qualidade do ar: Boa</description>
+      <value>100</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
   </parameter>
-  <parameter type="CO" active="false">
+  <parameter type="CO" active="true">
+    <rule condition="greaterThan">
+      <description>Qualidade do CO: Má</description>
+      <value>11</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
+    <rule condition="between">
+      <description>Qualidade do ar: Razoável</description>
+      <value>-1</value>
+      <minValue>2</minValue>
+      <maxValue>10</maxValue>
+    </rule>
   </parameter>
   <parameter type="O3" active="true">
     <rule condition="greaterThan">

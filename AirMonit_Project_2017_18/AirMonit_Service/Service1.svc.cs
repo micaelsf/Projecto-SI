@@ -1,290 +1,827 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
-
 
 namespace AirMonit_Service
 {
-
-    public static class databaseTableConstants
+    //Constantes para os nomes das tabelas, para quando inserimos parametros nas queries (FROM ...)
+    public static class DatabaseTableConstant
     {
-        public const string tableAlarms = "dbo.AlarmLogs";
-        public const string tableCity = "dbo.Citys";
+        public const string tableAlarms = "AlarmLogs";
+        public const string tableCity = "Cities";
+        public const string tableSensorData = "SensorData";
+        public const string tableUncommonEvents = "UncommonEvents";
     }
 
-    
-
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "AirMonit_Service" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select AirMonit_Service.svc or AirMonit_Service.svc.cs at the Solution Explorer and start debugging.
-    public class AirMonit_Service : IAccessingData, IStoreData
+    public class AirMonit_Service : IAirMonit_AccessingData, IAirMonit_StoreData
     {
-
-        private string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["appHarborConnect"].ConnectionString;
+        private string connectionString = ConfigurationManager.ConnectionStrings["appHarborConnect"].ConnectionString;
         private SqlConnection connection;
-        //String connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["connectionDBProducts"].ConnectionString;
 
         public AirMonit_Service()
         {
             connection = new SqlConnection(connectionString);
-            //StoreSensorData();
         }
 
-        public void StoreSensorData()
+        public int storeUncommonEvent(UncommonEvents userInfo)
         {
-            string queryStr =
-                @"INSERT INTO SensorData (Param,Value,CityId,DateTime,SensorId) 
-                 VALUES(@param,@value,@city,@dateTime,@sensorId)";
             int linesReturned = -1;
+            string query = string.Format(@"
+                        INSERT INTO {0} (CityId, Type, Description, UserName, Temperature, DateTime) 
+                        VALUES (@cityId, @type, @description, @username, @temperature, @dateTime)", DatabaseTableConstant.tableUncommonEvents);
+
+            if (userInfo.Username == null || userInfo.Username.Trim().Count() == 0)
+            {
+                return -1;
+            }
+
+            int cityId = fetchCityIdFromName(userInfo.CityName);
+
+            if (cityId == -1)
+            {
+                return -1;
+            }
 
             using (connection)
             {
-                using (var command = new SqlCommand(queryStr, connection))
-                {
-                    command.Parameters.AddWithValue("@param", "NO2");
-                    command.Parameters.AddWithValue("@value", 200);
-                    command.Parameters.AddWithValue("@city", 1);
-                    command.Parameters.AddWithValue("@dateTime", "2017-11-06 12:12:33");
-                    command.Parameters.AddWithValue("@sensorId", 3);
+                SqlCommand command = new SqlCommand(query, connection);
 
-                    try
+                command.Parameters.AddWithValue("cityId", cityId);
+                command.Parameters.AddWithValue("type", userInfo.Type);
+                command.Parameters.AddWithValue("description", userInfo.Description);
+                command.Parameters.AddWithValue("username", userInfo.Username);
+                command.Parameters.AddWithValue("dateTime", DateTime.Now);
+                command.Parameters.AddWithValue("temperature", userInfo.Temperature);
+
+                try
+                {
+                    connection.Open();
+                    linesReturned = command.ExecuteNonQuery();
+                    Debug.WriteLine("Commands executed! Total rows affected are " + linesReturned);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Erro ao escrever na BD: " + e.ToString());
+                }
+            }
+
+            return linesReturned;
+        }
+
+        public List<UncommonEvents> getUncommonEvents(string cityName, DateTime dateTime)
+        {
+            string query;
+            bool allcity = false;
+            int cityId = -1;
+
+            if (dateTime == null)
+            {
+                return null;
+            }
+
+            if (cityName == null)
+            {
+                query = string.Format(@"
+                        SELECT City_Name, Type, DateTime, Temperature, UserName, Description 
+                        FROM {0} uevt JOIN {1} ct ON uevt.CityId = ct.Id
+                        WHERE CONVERT(varchar, DateTime, 23) = @date 
+                        ORDER BY 3 DESC", DatabaseTableConstant.tableUncommonEvents, DatabaseTableConstant.tableCity);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                        SELECT City_Name, Type, DateTime, Temperature, UserName, Description 
+                        FROM {0} uevt JOIN {1} ct ON uevt.CityId = ct.Id
+                        WHERE CONVERT(varchar, DateTime, 23) = @date 
+                        AND CityId = @cityId 
+                        ORDER BY 3 DESC", DatabaseTableConstant.tableUncommonEvents, DatabaseTableConstant.tableCity);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
+                {
+                    return null;
+                }
+            }
+
+            List<UncommonEvents> events = new List<UncommonEvents>();
+
+            string date = dateTime.ToString("yyyy-MM-dd");
+
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("date", date);
+                if (!allcity)
+                {
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
+
+                try
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        connection.Open();
-                        linesReturned = command.ExecuteNonQuery();
+                        while (reader.Read())
+                        {
+                            UncommonEvents event_ = new UncommonEvents
+                            {
+                                CityName = reader["City_Name"] + "",
+                                Type = reader["Type"] + "",
+                                DateTime = (DateTime)reader["DateTime"],
+                                Temperature = float.Parse(reader["Temperature"] + ""),
+                                Username = reader["UserName"] + "",
+                                Description = reader["Description"] + ""
+                            };
+
+                            events.Add(event_);
+                        }
                     }
-                    catch (Exception ex)
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine((e.ToString()));
+                }
+
+                return events;
+            }
+        }
+
+        public List<AlarmLog> getDailyAlarmsByCity(string cityName, DateTime dateTime)
+        {
+            string query = string.Format(@"
+                        SELECT al.Description, al.DateTime, s.Param, s.Value 
+                        FROM {0} al JOIN {1} s ON al.SensorDataUID = s.SensorDataUID 
+                        WHERE CONVERT(varchar, al.DateTime, 23) = @date 
+                        AND CityId = @cityId 
+                        ORDER BY 2 DESC", DatabaseTableConstant.tableAlarms, DatabaseTableConstant.tableSensorData);
+
+            List<AlarmLog> dataAlarms = new List<AlarmLog>();
+
+            string date = dateTime.ToString("yyyy-MM-dd");
+
+            if (dateTime == null)
+            {
+                return null;
+            }
+
+            int cityId = fetchCityIdFromName(cityName);
+
+            if (cityId == -1)
+            {
+                return null;
+            }
+
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("date", date);
+                command.Parameters.AddWithValue("cityId", cityId);
+
+                try
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        Console.WriteLine(ex);
+                        while (reader.Read())
+                        {
+                            AlarmLog alarm = new AlarmLog
+                            {
+                                Description = reader["Description"] + "",
+                                DateTime = (DateTime)reader["DateTime"],
+                                Parameter = reader["Param"] + "",
+                                Value = int.Parse(reader["Value"] + "")
+                            };
+
+                            dataAlarms.Add(alarm);
+                        }
                     }
                 }
-            }
-        }
-
-        public List<AlarmLog> getDailyAlarmsByCity(string cityParam, string dateDay)
-        {
-            List<AlarmLog> alarmsOnData = new List<AlarmLog>();
-
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-
-            try
-            {
-                int idCity = fetchCityIdFromName(connection, cityParam);
-                SqlCommand command = new SqlCommand("SELECT  * FROM @tableName WHERE date_time = @date AND IdCity= @idCity  ORDER BY id", connection);
-                command.Parameters.AddWithValue("tableName", databaseTableConstants.tableAlarms);
-                command.Parameters.AddWithValue("date", dateDay);
-                command.Parameters.AddWithValue("idCity", idCity);
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
+                catch (Exception e)
                 {
-                    AlarmLog alarm = new AlarmLog
-                    {
-                        Id = (int)reader["Id"],
-                        IdCity = (string)reader["Name"],
-                        AirParameter = (string)reader["AirParameter"],
-                        UncommonEvents = (string)reader["UncommonEvents"],
-                        Severity = reader["Severity"] == DBNull.Value ? "" :  (string)reader["Severity"],
-                        Description = (string)reader["Description"],
-                        Date_Time = (DateTime)reader["Date_Time"],
-                        Value = (int)reader["Value"]
-                    };
-                    alarmsOnData.Add(alarm);
+                    Debug.WriteLine((e.ToString()));
                 }
 
-                reader.Close();
-                connection.Close();
+                return dataAlarms;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine((e.ToString()));
-            }
-            return alarmsOnData;
         }
 
-
-
-
-        public City getInfoAvgEachDay(string cityParam, string dateDay)
+        public List<AlarmLog> getDailyAlarmsByCityBetweenDates(string cityName, DateTime startDate, DateTime endDate)
         {
-            City avgInfo = null;
+            string query;
+            bool allcity = false;
+            int cityId = -1;
 
-             SqlConnection connection = new SqlConnection(connectionString);
-             connection.Open();
-
-             try { 
-            SqlCommand command = new SqlCommand("SELECT  AVG(NO2), AVG(CO), AVG(O3) FROM " + databaseTableConstants.tableAlarms + " WHERE date_time = @date", connection);
-             command.Parameters.AddWithValue("@date", dateDay);
-
-             SqlDataReader reader = command.ExecuteReader();
-
-             while (reader.Read())
-             {
-                 avgInfo = new City
-                 {
-                     Id = (int)reader["Id"],
-                     CityName = (string)reader["City_Name"],
-                     Date_Time = (DateTime)reader["Date_Time"],
-                     NO2 = (int)reader["NO2"],
-                     CO = (int)reader["CO"],
-                     O3 = (int)reader["O3"]
-                 };
-             };
-                reader.Close();
-            } catch(Exception e)
+            if (startDate == null || endDate == null || startDate > endDate)
             {
-                Console.WriteLine("Error while fetching avg for each day");
+                return null;
             }
-             
-             connection.Close();
 
-             return avgInfo;
-        }
-
-        public string getInfoAvgEachHour(string cityParam, string dateDay)
-        {
-            throw new NotImplementedException();
-        }
-
-        public City GetInfoMaxEachDay(string cityParam, string dateDay)
-        {
-            City maxInfo = null;
-
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-
-            try
+            if (cityName == null)
             {
-                SqlCommand command = new SqlCommand("SELECT  MAX(NO2), MAX(CO), MAX(O3) FROM " + databaseTableConstants.tableAlarms + " WHERE date_time = @date", connection);
-                command.Parameters.AddWithValue("@date", dateDay);
+                query = string.Format(@"
+                    SELECT al.Description, al.DateTime, s.Param, s.Value 
+                    FROM {0} al JOIN {1} s ON al.SensorDataUID = s.SensorDataUID 
+                    WHERE al.DateTime >= @startDate AND al.DateTime <= @endDate
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableAlarms, DatabaseTableConstant.tableSensorData);
 
-                SqlDataReader reader = command.ExecuteReader();
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                    SELECT al.Description, al.DateTime, s.Param, s.Value 
+                    FROM {0} al JOIN {1} s ON al.SensorDataUID = s.SensorDataUID 
+                    WHERE CityId = @cityId AND al.DateTime >= @startDate AND al.DateTime <= @endDate
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableAlarms, DatabaseTableConstant.tableSensorData);
 
-                while (reader.Read())
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
                 {
-                    maxInfo = new City
-                    {
-                        Id = (int)reader["Id"],
-                        CityName = (string)reader["City_Name"],
-                        Date_Time = (DateTime)reader["Date_Time"],
-                        NO2 = (int)reader["NO2"],
-                        CO = (int)reader["CO"],
-                        O3 = (int)reader["O3"]
-                    };
-                };
-                reader.Close();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error while fetching avg for each day");
-            }
-
-            connection.Close();
-
-            return maxInfo;
-        }
-
-        public string getInfoMaxEachHour(string cityParam, string dateDay)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string getInfoMinEachDay(string cityParam, string dateDay)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string getInfoMinEachHour(string cityParam, string dateDay)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void sendUserInfo(UserInput userInfo)
-        {
-
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-
-
-            // SqlCommand insertCommand = new SqlCommand("INSERT INTO TableName (FirstColumn, SecondColumn, ThirdColumn, ForthColumn) VALUES (@0, @1, @2, @3)", conn);
-
-            try
-            {
-                int cityIdFromDB = fetchCityIdFromName(connection, userInfo.City);
-            SqlCommand command = new SqlCommand("INSERT INTO @tableName (IdCity, AirParameter, UncommonEvents, Severity, Description, Date_Time, Value)" +
-                "VALUES (@city, @AirParameter, @UncommonEvent, @Severity, @Description, @Date_Time, @Value)", connection);
-            command.Parameters.AddWithValue("tableName", databaseTableConstants.tableAlarms);
-            command.Parameters.AddWithValue("city", value: cityIdFromDB); //ALTERAR A FORMA DE OBTER O ID DA CIDADE , SWITCH CASE ? XML FILE? DICIONARIO DE DADOS ?
-            command.Parameters.AddWithValue("AirParameter", "Temperature");
-            command.Parameters.AddWithValue("UncommonEvent", "User Defined");
-            command.Parameters.AddWithValue("Severity", DBNull.Value);
-            command.Parameters.AddWithValue("Description", userInfo.UncommonEvent);
-            command.Parameters.AddWithValue("Date_Time", DateTime.Now);
-            command.Parameters.AddWithValue("Value", userInfo.Temperature);
-
-            Console.WriteLine("Commands executed! Total rows affected are " + command.ExecuteNonQuery());
-
-            } catch(Exception e)
-                {
-                connection.Close();
-
-                Console.WriteLine("Erro ao escrever na BD: " + e.ToString());
+                    return null;
                 }
-            connection.Close();
+            }
+
+            List<AlarmLog> dataAlarms = new List<AlarmLog>();
+
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                if (!allcity)
+                {
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
+                command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd 00:00:00"));
+                command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd 23:59:59"));
+
+                try
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            AlarmLog alarm = new AlarmLog
+                            {
+                                Description = reader["Description"] + "",
+                                DateTime = (DateTime)reader["DateTime"],
+                                Parameter = reader["Param"] + "",
+                                Value = int.Parse(reader["Value"] + "")
+                            };
+
+                            dataAlarms.Add(alarm);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine((e.ToString()));
+                }
+
+                return dataAlarms;
+            }
         }
 
-        City IAccessingData.getInfoAvgEachHour(string city, string dateTime)
+        public List<InfoBetweenDate> getInfoAvgBetweenDates(string parameter, string cityName, DateTime startDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            string query;
+            bool allcity = false;
+            int cityId = -1;
+
+            if (startDate == null || endDate == null || startDate > endDate)
+            {
+                return null;
+            }
+
+            if (cityName == null)
+            {
+                query = string.Format(@"
+                    SELECT AVG(Value) as Average, CONVERT(varchar, DateTime, 23) as Day, City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam 
+                    AND DateTime >= @startDate AND DateTime <= @endDate
+                    GROUP BY CONVERT(varchar, DateTime, 23), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                    SELECT AVG(Value) as Average, CONVERT(varchar, DateTime, 23) as Day, City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CityId = @cityId 
+                    AND DateTime >= @startDate AND DateTime <= @endDate
+                    GROUP BY CONVERT(varchar, DateTime, 23), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
+                {
+                    return null;
+                }
+            }
+
+            List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
+
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("userParam", parameter.ToUpper());
+                if (!allcity)
+                {
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
+                command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd 00:00:00"));
+                command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd 23:59:59"));
+
+                try
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                            {
+                                Value = int.Parse(reader["Average"] + ""),
+                                Date = reader["Day"] + "",
+                                City = reader["City"] + "",
+                            };
+
+                            listValues.Add(infoBetweenDate);
+                        };
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error while fetching avg for each day: " + e.Message);
+                }
+            }
+
+            return listValues;
         }
 
-        City IAccessingData.getInfoMaxEachDay(string city, string dateTime)
+        public List<InfoBetweenDate> getInfoMaxBetweenDates(string parameter, string cityName, DateTime startDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            string query;
+            bool allcity = false;
+            int cityId = -1;
+
+            if (startDate == null || endDate == null || startDate > endDate)
+            {
+                return null;
+            }
+
+            if (cityName == null)
+            {
+                query = string.Format(@"
+                    SELECT MAX(Value) as Maximum, CONVERT(varchar, DateTime, 23) as Day, City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam 
+                    AND DateTime >= @startDate AND DateTime <= @endDate
+                    GROUP BY CONVERT(varchar, DateTime, 23), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                    SELECT MAX(Value) as Maximum, CONVERT(varchar, DateTime, 23) as Day, City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CityId = @cityId 
+                    AND DateTime >= @startDate AND DateTime <= @endDate
+                    GROUP BY CONVERT(varchar, DateTime, 23), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
+                {
+                    return null;
+                }
+            }
+
+            List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
+
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("userParam", parameter.ToUpper());
+                if (!allcity)
+                {
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
+                command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd 00:00:00"));
+                command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd 23:59:59"));
+
+                try
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                            {
+                                Value = int.Parse(reader["Maximum"] + ""),
+                                Date = reader["Day"] + "",
+                                City = reader["City"] + "",
+                            };
+
+                            listValues.Add(infoBetweenDate);
+                        };
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error while fetching max for each day: " + e.Message);
+                }
+            }
+
+            return listValues;
         }
 
-        City IAccessingData.getInfoMaxEachHour(string city, string dateTime)
+        public List<InfoBetweenDate> getInfoMinBetweenDates(string parameter, string cityName, DateTime startDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            string query;
+            bool allcity = false;
+            int cityId = -1;
+
+            if (startDate == null || endDate == null || startDate > endDate)
+            {
+                return null;
+            }
+
+            if (cityName == null)
+            {
+                query = string.Format(@"
+                    SELECT MIN(Value) AS Minimum, CONVERT(varchar, DateTime, 23) AS Day, City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam 
+                    AND DateTime >= @startDate AND DateTime <= @endDate
+                    GROUP BY CONVERT(varchar, DateTime, 23), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                    SELECT MIN(Value) as Minimum, CONVERT(varchar, DateTime, 23) as Day, City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CityId = @cityId 
+                    AND DateTime >= @startDate AND DateTime <= @endDate
+                    GROUP BY CONVERT(varchar, DateTime, 23), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
+                {
+                    return null;
+                }
+            }
+
+            List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
+
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("userParam", parameter.ToUpper());
+                if (!allcity)
+                {
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
+                command.Parameters.AddWithValue("startDate", startDate.ToString("yyyy-MM-dd 00:00:00"));
+                command.Parameters.AddWithValue("endDate", endDate.ToString("yyyy-MM-dd 23:59:59"));
+
+                try
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                            {
+                                Value = int.Parse(reader["Minimum"] + ""),
+                                Date = reader["Day"] + "",
+                                City = reader["City"] + "",
+                            };
+
+                            listValues.Add(infoBetweenDate);
+                        };
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error while fetching min for each day: " + e.Message);
+                }
+            }
+
+            return listValues;
         }
 
-        City IAccessingData.getInfoMinEachDay(string city, string dateTime)
+        public List<InfoBetweenDate> getInfoAvgEachHour(string parameter, string cityName, DateTime dateTime)
         {
-            throw new NotImplementedException();
+            string query;
+            bool allcity = false;
+            int cityId = -1;
+
+            if (dateTime == null)
+            {
+                return null;
+            }
+
+            if (cityName == null)
+            {
+
+                query = string.Format(@"
+                    SELECT AVG(Value) AS Average,  
+                        (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108), 2) + ':00:00') as Hour,
+                        City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CONVERT(varchar, DateTime, 23) = @datetime
+                    GROUP BY (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108),2) + ':00:00'), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                    SELECT AVG(Value) AS Average,  
+                        (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108), 2) + ':00:00') as Hour,
+                        City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CityId = @cityId AND CONVERT(varchar, DateTime, 23) = @datetime
+                    GROUP BY (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108),2) + ':00:00'), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
+                {
+                    return null;
+                }
+            }
+
+            List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
+
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("userParam", parameter.ToUpper());
+                if (!allcity)
+                {
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
+                command.Parameters.AddWithValue("datetime", dateTime.ToString("yyyy-MM-dd") + "");
+
+                try
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                            {
+                                Value = int.Parse(reader["Average"] + ""),
+                                Date = reader["Hour"] + "",
+                                City = reader["City"] + "",
+                            };
+
+                            listValues.Add(infoBetweenDate);
+                        };
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error while fetching avg for each hour: " + e.Message);
+                }
+            }
+
+            return listValues;
         }
 
-        City IAccessingData.getInfoMinEachHour(string city, string dateTime)
+        public List<InfoBetweenDate> getInfoMaxEachHour(string parameter, string cityName, DateTime dateTime)
         {
-            throw new NotImplementedException();
+            string query;
+            bool allcity = false;
+            int cityId = -1;
+
+            if (dateTime == null)
+            {
+                return null;
+            }
+
+            if (cityName == null)
+            {
+
+                query = string.Format(@"
+                    SELECT MAX(Value) AS Maximum,  
+                        (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108), 2) + ':00:00') as Hour,
+                        City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CONVERT(varchar, DateTime, 23) = @datetime
+                    GROUP BY (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108),2) + ':00:00'), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                    SELECT MAX(Value) AS Maximum,  
+                        (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108), 2) + ':00:00') as Hour,
+                        City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CityId = @cityId AND CONVERT(varchar, DateTime, 23) = @datetime
+                    GROUP BY (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108),2) + ':00:00'), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
+                {
+                    return null;
+                }
+            }
+
+            List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
+
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("userParam", parameter.ToUpper());
+                if (!allcity)
+                {
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
+                command.Parameters.AddWithValue("datetime", dateTime.ToString("yyyy-MM-dd") + "");
+
+                try
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                            {
+                                Value = int.Parse(reader["Maximum"] + ""),
+                                Date = reader["Hour"] + "",
+                                City = reader["City"] + "",
+                            };
+
+                            listValues.Add(infoBetweenDate);
+                        };
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error while fetching max for each hour: " + e.Message);
+                }
+            }
+
+            return listValues;
         }
 
-        private int fetchCityIdFromName(SqlConnection connection, string cityName)
+        public List<InfoBetweenDate> getInfoMinEachHour(string parameter, string cityName, DateTime dateTime)
         {
+            string query;
+            bool allcity = false;
+            int cityId = -1;
 
+            if (dateTime == null)
+            {
+                return null;
+            }
+
+            if (cityName == null)
+            {
+
+                query = string.Format(@"
+                    SELECT MIN(Value) AS Minimum,  
+                        (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108), 2) + ':00:00') as Hour,
+                        City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CONVERT(varchar, DateTime, 23) = @datetime
+                    GROUP BY (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108),2) + ':00:00'), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                allcity = true;
+            }
+            else
+            {
+                query = string.Format(@"
+                    SELECT MIN(Value) AS Minimum,  
+                        (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108), 2) + ':00:00') as Hour,
+                        City_Name AS City
+                    FROM {0} s JOIN {1} c ON s.CityId = c.Id
+                    WHERE Param = @userParam AND CityId = @cityId AND CONVERT(varchar, DateTime, 23) = @datetime
+                    GROUP BY (CONVERT(varchar, DateTime, 23) + ' ' + LEFT(CONVERT(varchar, DateTime, 108),2) + ':00:00'), City_Name
+                    ORDER BY 2 DESC", DatabaseTableConstant.tableSensorData, DatabaseTableConstant.tableCity);
+
+                cityId = fetchCityIdFromName(cityName);
+
+                if (cityId == -1)
+                {
+                    return null;
+                }
+            }
+
+            List<InfoBetweenDate> listValues = new List<InfoBetweenDate>();
+
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("userParam", parameter.ToUpper());
+                if (!allcity)
+                {
+                    command.Parameters.AddWithValue("cityId", cityId);
+                }
+                command.Parameters.AddWithValue("datetime", dateTime.ToString("yyyy-MM-dd") + "");
+
+                try
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            InfoBetweenDate infoBetweenDate = new InfoBetweenDate
+                            {
+                                Value = int.Parse(reader["Minimum"] + ""),
+                                Date = reader["Hour"] + "",
+                                City = reader["City"] + "",
+                            };
+
+                            listValues.Add(infoBetweenDate);
+                        };
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error while fetching min for each hour: " + e.Message);
+                }
+            }
+
+            return listValues;
+        }
+
+
+        // UTIL FUNCTION
+        private int fetchCityIdFromName(string cityName)
+        {
+            string query = string.Format(@"SELECT id FROM {0} WHERE City_Name = @cityName", DatabaseTableConstant.tableCity);
             int cityIdFromDB = -1;
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("cityName", cityName.First().ToString().ToUpper() + cityName.Substring(1));
+
             try
             {
-                SqlCommand commandForCityId = new SqlCommand("SELECT id FROM @tableName WHERE CityName = @cityName");
-                commandForCityId.Parameters.AddWithValue("tableName", databaseTableConstants.tableCity);
-                commandForCityId.Parameters.AddWithValue("cityName", cityName);
-                SqlDataReader readerForID = commandForCityId.ExecuteReader();
-                while (readerForID.Read())
-                {
-                    cityIdFromDB = (int)readerForID["Id"];
-                    Console.WriteLine("ID of city: " + cityIdFromDB.ToString());
-                }
-                readerForID.Close();
+                connection.Open();
+
+                cityIdFromDB = (int)command.ExecuteScalar();
+                Debug.WriteLine("ID of city: " + cityIdFromDB);
+
             }
             catch (Exception e)
             {
-                connection.Close();
-                Console.WriteLine("Error retrieving city Id from name: " + e.ToString());
+                Debug.WriteLine("Error retrieving city Id from name: " + e.Message);
             }
+
+            connection.Close();
+
             return cityIdFromDB;
         }
     }

@@ -17,6 +17,11 @@
             {
                 components.Dispose();
             }
+
+            mClient.Unsubscribe(topics);
+            mClient.Disconnect();
+            mClient = null;
+
             base.Dispose(disposing);
         }
 

@@ -61,7 +61,7 @@ namespace AirMonit_DLog
             try
             {
                 newAlarmDataRow.Description = alarmData.AlarmDescription;
-                newAlarmDataRow.Date_Time = DateTime.Parse(alarmData.AlarmDate + " " + alarmData.AlarmTime);
+                newAlarmDataRow.DateTime = DateTime.Parse(alarmData.AlarmDate + " " + alarmData.AlarmTime);
                 newAlarmDataRow.SensorDataUID = alarmData.SensorDataUID;
 
                 // Add the row to the AlarmLogs table

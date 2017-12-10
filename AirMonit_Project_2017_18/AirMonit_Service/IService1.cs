@@ -10,88 +10,101 @@ namespace AirMonit_Service
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IAccessingData" in both code and config file together.
     [ServiceContract]
-    public interface IAccessingData
+    public interface IAirMonit_AccessingData
     {
         [OperationContract]
-        void StoreSensorData();
+        List<InfoBetweenDate> getInfoMinEachHour(string Parameter, string city, DateTime dateTime);
         [OperationContract]
-        City getInfoMinEachHour(string city, string dateTime);
+        List<InfoBetweenDate> getInfoMaxEachHour(string Parameter, string city, DateTime dateTime);
         [OperationContract]
-        City getInfoMaxEachHour(string city, string dateTime);
-        [OperationContract]
-        City getInfoAvgEachHour(string city, string dateTime);
+        List<InfoBetweenDate> getInfoAvgEachHour(string Parameter, string city, DateTime dateTime);
 
         [OperationContract]
-        City getInfoMinEachDay(string city, string dateTime);
+        List<InfoBetweenDate> getInfoMinBetweenDates(string Parameter, string city, DateTime startDate, DateTime endDate);
         [OperationContract]
-        City getInfoMaxEachDay(string city, string dateTime);
+        List<InfoBetweenDate> getInfoMaxBetweenDates(string Parameter, string city, DateTime startDate, DateTime endDate);
         [OperationContract]
-        City getInfoAvgEachDay(string city, string dateTime);
+        List<InfoBetweenDate> getInfoAvgBetweenDates(string Parameter, string city, DateTime startDate, DateTime endDate);
 
         [OperationContract]
-        List<AlarmLog> getDailyAlarmsByCity(string city, string dateTime);
-       
+        List<AlarmLog> getDailyAlarmsByCity(string city, DateTime dateTime);
+        [OperationContract]
+        List<AlarmLog> getDailyAlarmsByCityBetweenDates(string city, DateTime startDate, DateTime endDate);
+
+        [OperationContract]
+        List<UncommonEvents> getUncommonEvents(string city, DateTime dateTime);
+
+
     }
 
-    public interface IStoreData
+    [ServiceContract]
+    public interface IAirMonit_StoreData
     {
         [OperationContract]
-        void sendUserInfo(UserInput userInfo);
-    }
-
-
-    [DataContract]
-    public class City
-    {
-        
-        [DataMember]
-        public int Id { get; set; }
-        [DataMember]
-        public string CityName { get; set; }
-        [DataMember]
-        public DateTime Date_Time { get; set; }
-        [DataMember]
-        public int NO2 { get; set; }
-        [DataMember]
-        public int CO { get; set; }
-        [DataMember]
-        public int O3 { get; set; }
+        int storeUncommonEvent(UncommonEvents userInfo);
     }
 
     [DataContract]
-    public class AlarmLog
+    public class SensorData //DONE 
     {
         [DataMember]
         public int Id { get; set; }
         [DataMember]
-        public string IdCity { get; set; }
+        public string Param { get; set; }
         [DataMember]
-        public string AirParameter { get; set; }
+        public int Value { get; set; }
         [DataMember]
-        public string UncommonEvents { get; set; }
+        public int CityId { get; set; }
         [DataMember]
-        public string Severity { get; set; }
+        public DateTime DateTime { get; set; }
+        [DataMember]
+        public int SensorId { get; set; }
+    }
+
+    [DataContract]
+    public class AlarmLog  //DONE
+    {
         [DataMember]
         public string Description { get; set; }
         [DataMember]
-        public DateTime Date_Time { get; set; }
+        public DateTime DateTime { get; set; }
+        [DataMember]
+        public string Parameter { get; set; }
         [DataMember]
         public int Value { get; set; }
     }
 
     [DataContract]
-    public class UserInput
+    public class InfoBetweenDate
     {
         [DataMember]
-        public string Id { get; set; }
+        public int Value { get; set; }
         [DataMember]
-        public string UncommonEvent { get; set; }
-        [DataMember]
-        public int Temperature { get; set; }
+        public string Date { get; set; }
         [DataMember]
         public string City { get; set; }
     }
+
+    [DataContract]
+    public class UncommonEvents //DONE
+    {
+        [DataMember]
+        public string CityName { get; set; }
+        [DataMember]
+        public string Type { get; set; }
+        [DataMember]
+        public string Description { get; set; }
+        [DataMember]
+        public string Username { get; set; }
+        [DataMember]
+        public float Temperature { get; set; }
+        [DataMember]
+        public DateTime DateTime { get; set; }
+
+    }
 }
+
+
 
 
 

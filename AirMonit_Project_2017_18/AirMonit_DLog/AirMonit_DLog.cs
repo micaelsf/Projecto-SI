@@ -20,7 +20,7 @@ namespace AirMonit_DLog
     {
         private MqttClient m_cClient;
         private Boolean serviceActive;
-        private string[] m_strTopicsInfo = { "data", "alarm" };
+        private string[] topics = { "data", "alarm" };
         private XMLDataHandler handlerXml;
 
         //validacao xml
@@ -71,12 +71,12 @@ namespace AirMonit_DLog
                 //Subscribe to topics
                 byte[] qosLevels = { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE,
                                         MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE};//QoS
-                m_cClient.Subscribe(m_strTopicsInfo, qosLevels);
+                m_cClient.Subscribe(topics, qosLevels);
             }
             else
             {
                 // desliga o serviço
-                m_cClient.Unsubscribe(m_strTopicsInfo); //Put this in a button to see notif!
+                m_cClient.Unsubscribe(topics); //Put this in a button to see notif!
                 m_cClient.Disconnect();
                 serviceActive = false;
                 btnStartStop.Text = "Start";
@@ -88,9 +88,9 @@ namespace AirMonit_DLog
 
         private void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
-            if (e.Topic.Equals(m_strTopicsInfo[1])) // alarm
+            if (e.Topic.Equals(topics[1])) // alarm
             {
-                if (handlerXml.ValidateXMLStructure(Encoding.UTF8.GetString(e.Message), m_strTopicsInfo[1]))
+                if (handlerXml.ValidateXMLStructure(Encoding.UTF8.GetString(e.Message), topics[1]))
                 {
                     listBoxAlarmLog.BeginInvoke(
                        (MethodInvoker)delegate {
@@ -101,9 +101,9 @@ namespace AirMonit_DLog
                    );
                 }
             }
-            if (e.Topic.Equals(m_strTopicsInfo[0])) //data
+            if (e.Topic.Equals(topics[0])) //data
             {
-                if (handlerXml.ValidateXMLStructure(Encoding.UTF8.GetString(e.Message), m_strTopicsInfo[0]))
+                if (handlerXml.ValidateXMLStructure(Encoding.UTF8.GetString(e.Message), topics[0]))
                 {
                     listBoxCityLog.BeginInvoke(
                         (MethodInvoker)delegate {

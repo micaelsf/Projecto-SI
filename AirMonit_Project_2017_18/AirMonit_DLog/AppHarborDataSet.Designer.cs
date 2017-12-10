@@ -388,9 +388,9 @@ namespace AirMonit_DLog {
             
             private global::System.Data.DataColumn columnDescription;
             
-            private global::System.Data.DataColumn columnDate_Time;
-            
             private global::System.Data.DataColumn columnSensorDataUID;
+            
+            private global::System.Data.DataColumn columnDateTime;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -443,17 +443,17 @@ namespace AirMonit_DLog {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn Date_TimeColumn {
+            public global::System.Data.DataColumn SensorDataUIDColumn {
                 get {
-                    return this.columnDate_Time;
+                    return this.columnSensorDataUID;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn SensorDataUIDColumn {
+            public global::System.Data.DataColumn DateTimeColumn {
                 get {
-                    return this.columnSensorDataUID;
+                    return this.columnDateTime;
                 }
             }
             
@@ -494,13 +494,13 @@ namespace AirMonit_DLog {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public AlarmLogsRow AddAlarmLogsRow(string Description, System.DateTimeOffset Date_Time, string SensorDataUID) {
+            public AlarmLogsRow AddAlarmLogsRow(string Description, string SensorDataUID, System.DateTime DateTime) {
                 AlarmLogsRow rowAlarmLogsRow = ((AlarmLogsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         Description,
-                        Date_Time,
-                        SensorDataUID};
+                        SensorDataUID,
+                        DateTime};
                 rowAlarmLogsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowAlarmLogsRow);
                 return rowAlarmLogsRow;
@@ -532,8 +532,8 @@ namespace AirMonit_DLog {
             internal void InitVars() {
                 this.columnId = base.Columns["Id"];
                 this.columnDescription = base.Columns["Description"];
-                this.columnDate_Time = base.Columns["Date_Time"];
                 this.columnSensorDataUID = base.Columns["SensorDataUID"];
+                this.columnDateTime = base.Columns["DateTime"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -543,10 +543,10 @@ namespace AirMonit_DLog {
                 base.Columns.Add(this.columnId);
                 this.columnDescription = new global::System.Data.DataColumn("Description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDescription);
-                this.columnDate_Time = new global::System.Data.DataColumn("Date_Time", typeof(global::System.DateTimeOffset), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDate_Time);
                 this.columnSensorDataUID = new global::System.Data.DataColumn("SensorDataUID", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSensorDataUID);
+                this.columnDateTime = new global::System.Data.DataColumn("DateTime", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDateTime);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AutoIncrement = true;
@@ -557,8 +557,9 @@ namespace AirMonit_DLog {
                 this.columnId.Unique = true;
                 this.columnDescription.AllowDBNull = false;
                 this.columnDescription.MaxLength = 200;
-                this.columnDate_Time.AllowDBNull = false;
+                this.columnSensorDataUID.AllowDBNull = false;
                 this.columnSensorDataUID.MaxLength = 512;
+                this.columnDateTime.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1189,6 +1190,7 @@ namespace AirMonit_DLog {
                 this.columnCityId.AllowDBNull = false;
                 this.columnDateTime.AllowDBNull = false;
                 this.columnSensorId.AllowDBNull = false;
+                this.columnSensorDataUID.AllowDBNull = false;
                 this.columnSensorDataUID.MaxLength = 512;
             }
             
@@ -1335,6 +1337,8 @@ namespace AirMonit_DLog {
             
             private global::System.Data.DataColumn columnTemperature;
             
+            private global::System.Data.DataColumn columnDateTime;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public UncommonEventsDataTable() {
@@ -1418,6 +1422,14 @@ namespace AirMonit_DLog {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn DateTimeColumn {
+                get {
+                    return this.columnDateTime;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1453,7 +1465,7 @@ namespace AirMonit_DLog {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public UncommonEventsRow AddUncommonEventsRow(int CityId, string Type, string Description, string UserName, int Temperature) {
+            public UncommonEventsRow AddUncommonEventsRow(int CityId, string Type, string Description, string UserName, int Temperature, System.DateTime DateTime) {
                 UncommonEventsRow rowUncommonEventsRow = ((UncommonEventsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1461,7 +1473,8 @@ namespace AirMonit_DLog {
                         Type,
                         Description,
                         UserName,
-                        Temperature};
+                        Temperature,
+                        DateTime};
                 rowUncommonEventsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowUncommonEventsRow);
                 return rowUncommonEventsRow;
@@ -1497,6 +1510,7 @@ namespace AirMonit_DLog {
                 this.columnDescription = base.Columns["Description"];
                 this.columnUserName = base.Columns["UserName"];
                 this.columnTemperature = base.Columns["Temperature"];
+                this.columnDateTime = base.Columns["DateTime"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1514,6 +1528,8 @@ namespace AirMonit_DLog {
                 base.Columns.Add(this.columnUserName);
                 this.columnTemperature = new global::System.Data.DataColumn("Temperature", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTemperature);
+                this.columnDateTime = new global::System.Data.DataColumn("DateTime", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDateTime);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AutoIncrement = true;
@@ -1530,6 +1546,7 @@ namespace AirMonit_DLog {
                 this.columnUserName.AllowDBNull = false;
                 this.columnUserName.MaxLength = 50;
                 this.columnTemperature.AllowDBNull = false;
+                this.columnDateTime.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1694,25 +1711,9 @@ namespace AirMonit_DLog {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public System.DateTimeOffset Date_Time {
-                get {
-                    return ((global::System.DateTimeOffset)(this[this.tableAlarmLogs.Date_TimeColumn]));
-                }
-                set {
-                    this[this.tableAlarmLogs.Date_TimeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string SensorDataUID {
                 get {
-                    try {
-                        return ((string)(this[this.tableAlarmLogs.SensorDataUIDColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SensorDataUID\' in table \'AlarmLogs\' is DBNull.", e);
-                    }
+                    return ((string)(this[this.tableAlarmLogs.SensorDataUIDColumn]));
                 }
                 set {
                     this[this.tableAlarmLogs.SensorDataUIDColumn] = value;
@@ -1721,14 +1722,13 @@ namespace AirMonit_DLog {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsSensorDataUIDNull() {
-                return this.IsNull(this.tableAlarmLogs.SensorDataUIDColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetSensorDataUIDNull() {
-                this[this.tableAlarmLogs.SensorDataUIDColumn] = global::System.Convert.DBNull;
+            public System.DateTime DateTime {
+                get {
+                    return ((global::System.DateTime)(this[this.tableAlarmLogs.DateTimeColumn]));
+                }
+                set {
+                    this[this.tableAlarmLogs.DateTimeColumn] = value;
+                }
             }
         }
         
@@ -1853,28 +1853,11 @@ namespace AirMonit_DLog {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string SensorDataUID {
                 get {
-                    try {
-                        return ((string)(this[this.tableSensorData.SensorDataUIDColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SensorDataUID\' in table \'SensorData\' is DBNull.", e);
-                    }
+                    return ((string)(this[this.tableSensorData.SensorDataUIDColumn]));
                 }
                 set {
                     this[this.tableSensorData.SensorDataUIDColumn] = value;
                 }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsSensorDataUIDNull() {
-                return this.IsNull(this.tableSensorData.SensorDataUIDColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetSensorDataUIDNull() {
-                this[this.tableSensorData.SensorDataUIDColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1955,6 +1938,17 @@ namespace AirMonit_DLog {
                 }
                 set {
                     this[this.tableUncommonEvents.TemperatureColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public System.DateTime DateTime {
+                get {
+                    return ((global::System.DateTime)(this[this.tableUncommonEvents.DateTimeColumn]));
+                }
+                set {
+                    this[this.tableUncommonEvents.DateTimeColumn] = value;
                 }
             }
         }
@@ -2222,43 +2216,40 @@ namespace AirMonit_DLog.AppHarborDataSetTableAdapters {
             tableMapping.DataSetTable = "AlarmLogs";
             tableMapping.ColumnMappings.Add("Id", "Id");
             tableMapping.ColumnMappings.Add("Description", "Description");
-            tableMapping.ColumnMappings.Add("Date_Time", "Date_Time");
             tableMapping.ColumnMappings.Add("SensorDataUID", "SensorDataUID");
+            tableMapping.ColumnMappings.Add("DateTime", "DateTime");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
             this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[AlarmLogs] WHERE (([Id] = @Original_Id) AND ([Description] = @" +
-                "Original_Description) AND ([Date_Time] = @Original_Date_Time) AND ((@IsNull_Sens" +
-                "orDataUID = 1 AND [SensorDataUID] IS NULL) OR ([SensorDataUID] = @Original_Senso" +
-                "rDataUID)))";
+                "Original_Description) AND ([SensorDataUID] = @Original_SensorDataUID) AND ([Date" +
+                "Time] = @Original_DateTime))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Description", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Date_Time", global::System.Data.SqlDbType.DateTimeOffset, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date_Time", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_SensorDataUID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SensorDataUID", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SensorDataUID", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SensorDataUID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DateTime", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateTime", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[AlarmLogs] ([Description], [Date_Time], [SensorDataUID]) VALUE" +
-                "S (@Description, @Date_Time, @SensorDataUID);\r\nSELECT Id, Description, Date_Time" +
-                ", SensorDataUID FROM AlarmLogs WHERE (Id = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[AlarmLogs] ([Description], [SensorDataUID], [DateTime]) VALUES" +
+                " (@Description, @SensorDataUID, @DateTime);\r\nSELECT Id, Description, SensorDataU" +
+                "ID, DateTime FROM AlarmLogs WHERE (Id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Description", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Date_Time", global::System.Data.SqlDbType.DateTimeOffset, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date_Time", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SensorDataUID", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SensorDataUID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateTime", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateTime", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[AlarmLogs] SET [Description] = @Description, [Date_Time] = @Date_Time, [SensorDataUID] = @SensorDataUID WHERE (([Id] = @Original_Id) AND ([Description] = @Original_Description) AND ([Date_Time] = @Original_Date_Time) AND ((@IsNull_SensorDataUID = 1 AND [SensorDataUID] IS NULL) OR ([SensorDataUID] = @Original_SensorDataUID)));
-SELECT Id, Description, Date_Time, SensorDataUID FROM AlarmLogs WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[AlarmLogs] SET [Description] = @Description, [SensorDataUID] = @SensorDataUID, [DateTime] = @DateTime WHERE (([Id] = @Original_Id) AND ([Description] = @Original_Description) AND ([SensorDataUID] = @Original_SensorDataUID) AND ([DateTime] = @Original_DateTime));
+SELECT Id, Description, SensorDataUID, DateTime FROM AlarmLogs WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Description", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Date_Time", global::System.Data.SqlDbType.DateTimeOffset, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date_Time", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SensorDataUID", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SensorDataUID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateTime", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateTime", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Description", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Date_Time", global::System.Data.SqlDbType.DateTimeOffset, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date_Time", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_SensorDataUID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SensorDataUID", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SensorDataUID", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SensorDataUID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DateTime", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateTime", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
@@ -2275,7 +2266,7 @@ SELECT Id, Description, Date_Time, SensorDataUID FROM AlarmLogs WHERE (Id = @Id)
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT Id, Description, Date_Time, SensorDataUID FROM dbo.AlarmLogs";
+            this._commandCollection[0].CommandText = "SELECT Id, Description, SensorDataUID, DateTime FROM dbo.AlarmLogs";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -2336,7 +2327,7 @@ SELECT Id, Description, Date_Time, SensorDataUID FROM AlarmLogs WHERE (Id = @Id)
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, string Original_Description, System.DateTimeOffset Original_Date_Time, string Original_SensorDataUID) {
+        public virtual int Delete(int Original_Id, string Original_Description, string Original_SensorDataUID, System.DateTime Original_DateTime) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             if ((Original_Description == null)) {
                 throw new global::System.ArgumentNullException("Original_Description");
@@ -2344,15 +2335,13 @@ SELECT Id, Description, Date_Time, SensorDataUID FROM AlarmLogs WHERE (Id = @Id)
             else {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(Original_Description));
             }
-            this.Adapter.DeleteCommand.Parameters[2].Value = ((System.DateTimeOffset)(Original_Date_Time));
             if ((Original_SensorDataUID == null)) {
-                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
+                throw new global::System.ArgumentNullException("Original_SensorDataUID");
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[4].Value = ((string)(Original_SensorDataUID));
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_SensorDataUID));
             }
+            this.Adapter.DeleteCommand.Parameters[3].Value = ((System.DateTime)(Original_DateTime));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -2373,20 +2362,20 @@ SELECT Id, Description, Date_Time, SensorDataUID FROM AlarmLogs WHERE (Id = @Id)
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string Description, System.DateTimeOffset Date_Time, string SensorDataUID) {
+        public virtual int Insert(string Description, string SensorDataUID, System.DateTime DateTime) {
             if ((Description == null)) {
                 throw new global::System.ArgumentNullException("Description");
             }
             else {
                 this.Adapter.InsertCommand.Parameters[0].Value = ((string)(Description));
             }
-            this.Adapter.InsertCommand.Parameters[1].Value = ((System.DateTimeOffset)(Date_Time));
             if ((SensorDataUID == null)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+                throw new global::System.ArgumentNullException("SensorDataUID");
             }
             else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(SensorDataUID));
+                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(SensorDataUID));
             }
+            this.Adapter.InsertCommand.Parameters[2].Value = ((System.DateTime)(DateTime));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -2407,20 +2396,20 @@ SELECT Id, Description, Date_Time, SensorDataUID FROM AlarmLogs WHERE (Id = @Id)
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Description, System.DateTimeOffset Date_Time, string SensorDataUID, int Original_Id, string Original_Description, System.DateTimeOffset Original_Date_Time, string Original_SensorDataUID, int Id) {
+        public virtual int Update(string Description, string SensorDataUID, System.DateTime DateTime, int Original_Id, string Original_Description, string Original_SensorDataUID, System.DateTime Original_DateTime, int Id) {
             if ((Description == null)) {
                 throw new global::System.ArgumentNullException("Description");
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(Description));
             }
-            this.Adapter.UpdateCommand.Parameters[1].Value = ((System.DateTimeOffset)(Date_Time));
             if ((SensorDataUID == null)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+                throw new global::System.ArgumentNullException("SensorDataUID");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(SensorDataUID));
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(SensorDataUID));
             }
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((System.DateTime)(DateTime));
             this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_Id));
             if ((Original_Description == null)) {
                 throw new global::System.ArgumentNullException("Original_Description");
@@ -2428,16 +2417,14 @@ SELECT Id, Description, Date_Time, SensorDataUID FROM AlarmLogs WHERE (Id = @Id)
             else {
                 this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Original_Description));
             }
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((System.DateTimeOffset)(Original_Date_Time));
             if ((Original_SensorDataUID == null)) {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
+                throw new global::System.ArgumentNullException("Original_SensorDataUID");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_SensorDataUID));
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(Original_SensorDataUID));
             }
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(Id));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((System.DateTime)(Original_DateTime));
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -2458,8 +2445,8 @@ SELECT Id, Description, Date_Time, SensorDataUID FROM AlarmLogs WHERE (Id = @Id)
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Description, System.DateTimeOffset Date_Time, string SensorDataUID, int Original_Id, string Original_Description, System.DateTimeOffset Original_Date_Time, string Original_SensorDataUID) {
-            return this.Update(Description, Date_Time, SensorDataUID, Original_Id, Original_Description, Original_Date_Time, Original_SensorDataUID, Original_Id);
+        public virtual int Update(string Description, string SensorDataUID, System.DateTime DateTime, int Original_Id, string Original_Description, string Original_SensorDataUID, System.DateTime Original_DateTime) {
+            return this.Update(Description, SensorDataUID, DateTime, Original_Id, Original_Description, Original_SensorDataUID, Original_DateTime, Original_Id);
         }
     }
     
@@ -2912,7 +2899,7 @@ SELECT Id, Description, Date_Time, SensorDataUID FROM AlarmLogs WHERE (Id = @Id)
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[SensorData] WHERE (([Id] = @Original_Id) AND ([Param] = @Original_Param) AND ([Value] = @Original_Value) AND ([CityId] = @Original_CityId) AND ([DateTime] = @Original_DateTime) AND ([SensorId] = @Original_SensorId) AND ((@IsNull_SensorDataUID = 1 AND [SensorDataUID] IS NULL) OR ([SensorDataUID] = @Original_SensorDataUID)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[SensorData] WHERE (([Id] = @Original_Id) AND ([Param] = @Original_Param) AND ([Value] = @Original_Value) AND ([CityId] = @Original_CityId) AND ([DateTime] = @Original_DateTime) AND ([SensorId] = @Original_SensorId) AND ([SensorDataUID] = @Original_SensorDataUID))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Param", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Param", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -2920,7 +2907,6 @@ SELECT Id, Description, Date_Time, SensorDataUID FROM AlarmLogs WHERE (Id = @Id)
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CityId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CityId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DateTime", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateTime", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SensorId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SensorId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_SensorDataUID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SensorDataUID", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SensorDataUID", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SensorDataUID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
@@ -2935,7 +2921,7 @@ SELECT Id, Param, Value, CityId, DateTime, SensorId, SensorDataUID FROM SensorDa
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SensorDataUID", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SensorDataUID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[SensorData] SET [Param] = @Param, [Value] = @Value, [CityId] = @CityId, [DateTime] = @DateTime, [SensorId] = @SensorId, [SensorDataUID] = @SensorDataUID WHERE (([Id] = @Original_Id) AND ([Param] = @Original_Param) AND ([Value] = @Original_Value) AND ([CityId] = @Original_CityId) AND ([DateTime] = @Original_DateTime) AND ([SensorId] = @Original_SensorId) AND ((@IsNull_SensorDataUID = 1 AND [SensorDataUID] IS NULL) OR ([SensorDataUID] = @Original_SensorDataUID)));
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[SensorData] SET [Param] = @Param, [Value] = @Value, [CityId] = @CityId, [DateTime] = @DateTime, [SensorId] = @SensorId, [SensorDataUID] = @SensorDataUID WHERE (([Id] = @Original_Id) AND ([Param] = @Original_Param) AND ([Value] = @Original_Value) AND ([CityId] = @Original_CityId) AND ([DateTime] = @Original_DateTime) AND ([SensorId] = @Original_SensorId) AND ([SensorDataUID] = @Original_SensorDataUID));
 SELECT Id, Param, Value, CityId, DateTime, SensorId, SensorDataUID FROM SensorData WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Param", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Param", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -2950,7 +2936,6 @@ SELECT Id, Param, Value, CityId, DateTime, SensorId, SensorDataUID FROM SensorDa
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CityId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CityId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DateTime", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateTime", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SensorId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SensorId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_SensorDataUID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SensorDataUID", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SensorDataUID", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SensorDataUID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -3043,12 +3028,10 @@ SELECT Id, Param, Value, CityId, DateTime, SensorId, SensorDataUID FROM SensorDa
             this.Adapter.DeleteCommand.Parameters[4].Value = ((System.DateTime)(Original_DateTime));
             this.Adapter.DeleteCommand.Parameters[5].Value = ((int)(Original_SensorId));
             if ((Original_SensorDataUID == null)) {
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[7].Value = global::System.DBNull.Value;
+                throw new global::System.ArgumentNullException("Original_SensorDataUID");
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[7].Value = ((string)(Original_SensorDataUID));
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((string)(Original_SensorDataUID));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -3082,7 +3065,7 @@ SELECT Id, Param, Value, CityId, DateTime, SensorId, SensorDataUID FROM SensorDa
             this.Adapter.InsertCommand.Parameters[3].Value = ((System.DateTime)(DateTime));
             this.Adapter.InsertCommand.Parameters[4].Value = ((int)(SensorId));
             if ((SensorDataUID == null)) {
-                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
+                throw new global::System.ArgumentNullException("SensorDataUID");
             }
             else {
                 this.Adapter.InsertCommand.Parameters[5].Value = ((string)(SensorDataUID));
@@ -3119,7 +3102,7 @@ SELECT Id, Param, Value, CityId, DateTime, SensorId, SensorDataUID FROM SensorDa
             this.Adapter.UpdateCommand.Parameters[3].Value = ((System.DateTime)(DateTime));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(SensorId));
             if ((SensorDataUID == null)) {
-                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
+                throw new global::System.ArgumentNullException("SensorDataUID");
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(SensorDataUID));
@@ -3136,14 +3119,12 @@ SELECT Id, Param, Value, CityId, DateTime, SensorId, SensorDataUID FROM SensorDa
             this.Adapter.UpdateCommand.Parameters[10].Value = ((System.DateTime)(Original_DateTime));
             this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(Original_SensorId));
             if ((Original_SensorDataUID == null)) {
-                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
+                throw new global::System.ArgumentNullException("Original_SensorDataUID");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(Original_SensorDataUID));
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((string)(Original_SensorDataUID));
             }
-            this.Adapter.UpdateCommand.Parameters[14].Value = ((int)(Id));
+            this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -3296,13 +3277,11 @@ SELECT Id, Param, Value, CityId, DateTime, SensorId, SensorDataUID FROM SensorDa
             tableMapping.ColumnMappings.Add("Description", "Description");
             tableMapping.ColumnMappings.Add("UserName", "UserName");
             tableMapping.ColumnMappings.Add("Temperature", "Temperature");
+            tableMapping.ColumnMappings.Add("DateTime", "DateTime");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[UncommonEvents] WHERE (([Id] = @Original_Id) AND ([CityId] = @" +
-                "Original_CityId) AND ([Type] = @Original_Type) AND ([Description] = @Original_De" +
-                "scription) AND ([UserName] = @Original_UserName) AND ([Temperature] = @Original_" +
-                "Temperature))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[UncommonEvents] WHERE (([Id] = @Original_Id) AND ([CityId] = @Original_CityId) AND ([Type] = @Original_Type) AND ([Description] = @Original_Description) AND ([UserName] = @Original_UserName) AND ([Temperature] = @Original_Temperature) AND ([DateTime] = @Original_DateTime))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CityId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CityId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -3310,32 +3289,36 @@ SELECT Id, Param, Value, CityId, DateTime, SensorId, SensorDataUID FROM SensorDa
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Description", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UserName", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Temperature", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Temperature", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DateTime", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateTime", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[UncommonEvents] ([CityId], [Type], [Description], [UserName], [Temperature]) VALUES (@CityId, @Type, @Description, @UserName, @Temperature);
-SELECT Id, CityId, Type, Description, UserName, Temperature FROM UncommonEvents WHERE (Id = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[UncommonEvents] ([CityId], [Type], [Description], [UserName], [Temperature], [DateTime]) VALUES (@CityId, @Type, @Description, @UserName, @Temperature, @DateTime);
+SELECT Id, CityId, Type, Description, UserName, Temperature, DateTime FROM UncommonEvents WHERE (Id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CityId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CityId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Type", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Type", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Description", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UserName", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Temperature", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Temperature", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateTime", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateTime", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[UncommonEvents] SET [CityId] = @CityId, [Type] = @Type, [Description] = @Description, [UserName] = @UserName, [Temperature] = @Temperature WHERE (([Id] = @Original_Id) AND ([CityId] = @Original_CityId) AND ([Type] = @Original_Type) AND ([Description] = @Original_Description) AND ([UserName] = @Original_UserName) AND ([Temperature] = @Original_Temperature));
-SELECT Id, CityId, Type, Description, UserName, Temperature FROM UncommonEvents WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[UncommonEvents] SET [CityId] = @CityId, [Type] = @Type, [Description] = @Description, [UserName] = @UserName, [Temperature] = @Temperature, [DateTime] = @DateTime WHERE (([Id] = @Original_Id) AND ([CityId] = @Original_CityId) AND ([Type] = @Original_Type) AND ([Description] = @Original_Description) AND ([UserName] = @Original_UserName) AND ([Temperature] = @Original_Temperature) AND ([DateTime] = @Original_DateTime));
+SELECT Id, CityId, Type, Description, UserName, Temperature, DateTime FROM UncommonEvents WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CityId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CityId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Type", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Type", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Description", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UserName", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Temperature", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Temperature", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateTime", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateTime", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CityId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CityId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Type", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Type", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Description", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UserName", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Temperature", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Temperature", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DateTime", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateTime", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
@@ -3352,8 +3335,8 @@ SELECT Id, CityId, Type, Description, UserName, Temperature FROM UncommonEvents 
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT Id, CityId, Type, Description, UserName, Temperature FROM dbo.UncommonEven" +
-                "ts";
+            this._commandCollection[0].CommandText = "SELECT Id, CityId, Type, Description, UserName, Temperature, DateTime FROM dbo.Un" +
+                "commonEvents";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -3414,7 +3397,7 @@ SELECT Id, CityId, Type, Description, UserName, Temperature FROM UncommonEvents 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, int Original_CityId, string Original_Type, string Original_Description, string Original_UserName, int Original_Temperature) {
+        public virtual int Delete(int Original_Id, int Original_CityId, string Original_Type, string Original_Description, string Original_UserName, int Original_Temperature, System.DateTime Original_DateTime) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(Original_CityId));
             if ((Original_Type == null)) {
@@ -3436,6 +3419,7 @@ SELECT Id, CityId, Type, Description, UserName, Temperature FROM UncommonEvents 
                 this.Adapter.DeleteCommand.Parameters[4].Value = ((string)(Original_UserName));
             }
             this.Adapter.DeleteCommand.Parameters[5].Value = ((int)(Original_Temperature));
+            this.Adapter.DeleteCommand.Parameters[6].Value = ((System.DateTime)(Original_DateTime));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -3456,7 +3440,7 @@ SELECT Id, CityId, Type, Description, UserName, Temperature FROM UncommonEvents 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int CityId, string Type, string Description, string UserName, int Temperature) {
+        public virtual int Insert(int CityId, string Type, string Description, string UserName, int Temperature, System.DateTime DateTime) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(CityId));
             if ((Type == null)) {
                 throw new global::System.ArgumentNullException("Type");
@@ -3477,6 +3461,7 @@ SELECT Id, CityId, Type, Description, UserName, Temperature FROM UncommonEvents 
                 this.Adapter.InsertCommand.Parameters[3].Value = ((string)(UserName));
             }
             this.Adapter.InsertCommand.Parameters[4].Value = ((int)(Temperature));
+            this.Adapter.InsertCommand.Parameters[5].Value = ((System.DateTime)(DateTime));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -3497,7 +3482,7 @@ SELECT Id, CityId, Type, Description, UserName, Temperature FROM UncommonEvents 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int CityId, string Type, string Description, string UserName, int Temperature, int Original_Id, int Original_CityId, string Original_Type, string Original_Description, string Original_UserName, int Original_Temperature, int Id) {
+        public virtual int Update(int CityId, string Type, string Description, string UserName, int Temperature, System.DateTime DateTime, int Original_Id, int Original_CityId, string Original_Type, string Original_Description, string Original_UserName, int Original_Temperature, System.DateTime Original_DateTime, int Id) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(CityId));
             if ((Type == null)) {
                 throw new global::System.ArgumentNullException("Type");
@@ -3518,28 +3503,30 @@ SELECT Id, CityId, Type, Description, UserName, Temperature FROM UncommonEvents 
                 this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(UserName));
             }
             this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Temperature));
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_Id));
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_CityId));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((System.DateTime)(DateTime));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_Id));
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Original_CityId));
             if ((Original_Type == null)) {
                 throw new global::System.ArgumentNullException("Original_Type");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_Type));
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_Type));
             }
             if ((Original_Description == null)) {
                 throw new global::System.ArgumentNullException("Original_Description");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_Description));
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(Original_Description));
             }
             if ((Original_UserName == null)) {
                 throw new global::System.ArgumentNullException("Original_UserName");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(Original_UserName));
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Original_UserName));
             }
-            this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(Original_Temperature));
-            this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(Id));
+            this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(Original_Temperature));
+            this.Adapter.UpdateCommand.Parameters[12].Value = ((System.DateTime)(Original_DateTime));
+            this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -3560,8 +3547,8 @@ SELECT Id, CityId, Type, Description, UserName, Temperature FROM UncommonEvents 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int CityId, string Type, string Description, string UserName, int Temperature, int Original_Id, int Original_CityId, string Original_Type, string Original_Description, string Original_UserName, int Original_Temperature) {
-            return this.Update(CityId, Type, Description, UserName, Temperature, Original_Id, Original_CityId, Original_Type, Original_Description, Original_UserName, Original_Temperature, Original_Id);
+        public virtual int Update(int CityId, string Type, string Description, string UserName, int Temperature, System.DateTime DateTime, int Original_Id, int Original_CityId, string Original_Type, string Original_Description, string Original_UserName, int Original_Temperature, System.DateTime Original_DateTime) {
+            return this.Update(CityId, Type, Description, UserName, Temperature, DateTime, Original_Id, Original_CityId, Original_Type, Original_Description, Original_UserName, Original_Temperature, Original_DateTime, Original_Id);
         }
     }
     

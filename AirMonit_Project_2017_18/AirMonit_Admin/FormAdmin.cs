@@ -1,7 +1,9 @@
-﻿using System;
+﻿using AirMonit_Admin.AitMonitService;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,18 +17,20 @@ namespace AirMonit_Admin
     {
         private string[] Parameters = { "NO2", "CO", "O3" };
         private string[] cities = { "Leiria", "Lisboa", "Porto", "Coimbra" };
-
-
+        private IAirMonit_AccessingData airMonitServiceAccess;
+        
         //servico
         public FormAdmin()
         {
             InitializeComponent();
+            airMonitServiceAccess = new AirMonit_AccessingDataClient();
         }
 
         private void FormAdmin_Load(object sender, EventArgs e)
         {
             comboBoxCities.Items.AddRange(cities);
             comboBoxCities.SelectedIndex = 0;
+            ParametersCheckBoxEnable(true);
         }
 
         private List<string> GetActiveParameters()
@@ -45,93 +49,153 @@ namespace AirMonit_Admin
             return checkedParameters;
         }
 
-        private void ComboBoxCities_SelectedIndexChanged(object sender, EventArgs e)
+        private IEnumerable<AlarmLog> GetDailyAlarmsByCity(String city, DateTime dateIime)
         {
-           // string selectedCity = comboBoxCities.SelectedItem.ToString();
+            AlarmLog[] alarms = airMonitServiceAccess.getDailyAlarmsByCity(city, dateIime);
 
-          // dataGridRefresh(getDailyAlarmsByCity(selectedCity, dateTimeRaisedAlarms.Value.ToString()));
-
-            /*foreach (AlarmLog alarm in alarms)
+            if (alarms == null)
             {
-                int index = dataGridViewRaisedAlarms.Rows.Add();
-                DataGridViewRow row = dataGridViewRaisedAlarms.Rows[index];
+                Debug.WriteLine("Something went wrong at method 'GetDailyAlarmsByCity' ");
+                return null;
+            }
 
-               // row.Cells["RA_id"].Value = alarm.Id;
-               // row.Cells["RA_paramType"].Value = alarm.ParamType;
-               // row.Cells["RA_paramValue"].Value = alarm.ParamValue;
-              //  row.Cells["RA_description"].Value = alarm.Description;
-            }*/
+            Debug.WriteLine("Received alarms count: " + alarms.Count());
+            return alarms;
         }
 
-        private List<AlarmLog> GetDailyAlarmsByCity(String city, string dateIimeOffset)
+        private IEnumerable<AlarmLog> GetAlarmsBetweenDates(String city, DateTime startDate, DateTime endDate)
         {
-            List<AlarmLog> temporaryList = new List<AlarmLog>();
-            AlarmLog alarm1 = new AlarmLog(1, "Qualidade do NO2: Normal", dateIimeOffset, "NO2", 300);
-            AlarmLog alarm2 = new AlarmLog(2, "Qualidade do NO2: Má", dateIimeOffset, "NO2", 10);
-            AlarmLog alarm3 = new AlarmLog(3, "Qualidade do O3: Horrivel", dateIimeOffset, "O3", 200);
-            AlarmLog alarm4 = new AlarmLog(4, "Qualidade do CO: Normal", dateIimeOffset, "CO", 679);
-            AlarmLog alarm5 = new AlarmLog(5, "Qualidade do CO: Normal", dateIimeOffset, "NO2", 111);
-            AlarmLog alarm6 = new AlarmLog(6, "Qualidade do CO: Horrivel", dateIimeOffset, "NO2", 122);
+            AlarmLog[] alarms = airMonitServiceAccess.getDailyAlarmsByCityBetweenDates(city, startDate, endDate);
 
-            temporaryList.Add(alarm1);
-            temporaryList.Add(alarm2);
-            temporaryList.Add(alarm3);
-            temporaryList.Add(alarm4);
-            temporaryList.Add(alarm5);
-            temporaryList.Add(alarm6);
+            if (alarms == null)
+            {
+                Debug.WriteLine("Something went wrong at method 'GetAlarmsBetweenDates' ");
+                return null;
+            }
 
-            return temporaryList;
+            Debug.WriteLine("Received alarms between dates count: " + alarms.Count());
+            return alarms;
         }
 
-      //  private void TabRaisedAlarms_LostFocus(object sender, EventArgs e)
-       // {
-          //  ParametersCheckBoxEnable(false);
-       // }
+        private void comboBoxCities_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int selectedTabIndex = tabControl1.SelectedIndex;
+            Debug.WriteLine("Tab index: " + selectedTabIndex);
+            switch (selectedTabIndex)
+            {
+                case 2:
+                    RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
+                    break;
+                case 3:
+                    RefreshDataGridAtTAB("ALARMS_BETWEEN", dataGridViewAlarmsBetweenDates);
+                    break;
+            }
+        }
+
+        private void RefreshDataGridAtTAB(string tabFlag, DataGridView datagrid)
+        {
+            //ParametersCheckBoxEnable(true);
+            string selectedCity;
+            DateTime datetime;
+            DateTime endDate;
+            AlarmLog[] alarms;
+
+            switch (tabFlag)
+            {
+                case "RAISED_ALARMS":
+                    selectedCity = comboBoxCities.SelectedItem.ToString();
+                    datetime = DateTime.Parse(dateTimeMainPicker.Value.ToString());
+
+                    labelRaisedAlarmsCityName.Text = selectedCity;
+                    labelRaisedAlarmsDate.Text = datetime.ToString("yyyy-MM-dd");
+
+                    alarms = (AlarmLog[]) GetDailyAlarmsByCity(selectedCity, datetime);
+
+                    if (alarms == null)
+                    {
+                        datagrid.DataSource = null;
+                        return;
+                    }
+
+                    DataGridRefresh(alarms, datagrid);
+                    DataGridFilterParam();
+                    break;
+
+                case "ALARMS_BETWEEN":
+                    selectedCity = comboBoxCities.SelectedItem.ToString();
+                    datetime = DateTime.Parse(dateTimeMainPicker.Value.ToString());
+                    endDate = DateTime.Parse(dateTimePickerAlarmDateEnd.Value.ToString());
+
+                    if (datetime > endDate)
+                    {
+                        MessageBox.Show("Start Date cannot be after End Date");
+                        datagrid.DataSource = null;
+                        return;
+                    }
+
+                    labelCityOrCities.Text = selectedCity;
+                    labelDateStart.Text = datetime.ToString("yyyy-MM-dd");
+                    labelDateEnd.Text = endDate.ToString("yyyy-MM-dd");
+
+                    alarms = (AlarmLog[]) GetAlarmsBetweenDates(selectedCity, datetime, endDate);
+
+                    if (alarms == null)
+                    {
+                        datagrid.DataSource = null;
+                        return;
+                    }
+
+                    DataGridRefresh(alarms, datagrid);
+                    DataGridFilterParam();
+                    break;
+            }
+        }
 
         private void TabRaisedAlarms_Enter(object sender, EventArgs e)
         {
-            ParametersCheckBoxEnable(true);
-
-            string selectedCity = comboBoxCities.SelectedItem.ToString();
-            DataGridRefresh(GetDailyAlarmsByCity(selectedCity, dateTimeRaisedAlarms.Value.ToString()), dataGridViewRaisedAlarms);
-            DataGridFilterParam();
-
+            labelChooseDate.Text = "Choose Date";
+            labelEndDate.Hide();
+            dateTimePickerAlarmDateEnd.Hide();
+            RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
         }
+
         private void TabPageAlarmBetweenDates_Enter(object sender, EventArgs e)
         {
-            ParametersCheckBoxEnable(true);
-
-            string selectedCity = comboBoxCities.SelectedItem.ToString();
-            DataGridRefresh(GetDailyAlarmsByCity(selectedCity, dateTimeRaisedAlarms.Value.ToString()), dataGridViewAlarmsBetweenDates);
-            DataGridFilterParam();
-
+            //ParametersCheckBoxEnable(true);
+            labelChooseDate.Text = "Start Date";
+            labelEndDate.Show();
+            dateTimePickerAlarmDateEnd.Show();
+            RefreshDataGridAtTAB("ALARMS_BETWEEN", dataGridViewAlarmsBetweenDates);
         }
+
         private void TabPageUncommonEvents_Enter(object sender, EventArgs e)
         {
-            ParametersCheckBoxEnable(true);
-
+            //ParametersCheckBoxEnable(true);
+/*
             string selectedCity = comboBoxCities.SelectedItem.ToString();
-            DataGridRefresh(GetDailyAlarmsByCity(selectedCity, dateTimeRaisedAlarms.Value.ToString()), dataGridViewUncommonEvents);
-            DataGridFilterParam();
+            DateTime datetime = DateTime.Parse(dateTimeMainPicker.Value.ToString());
 
+            DataGridRefresh(GetDailyAlarmsByCity(selectedCity, datetime), dataGridViewAlarmsBetweenDates);
+            //DataGridRefresh(GetDailyAlarmsByCity(selectedCity, dateTimeRaisedAlarms.Value.ToString()), dataGridViewUncommonEvents);
+            DataGridFilterParam();*/
         }
 
         private void CheckBoxCO_CheckedChanged(object sender, EventArgs e)
         {
-            ParametersCheckBoxEnable(true);
+            //ParametersCheckBoxEnable(true);
             DataGridFilterParam();
         }
 
         private void CheckBoxO3_CheckedChanged(object sender, EventArgs e)
         {
-            ParametersCheckBoxEnable(true);
+            //ParametersCheckBoxEnable(true);
             DataGridFilterParam();
         }
 
 
         private void CheckBoxNO2_CheckedChanged(object sender, EventArgs e)
         {
-            ParametersCheckBoxEnable(true);
+            //ParametersCheckBoxEnable(true);
             DataGridFilterParam();
         }
 
@@ -141,30 +205,32 @@ namespace AirMonit_Admin
 
             foreach (DataGridViewRow row in dataGrid.Rows)
             {
-                string s = row.Cells[3].Value.ToString();
+                string s = row.Cells[2].Value.ToString();
 
                 if (checkBoxO3.Checked && s.StartsWith(checkBoxO3.Text, true, null))
                 {
-                    DataGridSetRowVisibilitie(row, true, dataGrid);
+                    DataGridSetRowVisibility(row, true, dataGrid);
                 }
                 else if (checkBoxNO2.Checked && s.StartsWith(checkBoxNO2.Text, true, null))
                 {
-                    DataGridSetRowVisibilitie(row, true, dataGrid);
+                    DataGridSetRowVisibility(row, true, dataGrid);
                 }
                 else if (checkBoxCO.Checked && s.StartsWith(checkBoxCO.Text, true, null))
                 {
-                    DataGridSetRowVisibilitie(row, true, dataGrid);
+                    DataGridSetRowVisibility(row, true, dataGrid);
                 }
                 else
                 {
-                    DataGridSetRowVisibilitie(row, false, dataGrid);
+                    DataGridSetRowVisibility(row, false, dataGrid);
                 }
             }
         }
 
         private void DateTimePickerAlarmBetweenDateBegin_ValueChanged(object sender, EventArgs e)
         {
-            DataGridView dataGrid = GetCurrentDataGrid();
+            RefreshDataGridAtTAB("ALARMS_BETWEEN", dataGridViewAlarmsBetweenDates);
+
+            /*DataGridView dataGrid = GetCurrentDataGrid();
 
             foreach (DataGridViewRow row in dataGrid.Rows)
             {
@@ -175,15 +241,15 @@ namespace AirMonit_Admin
                    // MessageBox.Show("picker " + dateTimePickerAlarmBetweenDateBegin.Value.Date.ToString());
 
                     //datetime compare - earlier = -1 / same = 0 / later = 1
-                if (DateTime.Compare(dateTimePickerAlarmBetweenDateBegin.Value.Date, timeRow.Date) <= 0 &&
-                        DateTime.Compare(dateTimePickerAlarmBetweenDateEnd.Value.Date, timeRow.Date) >= 0)
-                {
-                    DataGridSetRowVisibilitie(row, true, dataGrid);
-                }
-                else
-                {
-                    DataGridSetRowVisibilitie(row, false, dataGrid);
-                }
+                    if (DateTime.Compare(dateTimeMainPicker.Value.Date, timeRow.Date) <= 0 &&
+                            DateTime.Compare(dateTimePickerAlarmDateEnd.Value.Date, timeRow.Date) >= 0)
+                    {
+                        DataGridSetRowVisibility(row, true, dataGrid);
+                    }
+                    else
+                    {
+                        DataGridSetRowVisibility(row, false, dataGrid);
+                    }
 
                 }
                 catch (Exception)
@@ -191,12 +257,23 @@ namespace AirMonit_Admin
                     MessageBox.Show("The datetime is in wrong format at line " + row.Index);
                     return;
                 }
-            }
+            }*/
         }
 
         private void dateTimeRaisedAlarms_ValueChanged(object sender, EventArgs e)
         {
-            DataGridView dataGrid = GetCurrentDataGrid();
+            int selectedTabIndex = tabControl1.SelectedIndex;
+
+            switch (selectedTabIndex)
+            {
+                case 2:
+                    RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
+                    break;
+                case 3:
+                    RefreshDataGridAtTAB("ALARMS_BETWEEN", dataGridViewAlarmsBetweenDates);
+                    break;
+            }
+            /*DataGridView dataGrid = GetCurrentDataGrid();
 
             foreach (DataGridViewRow row in dataGrid.Rows)
             {
@@ -222,9 +299,8 @@ namespace AirMonit_Admin
                     MessageBox.Show("The datetime is in wrong format at line " + row.Index);
                     return;
                 }
-            }
+            }*/
         }
-
 
         private DataGridView GetCurrentDataGrid()
         {
@@ -252,22 +328,20 @@ namespace AirMonit_Admin
             checkBoxO3.Enabled = enable;
         }
 
-        private void DataGridSetRowVisibilitie(DataGridViewRow row, bool visibilitie, DataGridView dataGrid)
+        private void DataGridSetRowVisibility(DataGridViewRow row, bool visibilitiy, DataGridView dataGrid)
         {
             CurrencyManager currencyManager1 = (CurrencyManager)BindingContext[dataGrid.DataSource];
             currencyManager1.SuspendBinding();
-            row.Visible = visibilitie;
+            row.Visible = visibilitiy;
             currencyManager1.ResumeBinding();
         }
 
-        private void DataGridRefresh(List<AlarmLog> alarms, DataGridView dataGrid)
+        private void DataGridRefresh(IEnumerable<AlarmLog> alarms, DataGridView dataGrid)
         {
             dataGrid.DataSource = null;
             dataGrid.Refresh();
             dataGrid.DataSource = alarms;
         }
-
-
 
         private void ButtonChart_Click(object sender, EventArgs e)
         {
