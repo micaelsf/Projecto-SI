@@ -2,7 +2,7 @@
 
 namespace AirMonit_Admin
 {
-    class AlarmLog
+    class AlarmLog_
     {
         public int Id { get; set; }
         public string Description { get; set; }
@@ -10,7 +10,7 @@ namespace AirMonit_Admin
         public string ParamType { get; set; }
         public int ParamValue { get; set; }
 
-        public AlarmLog(int id, string description, string datetime, string paramType, int paramValue)
+        public AlarmLog_(int id, string description, string datetime, string paramType, int paramValue)
         {
             Id = id;
             Description = description;

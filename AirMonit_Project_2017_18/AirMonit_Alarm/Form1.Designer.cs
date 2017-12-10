@@ -237,6 +237,7 @@
             // 
             // comboBoxCreateCondition
             // 
+            this.comboBoxCreateCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCreateCondition.FormattingEnabled = true;
             this.comboBoxCreateCondition.Location = new System.Drawing.Point(116, 46);
             this.comboBoxCreateCondition.Name = "comboBoxCreateCondition";
@@ -327,9 +328,13 @@
             // 
             // comboBoxActiveConditions
             // 
+            this.comboBoxActiveConditions.CausesValidation = false;
+            this.comboBoxActiveConditions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxActiveConditions.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.comboBoxActiveConditions.Location = new System.Drawing.Point(101, 19);
             this.comboBoxActiveConditions.Name = "comboBoxActiveConditions";
             this.comboBoxActiveConditions.Size = new System.Drawing.Size(79, 21);
+            this.comboBoxActiveConditions.Sorted = true;
             this.comboBoxActiveConditions.TabIndex = 14;
             this.comboBoxActiveConditions.SelectedIndexChanged += new System.EventHandler(this.comboBoxActiveRules_SelectedIndexChanged);
             // 
@@ -398,11 +403,12 @@
             // 
             // comboBoxParameters
             // 
+            this.comboBoxParameters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxParameters.FormattingEnabled = true;
             this.comboBoxParameters.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.comboBoxParameters.Location = new System.Drawing.Point(123, 17);
             this.comboBoxParameters.Name = "comboBoxParameters";
-            this.comboBoxParameters.Size = new System.Drawing.Size(67, 21);
+            this.comboBoxParameters.Size = new System.Drawing.Size(100, 21);
             this.comboBoxParameters.TabIndex = 1;
             this.comboBoxParameters.SelectedIndexChanged += new System.EventHandler(this.comboBoxParameters_SelectedIndexChanged);
             // 
@@ -508,7 +514,6 @@
         private System.Windows.Forms.GroupBox groupBoxParameterRules;
         private System.Windows.Forms.Label labelSelectedCondition;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBoxActiveConditions;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.TextBox textBoxConditionValueMax;
         private System.Windows.Forms.Button buttonCancel;
@@ -517,6 +522,7 @@
         private System.Windows.Forms.Button buttonRemoveCondition;
         private System.Windows.Forms.ComboBox comboBoxCreateCondition;
         private System.Windows.Forms.Label labelValue;
+        private System.Windows.Forms.ComboBox comboBoxActiveConditions;
     }
 }
 

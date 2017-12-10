@@ -29,8 +29,9 @@ namespace AirMonit_Service
         public int storeUncommonEvent(UncommonEvents userInfo)
         {
             int linesReturned = -1;
-            string query = string.Format(@"INSERT INTO {0} (CityId, Type, Description, UserName, Temperature, DateTime) 
-                            VALUES (@cityId, @type, @description, @username, @temperature, @dateTime)", DatabaseTableConstant.tableUncommonEvents);
+            string query = string.Format(@"
+                        INSERT INTO {0} (CityId, Type, Description, UserName, Temperature, DateTime) 
+                        VALUES (@cityId, @type, @description, @username, @temperature, @dateTime)", DatabaseTableConstant.tableUncommonEvents);
 
             if (userInfo.Username == null || userInfo.Username.Trim().Count() == 0)
             {
@@ -72,7 +73,8 @@ namespace AirMonit_Service
 
         public List<AlarmLog> getDailyAlarmsByCity(string cityName, DateTime dateTime)
         {
-            string query = string.Format(@"SELECT al.Description, al.DateTime, s.Param, s.Value 
+            string query = string.Format(@"
+                        SELECT al.Description, al.DateTime, s.Param, s.Value 
                         FROM {0} al JOIN {1} s ON al.SensorDataUID = s.SensorDataUID 
                         WHERE CONVERT(varchar, al.DateTime, 23) = @date 
                         AND CityId = @cityId 

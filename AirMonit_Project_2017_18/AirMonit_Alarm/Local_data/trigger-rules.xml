@@ -13,6 +13,12 @@
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
+    <rule condition="equals">
+      <description>Qualidade do ar: Boa</description>
+      <value>100</value>
+      <minValue>-1</minValue>
+      <maxValue>-1</maxValue>
+    </rule>
   </parameter>
   <parameter type="CO" active="true">
     <rule condition="greaterThan">

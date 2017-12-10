@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AirMonit_Service" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/AirMonit_Service" />
+      <xs:element name="getInfoMinEachHour">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="Parameter" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="city" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="dateTime" type="xs:dateTime" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInfoMinEachHourResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/AirMonit_Service" minOccurs="0" name="getInfoMinEachHourResult" nillable="true" type="q1:ArrayOfInfoBetweenDate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInfoMaxEachHour">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="Parameter" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="city" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="dateTime" type="xs:dateTime" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInfoMaxEachHourResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/AirMonit_Service" minOccurs="0" name="getInfoMaxEachHourResult" nillable="true" type="q2:ArrayOfInfoBetweenDate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInfoAvgEachHour">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="Parameter" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="city" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="dateTime" type="xs:dateTime" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInfoAvgEachHourResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/AirMonit_Service" minOccurs="0" name="getInfoAvgEachHourResult" nillable="true" type="q3:ArrayOfInfoBetweenDate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInfoMinBetweenDates">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="Parameter" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="city" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
+            <xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInfoMinBetweenDatesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/AirMonit_Service" minOccurs="0" name="getInfoMinBetweenDatesResult" nillable="true" type="q4:ArrayOfInfoBetweenDate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInfoMaxBetweenDates">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="Parameter" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="city" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
+            <xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInfoMaxBetweenDatesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/AirMonit_Service" minOccurs="0" name="getInfoMaxBetweenDatesResult" nillable="true" type="q5:ArrayOfInfoBetweenDate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInfoAvgBetweenDates">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="Parameter" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="city" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
+            <xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInfoAvgBetweenDatesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/AirMonit_Service" minOccurs="0" name="getInfoAvgBetweenDatesResult" nillable="true" type="q6:ArrayOfInfoBetweenDate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getDailyAlarmsByCity">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="city" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="dateTime" type="xs:dateTime" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getDailyAlarmsByCityResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/AirMonit_Service" minOccurs="0" name="getDailyAlarmsByCityResult" nillable="true" type="q7:ArrayOfAlarmLog" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="storeUncommonEvent">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/AirMonit_Service" minOccurs="0" name="userInfo" nillable="true" type="q8:UncommonEvents" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="storeUncommonEventResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="storeUncommonEventResult" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="anyType" nillable="true" type="xs:anyType" />
+      <xs:element name="anyURI" nillable="true" type="xs:anyURI" />
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary" />
+      <xs:element name="boolean" nillable="true" type="xs:boolean" />
+      <xs:element name="byte" nillable="true" type="xs:byte" />
+      <xs:element name="dateTime" nillable="true" type="xs:dateTime" />
+      <xs:element name="decimal" nillable="true" type="xs:decimal" />
+      <xs:element name="double" nillable="true" type="xs:double" />
+      <xs:element name="float" nillable="true" type="xs:float" />
+      <xs:element name="int" nillable="true" type="xs:int" />
+      <xs:element name="long" nillable="true" type="xs:long" />
+      <xs:element name="QName" nillable="true" type="xs:QName" />
+      <xs:element name="short" nillable="true" type="xs:short" />
+      <xs:element name="string" nillable="true" type="xs:string" />
+      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" />
+      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" />
+      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" />
+      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" />
+      <xs:element name="char" nillable="true" type="tns:char" />
+      <xs:simpleType name="char">
+        <xs:restriction base="xs:int" />
+      </xs:simpleType>
+      <xs:element name="duration" nillable="true" type="tns:duration" />
+      <xs:simpleType name="duration">
+        <xs:restriction base="xs:duration">
+          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" />
+          <xs:minInclusive value="-P10675199DT2H48M5.4775808S" />
+          <xs:maxInclusive value="P10675199DT2H48M5.4775807S" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="guid" nillable="true" type="tns:guid" />
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:attribute name="FactoryType" type="xs:QName" />
+      <xs:attribute name="Id" type="xs:ID" />
+      <xs:attribute name="Ref" type="xs:IDREF" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/AirMonit_Service" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/AirMonit_Service" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="ArrayOfInfoBetweenDate">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="InfoBetweenDate" nillable="true" type="tns:InfoBetweenDate" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfInfoBetweenDate" nillable="true" type="tns:ArrayOfInfoBetweenDate" />
+      <xs:complexType name="InfoBetweenDate">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Date" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Value" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="InfoBetweenDate" nillable="true" type="tns:InfoBetweenDate" />
+      <xs:complexType name="ArrayOfAlarmLog">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="AlarmLog" nillable="true" type="tns:AlarmLog" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfAlarmLog" nillable="true" type="tns:ArrayOfAlarmLog" />
+      <xs:complexType name="AlarmLog">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DateTime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Parameter" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Value" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="AlarmLog" nillable="true" type="tns:AlarmLog" />
+      <xs:complexType name="UncommonEvents">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CityName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DateTime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Temperature" type="xs:float" />
+          <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="UncommonEvents" nillable="true" type="tns:UncommonEvents" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="IAirMonit_AccessingData_getInfoMinEachHour_InputMessage">
+    <wsdl:part name="parameters" element="tns:getInfoMinEachHour" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getInfoMinEachHour_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getInfoMinEachHourResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getInfoMaxEachHour_InputMessage">
+    <wsdl:part name="parameters" element="tns:getInfoMaxEachHour" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getInfoMaxEachHour_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getInfoMaxEachHourResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getInfoAvgEachHour_InputMessage">
+    <wsdl:part name="parameters" element="tns:getInfoAvgEachHour" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getInfoAvgEachHour_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getInfoAvgEachHourResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getInfoMinBetweenDates_InputMessage">
+    <wsdl:part name="parameters" element="tns:getInfoMinBetweenDates" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getInfoMinBetweenDates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getInfoMinBetweenDatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getInfoMaxBetweenDates_InputMessage">
+    <wsdl:part name="parameters" element="tns:getInfoMaxBetweenDates" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getInfoMaxBetweenDates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getInfoMaxBetweenDatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getInfoAvgBetweenDates_InputMessage">
+    <wsdl:part name="parameters" element="tns:getInfoAvgBetweenDates" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getInfoAvgBetweenDates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getInfoAvgBetweenDatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getDailyAlarmsByCity_InputMessage">
+    <wsdl:part name="parameters" element="tns:getDailyAlarmsByCity" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_AccessingData_getDailyAlarmsByCity_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getDailyAlarmsByCityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_StoreData_storeUncommonEvent_InputMessage">
+    <wsdl:part name="parameters" element="tns:storeUncommonEvent" />
+  </wsdl:message>
+  <wsdl:message name="IAirMonit_StoreData_storeUncommonEvent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:storeUncommonEventResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IAirMonit_AccessingData">
+    <wsdl:operation name="getInfoMinEachHour">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getInfoMinEachHour" message="tns:IAirMonit_AccessingData_getInfoMinEachHour_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getInfoMinEachHourResponse" message="tns:IAirMonit_AccessingData_getInfoMinEachHour_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getInfoMaxEachHour">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getInfoMaxEachHour" message="tns:IAirMonit_AccessingData_getInfoMaxEachHour_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getInfoMaxEachHourResponse" message="tns:IAirMonit_AccessingData_getInfoMaxEachHour_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getInfoAvgEachHour">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getInfoAvgEachHour" message="tns:IAirMonit_AccessingData_getInfoAvgEachHour_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getInfoAvgEachHourResponse" message="tns:IAirMonit_AccessingData_getInfoAvgEachHour_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getInfoMinBetweenDates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getInfoMinBetweenDates" message="tns:IAirMonit_AccessingData_getInfoMinBetweenDates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getInfoMinBetweenDatesResponse" message="tns:IAirMonit_AccessingData_getInfoMinBetweenDates_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getInfoMaxBetweenDates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getInfoMaxBetweenDates" message="tns:IAirMonit_AccessingData_getInfoMaxBetweenDates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getInfoMaxBetweenDatesResponse" message="tns:IAirMonit_AccessingData_getInfoMaxBetweenDates_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getInfoAvgBetweenDates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getInfoAvgBetweenDates" message="tns:IAirMonit_AccessingData_getInfoAvgBetweenDates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getInfoAvgBetweenDatesResponse" message="tns:IAirMonit_AccessingData_getInfoAvgBetweenDates_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getDailyAlarmsByCity">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCity" message="tns:IAirMonit_AccessingData_getDailyAlarmsByCity_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCityResponse" message="tns:IAirMonit_AccessingData_getDailyAlarmsByCity_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IAirMonit_StoreData">
+    <wsdl:operation name="storeUncommonEvent">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAirMonit_StoreData/storeUncommonEvent" message="tns:IAirMonit_StoreData_storeUncommonEvent_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAirMonit_StoreData/storeUncommonEventResponse" message="tns:IAirMonit_StoreData_storeUncommonEvent_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IAirMonit_AccessingData" type="tns:IAirMonit_AccessingData">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getInfoMinEachHour">
+      <soap:operation soapAction="http://tempuri.org/IAirMonit_AccessingData/getInfoMinEachHour" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInfoMaxEachHour">
+      <soap:operation soapAction="http://tempuri.org/IAirMonit_AccessingData/getInfoMaxEachHour" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInfoAvgEachHour">
+      <soap:operation soapAction="http://tempuri.org/IAirMonit_AccessingData/getInfoAvgEachHour" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInfoMinBetweenDates">
+      <soap:operation soapAction="http://tempuri.org/IAirMonit_AccessingData/getInfoMinBetweenDates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInfoMaxBetweenDates">
+      <soap:operation soapAction="http://tempuri.org/IAirMonit_AccessingData/getInfoMaxBetweenDates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInfoAvgBetweenDates">
+      <soap:operation soapAction="http://tempuri.org/IAirMonit_AccessingData/getInfoAvgBetweenDates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDailyAlarmsByCity">
+      <soap:operation soapAction="http://tempuri.org/IAirMonit_AccessingData/getDailyAlarmsByCity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BasicHttpBinding_IAirMonit_StoreData" type="tns:IAirMonit_StoreData">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="storeUncommonEvent">
+      <soap:operation soapAction="http://tempuri.org/IAirMonit_StoreData/storeUncommonEvent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AirMonit_Service">
+    <wsdl:port name="BasicHttpBinding_IAirMonit_AccessingData" binding="tns:BasicHttpBinding_IAirMonit_AccessingData">
+      <soap:address location="http://airmonit-8.apphb.com/Service1.svc" />
+    </wsdl:port>
+    <wsdl:port name="BasicHttpBinding_IAirMonit_StoreData" binding="tns:BasicHttpBinding_IAirMonit_StoreData">
+      <soap:address location="http://airmonit-8.apphb.com/Service1.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
