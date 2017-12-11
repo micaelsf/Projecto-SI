@@ -82,6 +82,10 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.labelGroupBy = new System.Windows.Forms.Label();
             this.comboBoxGroupBy = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.labelAlarmsCount = new System.Windows.Forms.Label();
+            this.labelTotalEvents = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.tabPageUncommonEvents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUncommonEvents)).BeginInit();
@@ -230,6 +234,8 @@
             // 
             // tabPageUncommonEvents
             // 
+            this.tabPageUncommonEvents.Controls.Add(this.labelTotalEvents);
+            this.tabPageUncommonEvents.Controls.Add(this.label4);
             this.tabPageUncommonEvents.Controls.Add(this.labelEventsNoData);
             this.tabPageUncommonEvents.Controls.Add(this.labelEventsEndDate);
             this.tabPageUncommonEvents.Controls.Add(this.label6);
@@ -238,7 +244,7 @@
             this.tabPageUncommonEvents.Controls.Add(this.labelUncommonCityOrCities);
             this.tabPageUncommonEvents.Controls.Add(this.label10);
             this.tabPageUncommonEvents.Controls.Add(this.dataGridViewUncommonEvents);
-            this.tabPageUncommonEvents.Location = new System.Drawing.Point(4, 34);
+            this.tabPageUncommonEvents.Location = new System.Drawing.Point(4, 39);
             this.tabPageUncommonEvents.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageUncommonEvents.Name = "tabPageUncommonEvents";
             this.tabPageUncommonEvents.Padding = new System.Windows.Forms.Padding(2);
@@ -334,6 +340,8 @@
             // 
             // tabPageRaisedAlarms
             // 
+            this.tabPageRaisedAlarms.Controls.Add(this.labelAlarmsCount);
+            this.tabPageRaisedAlarms.Controls.Add(this.label1);
             this.tabPageRaisedAlarms.Controls.Add(this.labelRaisedAlarmsNoData);
             this.tabPageRaisedAlarms.Controls.Add(this.labelDateEnd);
             this.tabPageRaisedAlarms.Controls.Add(this.label8);
@@ -602,15 +610,15 @@
             // 
             // labelChartDays
             // 
-            this.labelChartDays.AutoSize = true;
             this.labelChartDays.BackColor = System.Drawing.Color.Transparent;
             this.labelChartDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelChartDays.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.labelChartDays.Location = new System.Drawing.Point(396, 409);
+            this.labelChartDays.Location = new System.Drawing.Point(292, 409);
             this.labelChartDays.Name = "labelChartDays";
-            this.labelChartDays.Size = new System.Drawing.Size(39, 18);
+            this.labelChartDays.Size = new System.Drawing.Size(250, 18);
             this.labelChartDays.TabIndex = 5;
             this.labelChartDays.Text = "Date";
+            this.labelChartDays.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // chartDaysData
             // 
@@ -666,6 +674,50 @@
             this.comboBoxGroupBy.Size = new System.Drawing.Size(91, 21);
             this.comboBoxGroupBy.TabIndex = 6;
             this.comboBoxGroupBy.SelectedIndexChanged += new System.EventHandler(this.comboBoxGroupBy_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(696, 10);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(107, 15);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Total occurrences:";
+            // 
+            // labelAlarmsCount
+            // 
+            this.labelAlarmsCount.BackColor = System.Drawing.Color.Transparent;
+            this.labelAlarmsCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelAlarmsCount.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.labelAlarmsCount.Location = new System.Drawing.Point(809, 4);
+            this.labelAlarmsCount.Name = "labelAlarmsCount";
+            this.labelAlarmsCount.Size = new System.Drawing.Size(84, 23);
+            this.labelAlarmsCount.TabIndex = 17;
+            this.labelAlarmsCount.Text = "999999";
+            this.labelAlarmsCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelTotalEvents
+            // 
+            this.labelTotalEvents.BackColor = System.Drawing.Color.Transparent;
+            this.labelTotalEvents.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTotalEvents.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.labelTotalEvents.Location = new System.Drawing.Point(807, 5);
+            this.labelTotalEvents.Name = "labelTotalEvents";
+            this.labelTotalEvents.Size = new System.Drawing.Size(84, 23);
+            this.labelTotalEvents.TabIndex = 21;
+            this.labelTotalEvents.Text = "999999";
+            this.labelTotalEvents.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(737, 11);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(75, 15);
+            this.label4.TabIndex = 20;
+            this.label4.Text = "Total events:";
             // 
             // FormAdmin
             // 
@@ -762,6 +814,10 @@
         private System.Windows.Forms.Label labelChartViewMode;
         private System.Windows.Forms.Label labelChartActiveMode1;
         private System.Windows.Forms.Label labelChartActiveMode;
+        private System.Windows.Forms.Label labelAlarmsCount;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelTotalEvents;
+        private System.Windows.Forms.Label label4;
     }
 }
 
