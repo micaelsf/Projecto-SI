@@ -16,9 +16,13 @@ namespace AirMonit_Admin
     public partial class FormAdmin : Form
     {
         private string[] Parameters = { "NO2", "CO", "O3" };
+        private string[] groupBy = { "AVG", "MAX", "MIN" };
         private string[] cities = { "Leiria", "Lisboa", "Porto", "Coimbra", "All cities" };
         private IAirMonit_AccessingData airMonitServiceAccess;
-        
+
+        private enum Modes { HOUR_MODE, DATE_MODE };
+        private Modes ActiveMode { get; set; }
+
         //servico
         public FormAdmin()
         {
@@ -28,9 +32,17 @@ namespace AirMonit_Admin
 
         private void FormAdmin_Load(object sender, EventArgs e)
         {
+            ActiveMode = Modes.DATE_MODE;
+            labelChartActiveMode1.Text = "Date Mode";
+
             comboBoxCities.Items.AddRange(cities);
+            comboBoxGroupBy.Items.AddRange(groupBy);
             comboBoxCities.SelectedIndex = 0;
+            //comboBoxGroupBy.SelectedIndex = 0; // is getting selected at comboBoxCities triggered event
             ParametersCheckBoxEnable(true);
+
+            labelChartDays.Hide();
+            labelChartValues.Hide();
         }
 
         private List<string> GetActiveParameters()
@@ -49,40 +61,17 @@ namespace AirMonit_Admin
             return checkedParameters;
         }
 
-        private IEnumerable<AlarmLog> GetAlarmsBetweenDates(String city, DateTime startDate, DateTime endDate)
-        {
-            AlarmLog[] alarms = airMonitServiceAccess.getDailyAlarmsByCityBetweenDates(city, startDate, endDate);
-
-            if (alarms == null)
-            {
-                Debug.WriteLine("Something went wrong at method 'GetAlarmsBetweenDates' ");
-                return null;
-            }
-
-            Debug.WriteLine("Received alarms between dates count: " + alarms.Count());
-            return alarms;
-        }
-
-        private IEnumerable<UncommonEvents> GetUncommonEvents(String city, DateTime startDate, DateTime endDate)
-        {
-            UncommonEvents[] events = airMonitServiceAccess.getUncommonEventsBetweenDates(city, startDate, endDate);
-
-            if (events == null)
-            {
-                Debug.WriteLine("Something went wrong at method 'GetUncommonEvents' ");
-                return null;
-            }
-
-            Debug.WriteLine("Received events count: " + events.Count());
-            return events;
-        }
-
         private void comboBoxCities_SelectedIndexChanged(object sender, EventArgs e)
         {
             int selectedTabIndex = tabControl1.SelectedIndex;
             Debug.WriteLine("Tab index: " + selectedTabIndex);
+
             switch (selectedTabIndex)
             {
+                case 0:
+                    //comboBoxGroupBy.SelectedIndex = 0;
+                    DisplayChart();
+                    break;
                 case 2:
                     RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
                     break;
@@ -108,7 +97,7 @@ namespace AirMonit_Admin
         private void RefreshEventsGrid()
         {
             string selectedCity;
-            DateTime datetime, endDate;
+            DateTime startDate, endDate;
             UncommonEvents[] events;
             DataGridView contextGrid = GetCurrentDataGrid();
 
@@ -116,8 +105,8 @@ namespace AirMonit_Admin
 
             try
             {
-                datetime = DateTime.Parse(dateTimeMainPicker.Value.ToString());
-                endDate = DateTime.Parse(dateTimePickerAlarmDateEnd.Value.ToString());
+                startDate = DateTime.Parse(dateTimeStartDate.Value.ToString());
+                endDate = DateTime.Parse(dateTimeEndDate.Value.ToString());
             }
             catch (Exception e)
             {
@@ -126,7 +115,7 @@ namespace AirMonit_Admin
             }
 
             labelUncommonCityOrCities.Text = selectedCity;
-            labelEventsStartDate.Text = datetime.ToString("yyyy-MM-dd");
+            labelEventsStartDate.Text = startDate.ToString("yyyy-MM-dd");
             labelEventsEndDate.Text = endDate.ToString("yyyy-MM-dd");
 
             if (selectedCity == "All cities")
@@ -134,7 +123,7 @@ namespace AirMonit_Admin
                 selectedCity = null;
             }
 
-            events = (UncommonEvents[])GetUncommonEvents(selectedCity, datetime, endDate);
+            events = (UncommonEvents[])GetUncommonEvents(selectedCity, startDate, endDate);
 
             if (events == null)
             {
@@ -142,13 +131,22 @@ namespace AirMonit_Admin
                 return;
             }
 
+            if (events.Count() == 0)
+            {
+                labelEventsNoData.Show();
+                contextGrid.DataSource = null;
+                return;
+            }
+
+            labelEventsNoData.Hide();
+
             DataGridRefresh(events, contextGrid);
         }
 
         private void RefreshRaisedAlarms()
         {
             string selectedCity;
-            DateTime datetime, endDate;
+            DateTime startDate, endDate;
             AlarmLog[] alarms;
             DataGridView contextGrid = GetCurrentDataGrid();
 
@@ -156,8 +154,8 @@ namespace AirMonit_Admin
 
             try
             {
-                datetime = DateTime.Parse(dateTimeMainPicker.Value.ToString());
-                endDate = DateTime.Parse(dateTimePickerAlarmDateEnd.Value.ToString());
+                startDate = DateTime.Parse(dateTimeStartDate.Value.ToString());
+                endDate = DateTime.Parse(dateTimeEndDate.Value.ToString());
             }
             catch (Exception e)
             {
@@ -165,7 +163,7 @@ namespace AirMonit_Admin
                 return;
             }
 
-            if (datetime > endDate)
+            if (startDate > endDate)
             {
                 MessageBox.Show("Start Date cannot be after End Date");
                 contextGrid.DataSource = null;
@@ -173,7 +171,7 @@ namespace AirMonit_Admin
             }
 
             labelRaisedAlarmsCityOrCities.Text = selectedCity;
-            labelDateStart.Text = datetime.ToString("yyyy-MM-dd");
+            labelDateStart.Text = startDate.ToString("yyyy-MM-dd");
             labelDateEnd.Text = endDate.ToString("yyyy-MM-dd");
 
             if (selectedCity == "All cities")
@@ -181,7 +179,7 @@ namespace AirMonit_Admin
                 selectedCity = null;
             }
 
-            alarms = (AlarmLog[])GetAlarmsBetweenDates(selectedCity, datetime, endDate);
+            alarms = (AlarmLog[])GetAlarmsBetweenDates(selectedCity, startDate, endDate);
 
             if (alarms == null)
             {
@@ -189,25 +187,45 @@ namespace AirMonit_Admin
                 return;
             }
 
+            if (alarms.Count() == 0)
+            {
+                labelRaisedAlarmsNoData.Show();
+                contextGrid.DataSource = null;
+                return;
+            }
+
+            if (GetActiveParameters().Count() == 0)
+            {
+                labelRaisedAlarmsNoData.Show();
+                contextGrid.DataSource = null;
+                return;
+            }
+
+            labelRaisedAlarmsNoData.Hide();
+
             DataGridRefresh(alarms, contextGrid);
-            DataGridFilterParam();
+            DataGridFilterParam(contextGrid);
         }
 
         private void TabPageRaisedAlarms_Enter(object sender, EventArgs e)
         {
+            labelGroupBy.Hide();
+            comboBoxGroupBy.Hide();
             labelChooseDate.Text = "Start Date";
             labelEndDate.Show();
             ShowParametersCheckBox();
-            dateTimePickerAlarmDateEnd.Show();
+            dateTimeEndDate.Show();
             RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
         }
 
         private void TabPageUncommonEvents_Enter(object sender, EventArgs e)
         {
+            labelGroupBy.Hide();
+            comboBoxGroupBy.Hide();
             labelChooseDate.Text = "Start Date";
             labelEndDate.Show();
             HideParametersCheckBox();
-            dateTimePickerAlarmDateEnd.Show();
+            dateTimeEndDate.Show();
             RefreshDataGridAtTAB("EVENTS", dataGridViewUncommonEvents);
         }
 
@@ -229,26 +247,43 @@ namespace AirMonit_Admin
 
         private void CheckBoxCO_CheckedChanged(object sender, EventArgs e)
         {
-            //ParametersCheckBoxEnable(true);
-            DataGridFilterParam();
+            DataGridView dataGrid = GetCurrentDataGrid();
+            if (dataGrid != null)
+            {
+                DataGridFilterParam(dataGrid);
+                return;
+            }
+
+            DisplayChart();
+
         }
 
         private void CheckBoxO3_CheckedChanged(object sender, EventArgs e)
         {
-            //ParametersCheckBoxEnable(true);
-            DataGridFilterParam();
-        }
+            DataGridView dataGrid = GetCurrentDataGrid();
+            if (dataGrid != null)
+            {
+                DataGridFilterParam(dataGrid);
+                return;
+            }
 
+            DisplayChart();
+        }
 
         private void CheckBoxNO2_CheckedChanged(object sender, EventArgs e)
         {
-            //ParametersCheckBoxEnable(true);
-            DataGridFilterParam();
+            DataGridView dataGrid = GetCurrentDataGrid();
+            if (dataGrid != null)
+            {
+                DataGridFilterParam(dataGrid);
+                return;
+            }
+
+            DisplayChart();
         }
 
-        private void DataGridFilterParam()
+        private void DataGridFilterParam(DataGridView dataGrid)
         {
-            DataGridView dataGrid = GetCurrentDataGrid();
             Debug.WriteLine("Current DataGrid name: " + dataGrid.Name);
 
             int paramCellIndex = getParameterCellIndex(dataGrid);
@@ -297,12 +332,15 @@ namespace AirMonit_Admin
             return paramCellIndex;
         }
 
-        private void DateTimePickerAlarmBetweenDateBegin_ValueChanged(object sender, EventArgs e)
+        private void DateTimePickerEndDate_ValueChanged(object sender, EventArgs e)
         {
             int selectedTabIndex = tabControl1.SelectedIndex;
 
             switch (selectedTabIndex)
             {
+                case 0:
+                    DisplayChart();
+                    break;
                 case 2:
                     RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
                     break;
@@ -312,12 +350,15 @@ namespace AirMonit_Admin
             }
         }
 
-        private void dateTimeRaisedAlarms_ValueChanged(object sender, EventArgs e)
+        private void DateTimePickerStartDate_ValueChanged(object sender, EventArgs e)
         {
             int selectedTabIndex = tabControl1.SelectedIndex;
 
             switch (selectedTabIndex)
             {
+                case 0:
+                    DisplayChart();
+                    break;
                 case 2:
                     RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
                     break;
@@ -455,56 +496,489 @@ namespace AirMonit_Admin
             }
         }
 
-        private void ButtonChart_Click(object sender, EventArgs e)
+        private void tabChart_Click(object sender, EventArgs e)
         {
-            chartSingleCity.Series.Clear();
-            int periodicity;
-            periodicity = 24; //semana 7 ou dia 24
+            ShowChartContentLabels();
+            DisplayChart();
+        }
+
+        private void DisplayChart()
+        {
+            // o clear só funciona corretamente quando o DisplayChart() é chamado pelo evento dos checkboxes
+            chartDaysData.Series.Clear();
+
+            DateTime startDate = new DateTime();
+            DateTime endDate = new DateTime();
+
+            try
+            {
+                startDate = DateTime.Parse(dateTimeStartDate.Value.ToString());
+                endDate = DateTime.Parse(dateTimeEndDate.Value.ToString());
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error parsing dates at RefreshSeries() method: " + e.Message);
+                return;
+            }
+
+            if (GetActiveParameters().Count() == 0)
+            {
+                HideChartContentLabels();
+                return;
+            }
+
+            if (startDate > endDate)
+            {
+                MessageBox.Show("Start Date cannot be after End Date");
+                chartDaysData.Series.Clear();
+                HideChartContentLabels();
+                return;
+            }
+
+            if (comboBoxGroupBy.SelectedItem == null)
+            {
+                HideChartContentLabels();
+                return;
+            }
+
+            string selectedGroupGy = comboBoxGroupBy.SelectedItem.ToString();
+
+            labelChartFunctionType.Text = selectedGroupGy;
+
+            switch (selectedGroupGy)
+            {
+                case "AVG":
+                    ShowAVGChart(startDate, endDate);
+                    break;
+                case "MAX":
+                    ShowMAXChart(startDate, endDate);
+                    break;
+                case "MIN":
+                    ShowMINChart(startDate, endDate);
+                    break;
+            }
+
+            chartDaysData.Show();
+        }
+
+        private void ShowMINChart(DateTime startDate, DateTime endDate)
+        {
+            InfoBetweenDate[] minInfo_NO2 = null, minInfo_CO = null, minInfo_O3 = null;
 
             if (checkBoxNO2.Checked == true)
             {
-                chartSingleCity.Series.Add("NO2");
-                chartSingleCity.Series["NO2"].SetDefault(true);
-                chartSingleCity.Series["NO2"].Enabled = true;
+                minInfo_NO2 = (InfoBetweenDate[])RefreshSeries("NO2", "MIN", startDate, endDate);
             }
 
             if (checkBoxCO.Checked == true)
             {
-                chartSingleCity.Series.Add("CO");
-                chartSingleCity.Series["CO"].SetDefault(true);
-                chartSingleCity.Series["CO"].Enabled = true;
+                minInfo_CO = (InfoBetweenDate[])RefreshSeries("CO", "MIN", startDate, endDate);
             }
 
             if (checkBoxO3.Checked == true)
             {
-                chartSingleCity.Series.Add("O3");
-                chartSingleCity.Series["O3"].SetDefault(true);
-                chartSingleCity.Series["O3"].Enabled = true;
+                minInfo_O3 = (InfoBetweenDate[])RefreshSeries("O3", "MIN", startDate, endDate);
             }
 
+            chartDaysData.Visible = true;
 
-            chartSingleCity.Visible = true;
+            int periodicity = 0;
 
-            for (int i = 0; i <= periodicity; i++)
+            // get periodicity, the size of the arrays are the same. avgInfo_NO2.Count == avgInfo_CO.Count == avgInfo_O3.Count
+            if (minInfo_NO2 != null)
             {
-                if (checkBoxCO.Checked == true)
-                {
-                    chartSingleCity.Series["NO2"].Points.AddXY(1, 1250 + i);
-                }
-
-                if (checkBoxCO.Checked == true)
-                {
-                    chartSingleCity.Series["CO"].Points.AddXY(2, 500 + i);
-                }
-
-                if (checkBoxCO.Checked == true)
-                {
-                    chartSingleCity.Series["O3"].Points.AddXY(3, 800 + i);
-                }
-
+                periodicity = minInfo_NO2.Count();
+            }
+            else if (minInfo_CO != null)
+            {
+                periodicity = minInfo_CO.Count();
+            }
+            else if (minInfo_O3 != null)
+            {
+                periodicity = minInfo_O3.Count();
             }
 
-            chartSingleCity.Show();
+            if (periodicity == 0)
+            {
+                HideChartContentLabels();
+                return;
+            }
+            
+            ShowChartContentLabels();
+
+            int minValueNO2, minValueCO, minValueO3;
+            string dateNO2, dateCO, dateO3;
+            string cityNO2, cityCO, cityO3;
+
+            // iterate from end to 0, so dates go from left to right (oldest to today date)
+            int x = 0;
+            for (int i = periodicity - 1; i >= 0; i--)
+            {
+                if (checkBoxNO2.Checked == true)
+                {
+                    minValueNO2 = minInfo_NO2[i].Value;
+                    dateNO2 = minInfo_NO2[i].Date;
+                    cityNO2 = minInfo_NO2[i].City;
+
+                    chartDaysData.Series["NO2"].Points.AddXY(dateNO2, minValueNO2);
+                    //chartSingleCity.Series["NO2"].ChartType = SeriesChartType.Bar;
+                    chartDaysData.Series["NO2"].Points[x].Label = minValueNO2 + "";
+                    chartDaysData.Series["NO2"].LabelForeColor = Color.Black;
+                    chartDaysData.Series["NO2"].Label = cityNO2;
+                }
+
+                if (checkBoxCO.Checked == true)
+                {
+                    minValueCO = minInfo_CO[i].Value;
+                    dateCO = minInfo_CO[i].Date;
+                    cityCO = minInfo_CO[i].City;
+
+                    chartDaysData.Series["CO"].Points.AddXY(dateCO, minValueCO);
+                    //chartSingleCity.Series["CO"].ChartType = SeriesChartType.Bar;
+                    chartDaysData.Series["CO"].Points[x].Label = minValueCO + "";
+                    chartDaysData.Series["CO"].LabelForeColor = Color.Black;
+                    chartDaysData.Series["CO"].Label = cityCO;
+                }
+
+                if (checkBoxO3.Checked == true)
+                {
+                    minValueO3 = minInfo_O3[i].Value;
+                    dateO3 = minInfo_O3[i].Date;
+                    cityO3 = minInfo_O3[i].City;
+
+                    chartDaysData.Series["O3"].Points.AddXY(dateO3, minValueO3);
+                    //chartSingleCity.Series["O3"].ChartType = SeriesChartType.Bar;
+                    chartDaysData.Series["O3"].Points[x].Label = minValueO3 + "";
+                    chartDaysData.Series["O3"].LabelForeColor = Color.Black;
+                    chartDaysData.Series["O3"].Label = cityO3;
+                }
+                x++;
+            }
+        }
+
+        private void ShowMAXChart(DateTime startDate, DateTime endDate)
+        {
+            InfoBetweenDate[] maxInfo_NO2 = null, maxInfo_CO = null, maxInfo_O3 = null;
+
+            if (checkBoxNO2.Checked == true)
+            {
+                maxInfo_NO2 = (InfoBetweenDate[])RefreshSeries("NO2", "MAX", startDate, endDate);
+            }
+
+            if (checkBoxCO.Checked == true)
+            {
+                maxInfo_CO = (InfoBetweenDate[])RefreshSeries("CO", "MAX", startDate, endDate);
+            }
+
+            if (checkBoxO3.Checked == true)
+            {
+                maxInfo_O3 = (InfoBetweenDate[])RefreshSeries("O3", "MAX", startDate, endDate);
+            }
+
+            chartDaysData.Visible = true;
+
+            int periodicity = 0;
+
+            // get periodicity, the size of the arrays are the same. avgInfo_NO2.Count == avgInfo_CO.Count == avgInfo_O3.Count
+            if (maxInfo_NO2 != null)
+            {
+                periodicity = maxInfo_NO2.Count();
+            }
+            else if (maxInfo_CO != null)
+            {
+                periodicity = maxInfo_CO.Count();
+            }
+            else if (maxInfo_O3 != null)
+            {
+                periodicity = maxInfo_O3.Count();
+            }
+
+            if (periodicity == 0)
+            {
+                HideChartContentLabels();
+                return;
+            }
+
+            ShowChartContentLabels();
+
+            int maxValueNO2, maxValueCO, maxValueO3;
+            string dateNO2, dateCO, dateO3;
+
+            // iterate from end to 0, so dates go from left to right (oldest to today date)
+            int x = 0;
+            for (int i = periodicity - 1; i >= 0; i--)
+            {
+                if (checkBoxNO2.Checked == true)
+                {
+                    maxValueNO2 = maxInfo_NO2[i].Value;
+                    dateNO2 = maxInfo_NO2[i].Date;
+                    chartDaysData.Series["NO2"].Points.AddXY(dateNO2, maxValueNO2);
+                    //chartSingleCity.Series["NO2"].ChartType = SeriesChartType.Bar;
+                    chartDaysData.Series["NO2"].Points[x].Label = maxValueNO2 + "";
+                    chartDaysData.Series["NO2"].LabelForeColor = Color.Black;
+                }
+
+                if (checkBoxCO.Checked == true)
+                {
+                    maxValueCO = maxInfo_CO[i].Value;
+                    dateCO = maxInfo_CO[i].Date;
+                    chartDaysData.Series["CO"].Points.AddXY(dateCO, maxValueCO);
+                    //chartSingleCity.Series["CO"].ChartType = SeriesChartType.Bar;
+                    chartDaysData.Series["CO"].Points[x].Label = maxValueCO + "";
+                    chartDaysData.Series["CO"].LabelForeColor = Color.Black;
+                }
+
+                if (checkBoxO3.Checked == true)
+                {
+                    maxValueO3 = maxInfo_O3[i].Value;
+                    dateO3 = maxInfo_O3[i].Date;
+                    chartDaysData.Series["O3"].Points.AddXY(dateO3, maxValueO3);
+                    //chartSingleCity.Series["O3"].ChartType = SeriesChartType.Bar;
+                    chartDaysData.Series["O3"].Points[x].Label = maxValueO3 + "";
+                    chartDaysData.Series["O3"].LabelForeColor = Color.Black;
+                }
+                x++;
+            }
+        }
+
+        private void ShowAVGChart(DateTime startDate, DateTime endDate)
+        {
+            InfoBetweenDate[] avgInfo_NO2 = null, avgInfo_CO = null, avgInfo_O3 = null;
+
+            if (checkBoxNO2.Checked == true)
+            {
+                avgInfo_NO2 = (InfoBetweenDate[])RefreshSeries("NO2", "AVG", startDate, endDate);
+            }
+
+            if (checkBoxCO.Checked == true)
+            {
+                avgInfo_CO = (InfoBetweenDate[])RefreshSeries("CO", "AVG", startDate, endDate);
+            }
+
+            if (checkBoxO3.Checked == true)
+            {
+                avgInfo_O3 = (InfoBetweenDate[])RefreshSeries("O3", "AVG", startDate, endDate);
+            }
+
+            chartDaysData.Visible = true;
+
+            int periodicity = 0;
+
+            // get periodicity, the size of the arrays are the same. avgInfo_NO2.Count == avgInfo_CO.Count == avgInfo_O3.Count
+            if (avgInfo_NO2 != null)
+            {
+                periodicity = avgInfo_NO2.Count();
+            }
+            else if (avgInfo_CO != null)
+            {
+                periodicity = avgInfo_CO.Count();
+            }
+            else if (avgInfo_O3 != null)
+            {
+                periodicity = avgInfo_O3.Count();
+            }
+
+            if (periodicity == 0)
+            {
+                HideChartContentLabels();
+                return;
+            }
+
+            ShowChartContentLabels();
+
+            int avgValueNO2, avgValueCO, avgValueO3;
+            string dateNO2, dateCO, dateO3;
+
+            // iterate from end to 0, so dates go from left to right (oldest to today date)
+            int x = 0;
+            for (int i = periodicity - 1; i >= 0; i--)
+            {
+                if (checkBoxNO2.Checked == true)
+                {
+                    avgValueNO2 = avgInfo_NO2[i].Value;
+                    dateNO2 = avgInfo_NO2[i].Date;
+                    Debug.WriteLine("[" + i + "] avgValueNO2 is: " + avgValueNO2);
+                    chartDaysData.Series["NO2"].Points.AddXY(dateNO2, avgValueNO2);
+                    //chartSingleCity.Series["NO2"].ChartType = SeriesChartType.Bar;
+                    chartDaysData.Series["NO2"].Points[x].Label = avgValueNO2 + "";
+                    chartDaysData.Series["NO2"].LabelForeColor = Color.Black;
+                }
+
+                if (checkBoxCO.Checked == true)
+                {
+                    avgValueCO = avgInfo_CO[i].Value;
+                    dateCO = avgInfo_CO[i].Date;
+                    chartDaysData.Series["CO"].Points.AddXY(dateCO, avgValueCO);
+                    //chartSingleCity.Series["CO"].ChartType = SeriesChartType.Bar;
+                    chartDaysData.Series["CO"].Points[x].Label = avgValueCO + "";
+                    chartDaysData.Series["CO"].LabelForeColor = Color.Black;
+                }
+
+                if (checkBoxO3.Checked == true)
+                {
+                    avgValueO3 = avgInfo_O3[i].Value;
+                    dateO3 = avgInfo_O3[i].Date;
+                    chartDaysData.Series["O3"].Points.AddXY(dateO3, avgValueO3);
+                    //chartSingleCity.Series["O3"].ChartType = SeriesChartType.Bar;
+                    chartDaysData.Series["O3"].Points[x].Label = avgValueO3 + "";
+                    chartDaysData.Series["O3"].LabelForeColor = Color.Black;
+                }
+                x++;
+            }
+        }
+
+        private void ShowChartContentLabels()
+        {
+            labelChartFunction.Show();
+            labelChartFunctionType.Show();
+            labelChartCurrentCity.Show();
+            labelChartCurrentCityName.Show();
+            labelNoDataAvailable.Hide();
+            labelChartDays.Show();
+            labelChartValues.Show();
+            labelChartViewMode.Show();
+            buttonMode.Show();
+            labelChartActiveMode.Show();
+            labelChartActiveMode1.Show();
+        }
+
+        private void HideChartContentLabels()
+        {
+            labelChartFunction.Hide();
+            labelChartFunctionType.Hide();
+            labelChartCurrentCity.Hide();
+            labelChartCurrentCityName.Hide();
+            labelNoDataAvailable.Show();
+            labelChartDays.Hide();
+            labelChartValues.Hide();
+            labelChartViewMode.Hide();
+            buttonMode.Hide();
+            labelChartActiveMode.Hide();
+            labelChartActiveMode1.Hide();
+        }
+
+        private void comboBoxGroupBy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DisplayChart();
+        }
+
+        private IEnumerable<InfoBetweenDate> RefreshSeries(string param, string type, DateTime startDate, DateTime endDate)
+        {
+            string selectedCity = comboBoxCities.SelectedItem.ToString();
+
+            labelChartCurrentCityName.Text = selectedCity;
+
+            if (selectedCity == "All cities")
+            {
+                selectedCity = null;
+            }
+
+            InfoBetweenDate[] info = null;
+
+            switch (type)
+            {
+                case "AVG":
+                    info = (InfoBetweenDate[]) GetInfoAvgBetweenDates(param, selectedCity, startDate, endDate);
+                    break;
+                case "MIN":
+                    info = (InfoBetweenDate[]) GetInfoMinBetweenDates(param, selectedCity, startDate, endDate);
+                    break;
+                case "MAX":
+                    info = (InfoBetweenDate[]) GetInfoMaxBetweenDates(param, selectedCity, startDate, endDate);
+                    break;
+            }
+
+            chartDaysData.Series.Add(param);
+
+            return info;
+        }
+
+        private void buttonMode_Click(object sender, EventArgs e)
+        {
+            string text = buttonMode.Text;
+
+            if (ActiveMode == Modes.DATE_MODE)
+            {
+                labelChartActiveMode1.Text = "24Hour Mode";
+                buttonMode.Text = "Date Mode";
+                ActiveMode = Modes.HOUR_MODE;
+            }
+            else
+            {
+                labelChartActiveMode1.Text = "Date Mode";
+                buttonMode.Text = "24Hour Mode";
+                ActiveMode = Modes.DATE_MODE;
+            }
+        }
+
+        private IEnumerable<InfoBetweenDate> GetInfoAvgBetweenDates(string parameter, string city, DateTime startDate, DateTime endDate)
+        {
+            InfoBetweenDate[] avgInfo = airMonitServiceAccess.getInfoAvgBetweenDates(parameter, city, startDate, endDate);
+
+            if (avgInfo == null)
+            {
+                MessageBox.Show("Something went wrong pulling AVG data from service. Please, try again later");
+                return null;
+            }
+
+            Debug.WriteLine("Received AVG info count: " + avgInfo.Count());
+            return avgInfo;
+        }
+
+        private IEnumerable<InfoBetweenDate> GetInfoMinBetweenDates(string parameter, string city, DateTime startDate, DateTime endDate)
+        {
+            InfoBetweenDate[] minInfo = airMonitServiceAccess.getInfoMinBetweenDates(parameter, city, startDate, endDate);
+
+            if (minInfo == null)
+            {
+                MessageBox.Show("Something went wrong pulling MIN data from service. Please, try again later");
+                return null;
+            }
+
+            Debug.WriteLine("Received MIN info count: " + minInfo.Count());
+            return minInfo;
+        }
+
+        private IEnumerable<InfoBetweenDate> GetInfoMaxBetweenDates(string parameter, string city, DateTime startDate, DateTime endDate)
+        {
+            InfoBetweenDate[] maxInfo = airMonitServiceAccess.getInfoMaxBetweenDates(parameter, city, startDate, endDate);
+
+            if (maxInfo == null)
+            {
+                MessageBox.Show("Something went wrong pulling MAX data from service. Please, try again later");
+                return null;
+            }
+
+            Debug.WriteLine("Received MAX info count: " + maxInfo.Count());
+            return maxInfo;
+        }
+
+        private IEnumerable<AlarmLog> GetAlarmsBetweenDates(String city, DateTime startDate, DateTime endDate)
+        {
+            AlarmLog[] alarms = airMonitServiceAccess.getDailyAlarmsByCityBetweenDates(city, startDate, endDate);
+
+            if (alarms == null)
+            {
+                MessageBox.Show("Something went wrong pulling data from service. Please, try again later");
+                return null;
+            }
+
+            Debug.WriteLine("Received alarms between dates count: " + alarms.Count());
+            return alarms;
+        }
+
+        private IEnumerable<UncommonEvents> GetUncommonEvents(String city, DateTime startDate, DateTime endDate)
+        {
+            UncommonEvents[] events = airMonitServiceAccess.getUncommonEventsBetweenDates(city, startDate, endDate);
+
+            if (events == null)
+            {
+                MessageBox.Show("Something went wrong pulling data from service. Please, try again later");
+                return null;
+            }
+
+            Debug.WriteLine("Received events count: " + events.Count());
+            return events;
         }
     }
 }

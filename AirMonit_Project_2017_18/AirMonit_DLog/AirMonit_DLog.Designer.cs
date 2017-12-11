@@ -122,7 +122,7 @@
             this.Controls.Add(this.listBoxAlarmLog);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "AirMonit_DLog";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;

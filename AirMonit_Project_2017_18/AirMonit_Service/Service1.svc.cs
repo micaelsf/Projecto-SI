@@ -97,7 +97,7 @@ namespace AirMonit_Service
                 query = string.Format(@"
                         SELECT City_Name, Type, DateTime, Temperature, UserName, Description 
                         FROM {0} uevt JOIN {1} ct ON uevt.CityId = ct.Id
-                        WHERE DateTime >= @startDate AND .DateTime <= @endDate
+                        WHERE DateTime >= @startDate AND DateTime <= @endDate
                         AND CityId = @cityId 
                         ORDER BY 3 DESC", DatabaseTableConstant.tableUncommonEvents, DatabaseTableConstant.tableCity);
 
