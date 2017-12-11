@@ -68,10 +68,10 @@ namespace AirMonit_Admin
                 case 0:
                     ShowActiveChartMode();
                     break;
-                case 2:
+                case 1:
                     RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
                     break;
-                case 3:
+                case 2:
                     RefreshDataGridAtTAB("EVENTS", dataGridViewUncommonEvents);
                     break;
             }
@@ -341,10 +341,10 @@ namespace AirMonit_Admin
                 case 0:
                     ShowActiveChartMode();
                     break;
-                case 2:
+                case 1:
                     RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
                     break;
-                case 3:
+                case 2:
                     RefreshDataGridAtTAB("EVENTS", dataGridViewUncommonEvents);
                     break;
             }
@@ -359,10 +359,10 @@ namespace AirMonit_Admin
                 case 0:
                     ShowActiveChartMode();
                     break;
-                case 2:
+                case 1:
                     RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
                     break;
-                case 3:
+                case 2:
                     RefreshDataGridAtTAB("EVENTS", dataGridViewUncommonEvents);
                     break;
             }
@@ -374,8 +374,8 @@ namespace AirMonit_Admin
 
             switch (currentTabIndex)
             {
-                case 2: return dataGridViewRaisedAlarms;
-                case 3: return dataGridViewUncommonEvents;
+                case 1: return dataGridViewRaisedAlarms;
+                case 2: return dataGridViewUncommonEvents;
             }
 
             return null;
@@ -1525,6 +1525,24 @@ namespace AirMonit_Admin
             labelTotalEvents.Text = events.Count() + "";
 
             return events;
+        }
+
+        private void buttonRefresh_Click(object sender, EventArgs e)
+        {
+            int selectedTabIndex = tabControl1.SelectedIndex;
+
+            switch (selectedTabIndex)
+            {
+                case 0:
+                    ShowActiveChartMode();
+                    break;
+                case 1:
+                    RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
+                    break;
+                case 2:
+                    RefreshDataGridAtTAB("EVENTS", dataGridViewUncommonEvents);
+                    break;
+            }
         }
     }
 }
