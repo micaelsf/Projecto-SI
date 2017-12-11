@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.checkBoxNO2 = new System.Windows.Forms.CheckBox();
             this.checkBoxCO = new System.Windows.Forms.CheckBox();
             this.checkBoxO3 = new System.Windows.Forms.CheckBox();
@@ -41,7 +41,7 @@
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.labelEndDate = new System.Windows.Forms.Label();
             this.dateTimeEndDate = new System.Windows.Forms.DateTimePicker();
-            this.labelChooseDate = new System.Windows.Forms.Label();
+            this.labelStartDate = new System.Windows.Forms.Label();
             this.dateTimeStartDate = new System.Windows.Forms.DateTimePicker();
             this.labelCities = new System.Windows.Forms.Label();
             this.comboBoxCities = new System.Windows.Forms.ComboBox();
@@ -65,7 +65,16 @@
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridViewRaisedAlarms = new System.Windows.Forms.DataGridView();
             this.tabPageAllCities = new System.Windows.Forms.TabPage();
-            this.tabPageSingleCity = new System.Windows.Forms.TabPage();
+            this.chart24hData = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabChart = new System.Windows.Forms.TabPage();
+            this.labelChartActiveMode1 = new System.Windows.Forms.Label();
+            this.labelChartActiveMode = new System.Windows.Forms.Label();
+            this.labelChartViewMode = new System.Windows.Forms.Label();
+            this.buttonMode = new System.Windows.Forms.Button();
+            this.labelChartCurrentCityName = new System.Windows.Forms.Label();
+            this.labelChartCurrentCity = new System.Windows.Forms.Label();
+            this.labelChartFunctionType = new System.Windows.Forms.Label();
+            this.labelChartFunction = new System.Windows.Forms.Label();
             this.labelNoDataAvailable = new System.Windows.Forms.Label();
             this.labelChartValues = new System.Windows.Forms.Label();
             this.labelChartDays = new System.Windows.Forms.Label();
@@ -73,25 +82,16 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.labelGroupBy = new System.Windows.Forms.Label();
             this.comboBoxGroupBy = new System.Windows.Forms.ComboBox();
-            this.labelChartFunction = new System.Windows.Forms.Label();
-            this.labelChartFunctionType = new System.Windows.Forms.Label();
-            this.labelChartCurrentCity = new System.Windows.Forms.Label();
-            this.labelChartCurrentCityName = new System.Windows.Forms.Label();
-            this.chart24hData = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.buttonMode = new System.Windows.Forms.Button();
-            this.labelChartViewMode = new System.Windows.Forms.Label();
-            this.labelChartActiveMode = new System.Windows.Forms.Label();
-            this.labelChartActiveMode1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.tabPageUncommonEvents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUncommonEvents)).BeginInit();
             this.tabPageRaisedAlarms.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRaisedAlarms)).BeginInit();
             this.tabPageAllCities.SuspendLayout();
-            this.tabPageSingleCity.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart24hData)).BeginInit();
+            this.tabChart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartDaysData)).BeginInit();
             this.tabControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart24hData)).BeginInit();
             this.SuspendLayout();
             // 
             // checkBoxNO2
@@ -100,7 +100,7 @@
             this.checkBoxNO2.Checked = true;
             this.checkBoxNO2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxNO2.Enabled = false;
-            this.checkBoxNO2.Location = new System.Drawing.Point(911, 197);
+            this.checkBoxNO2.Location = new System.Drawing.Point(909, 301);
             this.checkBoxNO2.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxNO2.Name = "checkBoxNO2";
             this.checkBoxNO2.Size = new System.Drawing.Size(48, 17);
@@ -115,7 +115,7 @@
             this.checkBoxCO.Checked = true;
             this.checkBoxCO.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxCO.Enabled = false;
-            this.checkBoxCO.Location = new System.Drawing.Point(911, 218);
+            this.checkBoxCO.Location = new System.Drawing.Point(909, 322);
             this.checkBoxCO.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxCO.Name = "checkBoxCO";
             this.checkBoxCO.Size = new System.Drawing.Size(41, 17);
@@ -130,7 +130,7 @@
             this.checkBoxO3.Checked = true;
             this.checkBoxO3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxO3.Enabled = false;
-            this.checkBoxO3.Location = new System.Drawing.Point(911, 239);
+            this.checkBoxO3.Location = new System.Drawing.Point(909, 343);
             this.checkBoxO3.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxO3.Name = "checkBoxO3";
             this.checkBoxO3.Size = new System.Drawing.Size(40, 17);
@@ -142,7 +142,7 @@
             // labelParameters
             // 
             this.labelParameters.AutoSize = true;
-            this.labelParameters.Location = new System.Drawing.Point(908, 182);
+            this.labelParameters.Location = new System.Drawing.Point(906, 286);
             this.labelParameters.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelParameters.Name = "labelParameters";
             this.labelParameters.Size = new System.Drawing.Size(63, 13);
@@ -157,7 +157,7 @@
             // labelEndDate
             // 
             this.labelEndDate.AutoSize = true;
-            this.labelEndDate.Location = new System.Drawing.Point(908, 82);
+            this.labelEndDate.Location = new System.Drawing.Point(906, 186);
             this.labelEndDate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelEndDate.Name = "labelEndDate";
             this.labelEndDate.Size = new System.Drawing.Size(55, 13);
@@ -167,28 +167,28 @@
             // dateTimeEndDate
             // 
             this.dateTimeEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimeEndDate.Location = new System.Drawing.Point(911, 97);
+            this.dateTimeEndDate.Location = new System.Drawing.Point(909, 201);
             this.dateTimeEndDate.Margin = new System.Windows.Forms.Padding(2);
             this.dateTimeEndDate.Name = "dateTimeEndDate";
             this.dateTimeEndDate.Size = new System.Drawing.Size(91, 20);
             this.dateTimeEndDate.TabIndex = 1;
             this.dateTimeEndDate.ValueChanged += new System.EventHandler(this.DateTimePickerEndDate_ValueChanged);
             // 
-            // labelChooseDate
+            // labelStartDate
             // 
-            this.labelChooseDate.AutoSize = true;
-            this.labelChooseDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChooseDate.Location = new System.Drawing.Point(908, 34);
-            this.labelChooseDate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelChooseDate.Name = "labelChooseDate";
-            this.labelChooseDate.Size = new System.Drawing.Size(89, 15);
-            this.labelChooseDate.TabIndex = 4;
-            this.labelChooseDate.Text = "Choose a date:";
+            this.labelStartDate.AutoSize = true;
+            this.labelStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelStartDate.Location = new System.Drawing.Point(906, 138);
+            this.labelStartDate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelStartDate.Name = "labelStartDate";
+            this.labelStartDate.Size = new System.Drawing.Size(64, 15);
+            this.labelStartDate.TabIndex = 4;
+            this.labelStartDate.Text = "Start Date:";
             // 
             // dateTimeStartDate
             // 
             this.dateTimeStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimeStartDate.Location = new System.Drawing.Point(911, 51);
+            this.dateTimeStartDate.Location = new System.Drawing.Point(909, 155);
             this.dateTimeStartDate.Margin = new System.Windows.Forms.Padding(2);
             this.dateTimeStartDate.Name = "dateTimeStartDate";
             this.dateTimeStartDate.Size = new System.Drawing.Size(91, 20);
@@ -199,7 +199,7 @@
             // 
             this.labelCities.AutoSize = true;
             this.labelCities.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCities.Location = new System.Drawing.Point(908, 129);
+            this.labelCities.Location = new System.Drawing.Point(906, 233);
             this.labelCities.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelCities.Name = "labelCities";
             this.labelCities.Size = new System.Drawing.Size(40, 15);
@@ -210,7 +210,7 @@
             // 
             this.comboBoxCities.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCities.FormattingEnabled = true;
-            this.comboBoxCities.Location = new System.Drawing.Point(911, 146);
+            this.comboBoxCities.Location = new System.Drawing.Point(909, 250);
             this.comboBoxCities.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxCities.Name = "comboBoxCities";
             this.comboBoxCities.Size = new System.Drawing.Size(91, 21);
@@ -342,7 +342,7 @@
             this.tabPageRaisedAlarms.Controls.Add(this.labelRaisedAlarmsCityOrCities);
             this.tabPageRaisedAlarms.Controls.Add(this.label5);
             this.tabPageRaisedAlarms.Controls.Add(this.dataGridViewRaisedAlarms);
-            this.tabPageRaisedAlarms.Location = new System.Drawing.Point(4, 34);
+            this.tabPageRaisedAlarms.Location = new System.Drawing.Point(4, 39);
             this.tabPageRaisedAlarms.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageRaisedAlarms.Name = "tabPageRaisedAlarms";
             this.tabPageRaisedAlarms.Padding = new System.Windows.Forms.Padding(2);
@@ -439,7 +439,7 @@
             // tabPageAllCities
             // 
             this.tabPageAllCities.Controls.Add(this.chart24hData);
-            this.tabPageAllCities.Location = new System.Drawing.Point(4, 34);
+            this.tabPageAllCities.Location = new System.Drawing.Point(4, 39);
             this.tabPageAllCities.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageAllCities.Name = "tabPageAllCities";
             this.tabPageAllCities.Padding = new System.Windows.Forms.Padding(2);
@@ -448,29 +448,133 @@
             this.tabPageAllCities.Text = "All Cities";
             this.tabPageAllCities.UseVisualStyleBackColor = true;
             // 
-            // tabPageSingleCity
+            // chart24hData
             // 
-            this.tabPageSingleCity.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPageSingleCity.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tabPageSingleCity.Controls.Add(this.labelChartActiveMode1);
-            this.tabPageSingleCity.Controls.Add(this.labelChartActiveMode);
-            this.tabPageSingleCity.Controls.Add(this.labelChartViewMode);
-            this.tabPageSingleCity.Controls.Add(this.buttonMode);
-            this.tabPageSingleCity.Controls.Add(this.labelChartCurrentCityName);
-            this.tabPageSingleCity.Controls.Add(this.labelChartCurrentCity);
-            this.tabPageSingleCity.Controls.Add(this.labelChartFunctionType);
-            this.tabPageSingleCity.Controls.Add(this.labelChartFunction);
-            this.tabPageSingleCity.Controls.Add(this.labelNoDataAvailable);
-            this.tabPageSingleCity.Controls.Add(this.labelChartValues);
-            this.tabPageSingleCity.Controls.Add(this.labelChartDays);
-            this.tabPageSingleCity.Controls.Add(this.chartDaysData);
-            this.tabPageSingleCity.Location = new System.Drawing.Point(4, 34);
-            this.tabPageSingleCity.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPageSingleCity.Name = "tabPageSingleCity";
-            this.tabPageSingleCity.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPageSingleCity.Size = new System.Drawing.Size(896, 431);
-            this.tabPageSingleCity.TabIndex = 0;
-            this.tabPageSingleCity.Text = "Single City";
+            this.chart24hData.BackColor = System.Drawing.Color.Transparent;
+            this.chart24hData.BorderSkin.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            chartArea2.Name = "ChartArea1";
+            this.chart24hData.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart24hData.Legends.Add(legend2);
+            this.chart24hData.Location = new System.Drawing.Point(1, 1);
+            this.chart24hData.Margin = new System.Windows.Forms.Padding(2);
+            this.chart24hData.Name = "chart24hData";
+            this.chart24hData.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.chart24hData.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart24hData.Series.Add(series2);
+            this.chart24hData.Size = new System.Drawing.Size(894, 429);
+            this.chart24hData.TabIndex = 5;
+            this.chart24hData.Text = "chart1";
+            // 
+            // tabChart
+            // 
+            this.tabChart.BackColor = System.Drawing.SystemColors.Control;
+            this.tabChart.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabChart.Controls.Add(this.labelChartCurrentCityName);
+            this.tabChart.Controls.Add(this.labelChartCurrentCity);
+            this.tabChart.Controls.Add(this.labelChartFunctionType);
+            this.tabChart.Controls.Add(this.labelChartFunction);
+            this.tabChart.Controls.Add(this.labelNoDataAvailable);
+            this.tabChart.Controls.Add(this.labelChartValues);
+            this.tabChart.Controls.Add(this.labelChartDays);
+            this.tabChart.Controls.Add(this.chartDaysData);
+            this.tabChart.Location = new System.Drawing.Point(4, 39);
+            this.tabChart.Margin = new System.Windows.Forms.Padding(2);
+            this.tabChart.Name = "tabChart";
+            this.tabChart.Padding = new System.Windows.Forms.Padding(2);
+            this.tabChart.Size = new System.Drawing.Size(896, 431);
+            this.tabChart.TabIndex = 0;
+            this.tabChart.Text = "Single City";
+            this.tabChart.Enter += new System.EventHandler(this.tabChart_Enter);
+            // 
+            // labelChartActiveMode1
+            // 
+            this.labelChartActiveMode1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelChartActiveMode1.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.labelChartActiveMode1.Location = new System.Drawing.Point(909, 106);
+            this.labelChartActiveMode1.Name = "labelChartActiveMode1";
+            this.labelChartActiveMode1.Size = new System.Drawing.Size(91, 23);
+            this.labelChartActiveMode1.TabIndex = 14;
+            this.labelChartActiveMode1.Text = "<>";
+            this.labelChartActiveMode1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelChartActiveMode
+            // 
+            this.labelChartActiveMode.AutoSize = true;
+            this.labelChartActiveMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelChartActiveMode.Location = new System.Drawing.Point(911, 89);
+            this.labelChartActiveMode.Name = "labelChartActiveMode";
+            this.labelChartActiveMode.Size = new System.Drawing.Size(89, 17);
+            this.labelChartActiveMode.TabIndex = 13;
+            this.labelChartActiveMode.Text = "Active Mode:";
+            // 
+            // labelChartViewMode
+            // 
+            this.labelChartViewMode.AutoSize = true;
+            this.labelChartViewMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelChartViewMode.Location = new System.Drawing.Point(903, 38);
+            this.labelChartViewMode.Name = "labelChartViewMode";
+            this.labelChartViewMode.Size = new System.Drawing.Size(103, 15);
+            this.labelChartViewMode.TabIndex = 12;
+            this.labelChartViewMode.Text = "Chart View Mode:";
+            // 
+            // buttonMode
+            // 
+            this.buttonMode.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonMode.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonMode.Location = new System.Drawing.Point(909, 56);
+            this.buttonMode.Name = "buttonMode";
+            this.buttonMode.Size = new System.Drawing.Size(91, 30);
+            this.buttonMode.TabIndex = 7;
+            this.buttonMode.Text = "24Hour Mode";
+            this.buttonMode.UseVisualStyleBackColor = false;
+            this.buttonMode.Click += new System.EventHandler(this.buttonMode_Click);
+            // 
+            // labelChartCurrentCityName
+            // 
+            this.labelChartCurrentCityName.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelChartCurrentCityName.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.labelChartCurrentCityName.Location = new System.Drawing.Point(779, 131);
+            this.labelChartCurrentCityName.Name = "labelChartCurrentCityName";
+            this.labelChartCurrentCityName.Size = new System.Drawing.Size(100, 23);
+            this.labelChartCurrentCityName.TabIndex = 11;
+            this.labelChartCurrentCityName.Text = "<>";
+            this.labelChartCurrentCityName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelChartCurrentCity
+            // 
+            this.labelChartCurrentCity.AutoSize = true;
+            this.labelChartCurrentCity.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelChartCurrentCity.Location = new System.Drawing.Point(786, 114);
+            this.labelChartCurrentCity.Name = "labelChartCurrentCity";
+            this.labelChartCurrentCity.Size = new System.Drawing.Size(86, 17);
+            this.labelChartCurrentCity.TabIndex = 10;
+            this.labelChartCurrentCity.Text = "Current City:";
+            // 
+            // labelChartFunctionType
+            // 
+            this.labelChartFunctionType.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelChartFunctionType.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.labelChartFunctionType.Location = new System.Drawing.Point(780, 199);
+            this.labelChartFunctionType.Name = "labelChartFunctionType";
+            this.labelChartFunctionType.Size = new System.Drawing.Size(100, 23);
+            this.labelChartFunctionType.TabIndex = 9;
+            this.labelChartFunctionType.Text = "<>";
+            this.labelChartFunctionType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelChartFunction
+            // 
+            this.labelChartFunction.AutoSize = true;
+            this.labelChartFunction.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelChartFunction.Location = new System.Drawing.Point(779, 182);
+            this.labelChartFunction.Name = "labelChartFunction";
+            this.labelChartFunction.Size = new System.Drawing.Size(104, 17);
+            this.labelChartFunction.TabIndex = 8;
+            this.labelChartFunction.Text = "Active function:";
             // 
             // labelNoDataAvailable
             // 
@@ -490,7 +594,7 @@
             this.labelChartValues.BackColor = System.Drawing.Color.Transparent;
             this.labelChartValues.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelChartValues.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.labelChartValues.Location = new System.Drawing.Point(-2, 195);
+            this.labelChartValues.Location = new System.Drawing.Point(36, 8);
             this.labelChartValues.Name = "labelChartValues";
             this.labelChartValues.Size = new System.Drawing.Size(52, 18);
             this.labelChartValues.TabIndex = 6;
@@ -512,43 +616,42 @@
             // 
             this.chartDaysData.BackColor = System.Drawing.Color.Transparent;
             this.chartDaysData.BorderSkin.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
-            chartArea5.Name = "ChartArea1";
-            this.chartDaysData.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chartDaysData.Legends.Add(legend5);
-            this.chartDaysData.Location = new System.Drawing.Point(-2, 0);
+            chartArea1.Name = "ChartArea1";
+            this.chartDaysData.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartDaysData.Legends.Add(legend1);
+            this.chartDaysData.Location = new System.Drawing.Point(-2, 15);
             this.chartDaysData.Margin = new System.Windows.Forms.Padding(2);
             this.chartDaysData.Name = "chartDaysData";
             this.chartDaysData.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.chartDaysData.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chartDaysData.Series.Add(series5);
-            this.chartDaysData.Size = new System.Drawing.Size(894, 429);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartDaysData.Series.Add(series1);
+            this.chartDaysData.Size = new System.Drawing.Size(894, 414);
             this.chartDaysData.TabIndex = 4;
             this.chartDaysData.Text = "chart1";
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPageSingleCity);
+            this.tabControl1.Controls.Add(this.tabChart);
             this.tabControl1.Controls.Add(this.tabPageAllCities);
             this.tabControl1.Controls.Add(this.tabPageRaisedAlarms);
             this.tabControl1.Controls.Add(this.tabPageUncommonEvents);
             this.tabControl1.Controls.Add(this.tabPageAbout);
-            this.tabControl1.ItemSize = new System.Drawing.Size(100, 30);
+            this.tabControl1.ItemSize = new System.Drawing.Size(100, 35);
             this.tabControl1.Location = new System.Drawing.Point(-2, 0);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(904, 469);
+            this.tabControl1.Size = new System.Drawing.Size(904, 474);
             this.tabControl1.TabIndex = 0;
-            this.tabControl1.Click += new System.EventHandler(this.tabChart_Click);
             // 
             // labelGroupBy
             // 
             this.labelGroupBy.AutoSize = true;
-            this.labelGroupBy.Location = new System.Drawing.Point(908, 270);
+            this.labelGroupBy.Location = new System.Drawing.Point(906, 374);
             this.labelGroupBy.Name = "labelGroupBy";
             this.labelGroupBy.Size = new System.Drawing.Size(54, 13);
             this.labelGroupBy.TabIndex = 5;
@@ -558,118 +661,11 @@
             // 
             this.comboBoxGroupBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxGroupBy.FormattingEnabled = true;
-            this.comboBoxGroupBy.Location = new System.Drawing.Point(911, 286);
+            this.comboBoxGroupBy.Location = new System.Drawing.Point(909, 390);
             this.comboBoxGroupBy.Name = "comboBoxGroupBy";
             this.comboBoxGroupBy.Size = new System.Drawing.Size(91, 21);
             this.comboBoxGroupBy.TabIndex = 6;
             this.comboBoxGroupBy.SelectedIndexChanged += new System.EventHandler(this.comboBoxGroupBy_SelectedIndexChanged);
-            // 
-            // labelChartFunction
-            // 
-            this.labelChartFunction.AutoSize = true;
-            this.labelChartFunction.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChartFunction.Location = new System.Drawing.Point(779, 182);
-            this.labelChartFunction.Name = "labelChartFunction";
-            this.labelChartFunction.Size = new System.Drawing.Size(104, 17);
-            this.labelChartFunction.TabIndex = 8;
-            this.labelChartFunction.Text = "Active function:";
-            // 
-            // labelChartFunctionType
-            // 
-            this.labelChartFunctionType.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChartFunctionType.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.labelChartFunctionType.Location = new System.Drawing.Point(780, 199);
-            this.labelChartFunctionType.Name = "labelChartFunctionType";
-            this.labelChartFunctionType.Size = new System.Drawing.Size(100, 23);
-            this.labelChartFunctionType.TabIndex = 9;
-            this.labelChartFunctionType.Text = "<>";
-            this.labelChartFunctionType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // labelChartCurrentCity
-            // 
-            this.labelChartCurrentCity.AutoSize = true;
-            this.labelChartCurrentCity.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChartCurrentCity.Location = new System.Drawing.Point(786, 114);
-            this.labelChartCurrentCity.Name = "labelChartCurrentCity";
-            this.labelChartCurrentCity.Size = new System.Drawing.Size(86, 17);
-            this.labelChartCurrentCity.TabIndex = 10;
-            this.labelChartCurrentCity.Text = "Current City:";
-            // 
-            // labelChartCurrentCityName
-            // 
-            this.labelChartCurrentCityName.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChartCurrentCityName.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.labelChartCurrentCityName.Location = new System.Drawing.Point(779, 131);
-            this.labelChartCurrentCityName.Name = "labelChartCurrentCityName";
-            this.labelChartCurrentCityName.Size = new System.Drawing.Size(100, 23);
-            this.labelChartCurrentCityName.TabIndex = 11;
-            this.labelChartCurrentCityName.Text = "<>";
-            this.labelChartCurrentCityName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // chart24hData
-            // 
-            this.chart24hData.BackColor = System.Drawing.Color.Transparent;
-            this.chart24hData.BorderSkin.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
-            chartArea6.Name = "ChartArea1";
-            this.chart24hData.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chart24hData.Legends.Add(legend6);
-            this.chart24hData.Location = new System.Drawing.Point(1, 1);
-            this.chart24hData.Margin = new System.Windows.Forms.Padding(2);
-            this.chart24hData.Name = "chart24hData";
-            this.chart24hData.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.chart24hData.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.chart24hData.Series.Add(series6);
-            this.chart24hData.Size = new System.Drawing.Size(894, 429);
-            this.chart24hData.TabIndex = 5;
-            this.chart24hData.Text = "chart1";
-            // 
-            // buttonMode
-            // 
-            this.buttonMode.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonMode.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonMode.Location = new System.Drawing.Point(780, 358);
-            this.buttonMode.Name = "buttonMode";
-            this.buttonMode.Size = new System.Drawing.Size(101, 30);
-            this.buttonMode.TabIndex = 7;
-            this.buttonMode.Text = "24Hour Mode";
-            this.buttonMode.UseVisualStyleBackColor = false;
-            this.buttonMode.Click += new System.EventHandler(this.buttonMode_Click);
-            // 
-            // labelChartViewMode
-            // 
-            this.labelChartViewMode.AutoSize = true;
-            this.labelChartViewMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChartViewMode.Location = new System.Drawing.Point(777, 340);
-            this.labelChartViewMode.Name = "labelChartViewMode";
-            this.labelChartViewMode.Size = new System.Drawing.Size(103, 15);
-            this.labelChartViewMode.TabIndex = 12;
-            this.labelChartViewMode.Text = "Chart View Mode:";
-            // 
-            // labelChartActiveMode
-            // 
-            this.labelChartActiveMode.AutoSize = true;
-            this.labelChartActiveMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChartActiveMode.Location = new System.Drawing.Point(784, 279);
-            this.labelChartActiveMode.Name = "labelChartActiveMode";
-            this.labelChartActiveMode.Size = new System.Drawing.Size(89, 17);
-            this.labelChartActiveMode.TabIndex = 13;
-            this.labelChartActiveMode.Text = "Active Mode:";
-            // 
-            // labelChartActiveMode1
-            // 
-            this.labelChartActiveMode1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelChartActiveMode1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.labelChartActiveMode1.Location = new System.Drawing.Point(769, 296);
-            this.labelChartActiveMode1.Name = "labelChartActiveMode1";
-            this.labelChartActiveMode1.Size = new System.Drawing.Size(120, 23);
-            this.labelChartActiveMode1.TabIndex = 14;
-            this.labelChartActiveMode1.Text = "<>";
-            this.labelChartActiveMode1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FormAdmin
             // 
@@ -677,9 +673,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1008, 473);
+            this.Controls.Add(this.labelChartActiveMode1);
             this.Controls.Add(this.comboBoxGroupBy);
+            this.Controls.Add(this.labelChartActiveMode);
             this.Controls.Add(this.labelGroupBy);
+            this.Controls.Add(this.labelChartViewMode);
             this.Controls.Add(this.labelParameters);
+            this.Controls.Add(this.buttonMode);
             this.Controls.Add(this.labelEndDate);
             this.Controls.Add(this.checkBoxO3);
             this.Controls.Add(this.checkBoxCO);
@@ -688,7 +688,7 @@
             this.Controls.Add(this.comboBoxCities);
             this.Controls.Add(this.labelCities);
             this.Controls.Add(this.dateTimeStartDate);
-            this.Controls.Add(this.labelChooseDate);
+            this.Controls.Add(this.labelStartDate);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -703,11 +703,11 @@
             this.tabPageRaisedAlarms.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRaisedAlarms)).EndInit();
             this.tabPageAllCities.ResumeLayout(false);
-            this.tabPageSingleCity.ResumeLayout(false);
-            this.tabPageSingleCity.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart24hData)).EndInit();
+            this.tabChart.ResumeLayout(false);
+            this.tabChart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartDaysData)).EndInit();
             this.tabControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart24hData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -719,14 +719,14 @@
         private System.Windows.Forms.CheckBox checkBoxO3;
         private System.Windows.Forms.Label labelParameters;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
-        private System.Windows.Forms.Label labelChooseDate;
+        private System.Windows.Forms.Label labelStartDate;
         private System.Windows.Forms.DateTimePicker dateTimeStartDate;
         private System.Windows.Forms.Label labelCities;
         private System.Windows.Forms.ComboBox comboBoxCities;
         private System.Windows.Forms.Label labelEndDate;
         private System.Windows.Forms.DateTimePicker dateTimeEndDate;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPageSingleCity;
+        private System.Windows.Forms.TabPage tabChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartDaysData;
         private System.Windows.Forms.TabPage tabPageAllCities;
         private System.Windows.Forms.TabPage tabPageRaisedAlarms;

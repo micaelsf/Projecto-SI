@@ -23,7 +23,6 @@ namespace AirMonit_Admin
         private enum Modes { HOUR_MODE, DATE_MODE };
         private Modes ActiveMode { get; set; }
 
-        //servico
         public FormAdmin()
         {
             InitializeComponent();
@@ -40,9 +39,7 @@ namespace AirMonit_Admin
             comboBoxCities.SelectedIndex = 0;
             //comboBoxGroupBy.SelectedIndex = 0; // is getting selected at comboBoxCities triggered event
             ParametersCheckBoxEnable(true);
-
-            labelChartDays.Hide();
-            labelChartValues.Hide();
+            HideChartContentLabels();
         }
 
         private List<string> GetActiveParameters()
@@ -64,13 +61,12 @@ namespace AirMonit_Admin
         private void comboBoxCities_SelectedIndexChanged(object sender, EventArgs e)
         {
             int selectedTabIndex = tabControl1.SelectedIndex;
-            Debug.WriteLine("Tab index: " + selectedTabIndex);
+            Debug.WriteLine("Selected Tab index: " + selectedTabIndex);
 
             switch (selectedTabIndex)
             {
                 case 0:
-                    //comboBoxGroupBy.SelectedIndex = 0;
-                    DisplayChart();
+                    ShowActiveChartMode();
                     break;
                 case 2:
                     RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
@@ -211,9 +207,10 @@ namespace AirMonit_Admin
         {
             labelGroupBy.Hide();
             comboBoxGroupBy.Hide();
-            labelChooseDate.Text = "Start Date";
+            labelStartDate.Text = "Start Date";
             labelEndDate.Show();
             ShowParametersCheckBox();
+            HideChartModeLayout();
             dateTimeEndDate.Show();
             RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
         }
@@ -222,9 +219,10 @@ namespace AirMonit_Admin
         {
             labelGroupBy.Hide();
             comboBoxGroupBy.Hide();
-            labelChooseDate.Text = "Start Date";
+            labelStartDate.Text = "Start Date";
             labelEndDate.Show();
             HideParametersCheckBox();
+            HideChartModeLayout();
             dateTimeEndDate.Show();
             RefreshDataGridAtTAB("EVENTS", dataGridViewUncommonEvents);
         }
@@ -254,7 +252,7 @@ namespace AirMonit_Admin
                 return;
             }
 
-            DisplayChart();
+            ShowActiveChartMode();
 
         }
 
@@ -267,7 +265,8 @@ namespace AirMonit_Admin
                 return;
             }
 
-            DisplayChart();
+            ShowActiveChartMode();
+
         }
 
         private void CheckBoxNO2_CheckedChanged(object sender, EventArgs e)
@@ -279,7 +278,8 @@ namespace AirMonit_Admin
                 return;
             }
 
-            DisplayChart();
+            ShowActiveChartMode();
+
         }
 
         private void DataGridFilterParam(DataGridView dataGrid)
@@ -325,7 +325,7 @@ namespace AirMonit_Admin
                 if (dataGrid.Columns["Parameter"] != null)
                 {
                     paramCellIndex = dataGrid.Columns["Parameter"].Index;
-                    Debug.WriteLine("Param cell index: " + dataGrid.Columns["Parameter"].Index);
+                    Debug.WriteLine("Parameter cell index: " + dataGrid.Columns["Parameter"].Index);
                 }
             }
 
@@ -339,7 +339,7 @@ namespace AirMonit_Admin
             switch (selectedTabIndex)
             {
                 case 0:
-                    DisplayChart();
+                    ShowActiveChartMode();
                     break;
                 case 2:
                     RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
@@ -357,7 +357,7 @@ namespace AirMonit_Admin
             switch (selectedTabIndex)
             {
                 case 0:
-                    DisplayChart();
+                    ShowActiveChartMode();
                     break;
                 case 2:
                     RefreshDataGridAtTAB("RAISED_ALARMS", dataGridViewRaisedAlarms);
@@ -496,10 +496,20 @@ namespace AirMonit_Admin
             }
         }
 
-        private void tabChart_Click(object sender, EventArgs e)
+        private void tabChart_Enter(object sender, EventArgs e)
         {
-            ShowChartContentLabels();
-            DisplayChart();
+            //ShowChartContentLabels();
+            labelGroupBy.Show();
+            comboBoxGroupBy.Show();
+            ShowParametersCheckBox();
+            ShowChartModeLayout();
+
+            ShowActiveChartMode();
+        }
+
+        private void DisplayHourChart()
+        {
+            //throw new NotImplementedException();
         }
 
         private void DisplayChart()
@@ -523,6 +533,7 @@ namespace AirMonit_Admin
 
             if (GetActiveParameters().Count() == 0)
             {
+                chartDaysData.Series.Clear();
                 HideChartContentLabels();
                 return;
             }
@@ -537,6 +548,7 @@ namespace AirMonit_Admin
 
             if (comboBoxGroupBy.SelectedItem == null)
             {
+                chartDaysData.Series.Clear();
                 HideChartContentLabels();
                 return;
             }
@@ -582,77 +594,85 @@ namespace AirMonit_Admin
 
             chartDaysData.Visible = true;
 
-            int periodicity = 0;
+            int periodicityNO2 = 0, periodicityCO = 0, periodicityO3 = 0;
+            int bigger = 0;
 
-            // get periodicity, the size of the arrays are the same. avgInfo_NO2.Count == avgInfo_CO.Count == avgInfo_O3.Count
+            // get periodicity,
             if (minInfo_NO2 != null)
             {
-                periodicity = minInfo_NO2.Count();
-            }
-            else if (minInfo_CO != null)
-            {
-                periodicity = minInfo_CO.Count();
-            }
-            else if (minInfo_O3 != null)
-            {
-                periodicity = minInfo_O3.Count();
+                periodicityNO2 = minInfo_NO2.Count();
+                bigger = bigger >= periodicityNO2 ? bigger : periodicityNO2;
             }
 
-            if (periodicity == 0)
+            if (minInfo_CO != null)
             {
-                HideChartContentLabels();
+                periodicityCO = minInfo_CO.Count();
+                bigger = bigger >= periodicityCO ? bigger : periodicityCO;
+            }
+
+            if (minInfo_O3 != null)
+            {
+                periodicityO3 = minInfo_O3.Count();
+                bigger = bigger >= periodicityO3 ? bigger : periodicityO3;
+            }
+
+            Debug.WriteLine("Bigger peridicity is: " + bigger);
+
+            if (periodicityNO2 == 0 && periodicityCO == 0 && periodicityO3 == 0)
+                {
+                    HideChartContentLabels();
                 return;
             }
-            
+
             ShowChartContentLabels();
 
             int minValueNO2, minValueCO, minValueO3;
             string dateNO2, dateCO, dateO3;
             string cityNO2, cityCO, cityO3;
 
-            // iterate from end to 0, so dates go from left to right (oldest to today date)
-            int x = 0;
-            for (int i = periodicity - 1; i >= 0; i--)
-            {
-                if (checkBoxNO2.Checked == true)
+            for (int i = 0; i < bigger; i++)
                 {
-                    minValueNO2 = minInfo_NO2[i].Value;
-                    dateNO2 = minInfo_NO2[i].Date;
-                    cityNO2 = minInfo_NO2[i].City;
-
-                    chartDaysData.Series["NO2"].Points.AddXY(dateNO2, minValueNO2);
-                    //chartSingleCity.Series["NO2"].ChartType = SeriesChartType.Bar;
-                    chartDaysData.Series["NO2"].Points[x].Label = minValueNO2 + "";
-                    chartDaysData.Series["NO2"].LabelForeColor = Color.Black;
-                    chartDaysData.Series["NO2"].Label = cityNO2;
+                    if (checkBoxNO2.Checked == true)
+                {
+                    if (i < periodicityNO2) // only do as much as the items it gots in the array, even if 'i' is bigger
+                    {
+                        minValueNO2 = minInfo_NO2[i].Value;
+                        dateNO2 = minInfo_NO2[i].Date;
+                        cityNO2 = minInfo_NO2[i].City;
+                        chartDaysData.Series["NO2"].Points.AddXY(dateNO2, minValueNO2);
+                        //chartSingleCity.Series["NO2"].ChartType = SeriesChartType.Bar;
+                        chartDaysData.Series["NO2"].Points[i].Label = minValueNO2 + "";
+                        chartDaysData.Series["NO2"].LabelForeColor = Color.Black;
+                    }
                 }
 
                 if (checkBoxCO.Checked == true)
                 {
-                    minValueCO = minInfo_CO[i].Value;
-                    dateCO = minInfo_CO[i].Date;
-                    cityCO = minInfo_CO[i].City;
-
-                    chartDaysData.Series["CO"].Points.AddXY(dateCO, minValueCO);
-                    //chartSingleCity.Series["CO"].ChartType = SeriesChartType.Bar;
-                    chartDaysData.Series["CO"].Points[x].Label = minValueCO + "";
-                    chartDaysData.Series["CO"].LabelForeColor = Color.Black;
-                    chartDaysData.Series["CO"].Label = cityCO;
+                    if (i < periodicityCO) // only do as much as the items it gots in the array, even if 'i' is bigger
+                    {
+                        minValueCO = minInfo_CO[i].Value;
+                        dateCO = minInfo_CO[i].Date;
+                        cityCO = minInfo_CO[i].City;
+                        chartDaysData.Series["CO"].Points.AddXY(dateCO, minValueCO);
+                        //chartSingleCity.Series["CO"].ChartType = SeriesChartType.Bar;
+                        chartDaysData.Series["CO"].Points[i].Label = minValueCO + "";
+                        chartDaysData.Series["CO"].LabelForeColor = Color.Black;
+                    }
                 }
 
                 if (checkBoxO3.Checked == true)
                 {
-                    minValueO3 = minInfo_O3[i].Value;
-                    dateO3 = minInfo_O3[i].Date;
-                    cityO3 = minInfo_O3[i].City;
-
-                    chartDaysData.Series["O3"].Points.AddXY(dateO3, minValueO3);
-                    //chartSingleCity.Series["O3"].ChartType = SeriesChartType.Bar;
-                    chartDaysData.Series["O3"].Points[x].Label = minValueO3 + "";
-                    chartDaysData.Series["O3"].LabelForeColor = Color.Black;
-                    chartDaysData.Series["O3"].Label = cityO3;
+                    if (i < periodicityO3) // only do as much as the items it gots in the array, even if 'i' is bigger
+                    {
+                        minValueO3 = minInfo_O3[i].Value;
+                        dateO3 = minInfo_O3[i].Date;
+                        cityO3 = minInfo_O3[i].City;
+                        chartDaysData.Series["O3"].Points.AddXY(dateO3, minValueO3);
+                        //chartSingleCity.Series["O3"].ChartType = SeriesChartType.Bar;
+                        chartDaysData.Series["O3"].Points[i].Label = minValueO3 + "";
+                        chartDaysData.Series["O3"].LabelForeColor = Color.Black;
+                    }
                 }
-                x++;
             }
         }
 
@@ -677,23 +697,31 @@ namespace AirMonit_Admin
 
             chartDaysData.Visible = true;
 
-            int periodicity = 0;
+            int periodicityNO2 = 0, periodicityCO = 0, periodicityO3 = 0;
+            int bigger = 0;
 
-            // get periodicity, the size of the arrays are the same. avgInfo_NO2.Count == avgInfo_CO.Count == avgInfo_O3.Count
+            // get periodicity,
             if (maxInfo_NO2 != null)
             {
-                periodicity = maxInfo_NO2.Count();
-            }
-            else if (maxInfo_CO != null)
-            {
-                periodicity = maxInfo_CO.Count();
-            }
-            else if (maxInfo_O3 != null)
-            {
-                periodicity = maxInfo_O3.Count();
+                periodicityNO2 = maxInfo_NO2.Count();
+                bigger = bigger >= periodicityNO2 ? bigger : periodicityNO2;
             }
 
-            if (periodicity == 0)
+            if (maxInfo_CO != null)
+            {
+                periodicityCO = maxInfo_CO.Count();
+                bigger = bigger >= periodicityCO ? bigger : periodicityCO;
+            }
+
+            if (maxInfo_O3 != null)
+            {
+                periodicityO3 = maxInfo_O3.Count();
+                bigger = bigger >= periodicityO3 ? bigger : periodicityO3;
+            }
+
+            Debug.WriteLine("Bigger peridicity is: " + bigger);
+
+            if (periodicityNO2 == 0 && periodicityCO == 0 && periodicityO3 == 0)
             {
                 HideChartContentLabels();
                 return;
@@ -704,40 +732,46 @@ namespace AirMonit_Admin
             int maxValueNO2, maxValueCO, maxValueO3;
             string dateNO2, dateCO, dateO3;
 
-            // iterate from end to 0, so dates go from left to right (oldest to today date)
-            int x = 0;
-            for (int i = periodicity - 1; i >= 0; i--)
+            for (int i = 0; i < bigger; i++)
             {
                 if (checkBoxNO2.Checked == true)
                 {
-                    maxValueNO2 = maxInfo_NO2[i].Value;
-                    dateNO2 = maxInfo_NO2[i].Date;
-                    chartDaysData.Series["NO2"].Points.AddXY(dateNO2, maxValueNO2);
-                    //chartSingleCity.Series["NO2"].ChartType = SeriesChartType.Bar;
-                    chartDaysData.Series["NO2"].Points[x].Label = maxValueNO2 + "";
-                    chartDaysData.Series["NO2"].LabelForeColor = Color.Black;
+                    if (i < periodicityCO) // only do as much as the items it gots in the array, even if 'i' is bigger
+                    {
+                        maxValueNO2 = maxInfo_NO2[i].Value;
+                        dateNO2 = maxInfo_NO2[i].Date;
+                        chartDaysData.Series["NO2"].Points.AddXY(dateNO2, maxValueNO2);
+                        //chartSingleCity.Series["NO2"].ChartType = SeriesChartType.Bar;
+                        chartDaysData.Series["NO2"].Points[i].Label = maxValueNO2 + "";
+                        chartDaysData.Series["NO2"].LabelForeColor = Color.Black;
+                    }
                 }
 
                 if (checkBoxCO.Checked == true)
                 {
-                    maxValueCO = maxInfo_CO[i].Value;
-                    dateCO = maxInfo_CO[i].Date;
-                    chartDaysData.Series["CO"].Points.AddXY(dateCO, maxValueCO);
-                    //chartSingleCity.Series["CO"].ChartType = SeriesChartType.Bar;
-                    chartDaysData.Series["CO"].Points[x].Label = maxValueCO + "";
-                    chartDaysData.Series["CO"].LabelForeColor = Color.Black;
+                    if (i < periodicityNO2) // only do as much as the items it gots in the array, even if 'i' is bigger
+                    {
+                        maxValueCO = maxInfo_CO[i].Value;
+                        dateCO = maxInfo_CO[i].Date;
+                        chartDaysData.Series["CO"].Points.AddXY(dateCO, maxValueCO);
+                        //chartSingleCity.Series["CO"].ChartType = SeriesChartType.Bar;
+                        chartDaysData.Series["CO"].Points[i].Label = maxValueCO + "";
+                        chartDaysData.Series["CO"].LabelForeColor = Color.Black;
+                    }
                 }
 
                 if (checkBoxO3.Checked == true)
                 {
-                    maxValueO3 = maxInfo_O3[i].Value;
-                    dateO3 = maxInfo_O3[i].Date;
-                    chartDaysData.Series["O3"].Points.AddXY(dateO3, maxValueO3);
-                    //chartSingleCity.Series["O3"].ChartType = SeriesChartType.Bar;
-                    chartDaysData.Series["O3"].Points[x].Label = maxValueO3 + "";
-                    chartDaysData.Series["O3"].LabelForeColor = Color.Black;
+                    if (i < periodicityO3) // only do as much as the items it gots in the array, even if 'i' is bigger
+                    {
+                        maxValueO3 = maxInfo_O3[i].Value;
+                        dateO3 = maxInfo_O3[i].Date;
+                        chartDaysData.Series["O3"].Points.AddXY(dateO3, maxValueO3);
+                        //chartSingleCity.Series["O3"].ChartType = SeriesChartType.Bar;
+                        chartDaysData.Series["O3"].Points[i].Label = maxValueO3 + "";
+                        chartDaysData.Series["O3"].LabelForeColor = Color.Black;
+                    }
                 }
-                x++;
             }
         }
 
@@ -762,25 +796,33 @@ namespace AirMonit_Admin
 
             chartDaysData.Visible = true;
 
-            int periodicity = 0;
+            int periodicityNO2 = 0, periodicityCO = 0, periodicityO3 = 0;
+            int bigger = 0;
 
-            // get periodicity, the size of the arrays are the same. avgInfo_NO2.Count == avgInfo_CO.Count == avgInfo_O3.Count
+            // get periodicity,
             if (avgInfo_NO2 != null)
             {
-                periodicity = avgInfo_NO2.Count();
-            }
-            else if (avgInfo_CO != null)
-            {
-                periodicity = avgInfo_CO.Count();
-            }
-            else if (avgInfo_O3 != null)
-            {
-                periodicity = avgInfo_O3.Count();
+                periodicityNO2 = avgInfo_NO2.Count();
+                bigger = bigger >= periodicityNO2 ? bigger : periodicityNO2;
             }
 
-            if (periodicity == 0)
+            if (avgInfo_CO != null)
             {
-                HideChartContentLabels();
+                periodicityCO = avgInfo_CO.Count();
+                bigger = bigger >= periodicityCO ? bigger : periodicityCO;
+            }
+
+            if (avgInfo_O3 != null)
+            {
+                periodicityO3 = avgInfo_O3.Count();
+                bigger = bigger >= periodicityO3 ? bigger : periodicityO3;
+            }
+
+            Debug.WriteLine("Bigger peridicity is: " + bigger);
+
+            if (periodicityNO2 == 0 && periodicityCO == 0 && periodicityO3 == 0)
+                {
+                    HideChartContentLabels();
                 return;
             }
 
@@ -789,41 +831,47 @@ namespace AirMonit_Admin
             int avgValueNO2, avgValueCO, avgValueO3;
             string dateNO2, dateCO, dateO3;
 
-            // iterate from end to 0, so dates go from left to right (oldest to today date)
-            int x = 0;
-            for (int i = periodicity - 1; i >= 0; i--)
+            for (int i = 0; i < bigger; i++)
             {
                 if (checkBoxNO2.Checked == true)
                 {
-                    avgValueNO2 = avgInfo_NO2[i].Value;
-                    dateNO2 = avgInfo_NO2[i].Date;
-                    Debug.WriteLine("[" + i + "] avgValueNO2 is: " + avgValueNO2);
-                    chartDaysData.Series["NO2"].Points.AddXY(dateNO2, avgValueNO2);
-                    //chartSingleCity.Series["NO2"].ChartType = SeriesChartType.Bar;
-                    chartDaysData.Series["NO2"].Points[x].Label = avgValueNO2 + "";
-                    chartDaysData.Series["NO2"].LabelForeColor = Color.Black;
+                    if (i < periodicityNO2) // only do as much as the items it gots in the array, even if 'i' is bigger
+                    {
+                        avgValueNO2 = avgInfo_NO2[i].Value;
+                        dateNO2 = avgInfo_NO2[i].Date;
+                        Debug.WriteLine("[" + i + "] avgValueNO2 is: " + avgValueNO2);
+                        chartDaysData.Series["NO2"].Points.AddXY(dateNO2, avgValueNO2);
+                        //chartSingleCity.Series["NO2"].ChartType = SeriesChartType.Bar;
+                        chartDaysData.Series["NO2"].Points[i].Label = avgValueNO2 + "";
+                        chartDaysData.Series["NO2"].LabelForeColor = Color.Black;
+                    }
                 }
 
                 if (checkBoxCO.Checked == true)
                 {
-                    avgValueCO = avgInfo_CO[i].Value;
-                    dateCO = avgInfo_CO[i].Date;
-                    chartDaysData.Series["CO"].Points.AddXY(dateCO, avgValueCO);
-                    //chartSingleCity.Series["CO"].ChartType = SeriesChartType.Bar;
-                    chartDaysData.Series["CO"].Points[x].Label = avgValueCO + "";
-                    chartDaysData.Series["CO"].LabelForeColor = Color.Black;
+                    if (i < periodicityCO) // only do as much as the items it gots in the array, even if 'i' is bigger
+                    {
+                        avgValueCO = avgInfo_CO[i].Value;
+                        dateCO = avgInfo_CO[i].Date;
+                        chartDaysData.Series["CO"].Points.AddXY(dateCO, avgValueCO);
+                        //chartSingleCity.Series["CO"].ChartType = SeriesChartType.Bar;
+                        chartDaysData.Series["CO"].Points[i].Label = avgValueCO + "";
+                        chartDaysData.Series["CO"].LabelForeColor = Color.Black;
+                    }
                 }
 
                 if (checkBoxO3.Checked == true)
                 {
-                    avgValueO3 = avgInfo_O3[i].Value;
-                    dateO3 = avgInfo_O3[i].Date;
-                    chartDaysData.Series["O3"].Points.AddXY(dateO3, avgValueO3);
-                    //chartSingleCity.Series["O3"].ChartType = SeriesChartType.Bar;
-                    chartDaysData.Series["O3"].Points[x].Label = avgValueO3 + "";
-                    chartDaysData.Series["O3"].LabelForeColor = Color.Black;
+                    if (i < periodicityO3) // only do as much as the items it gots in the array, even if 'i' is bigger
+                    {
+                        avgValueO3 = avgInfo_O3[i].Value;
+                        dateO3 = avgInfo_O3[i].Date;
+                        chartDaysData.Series["O3"].Points.AddXY(dateO3, avgValueO3);
+                        //chartSingleCity.Series["O3"].ChartType = SeriesChartType.Bar;
+                        chartDaysData.Series["O3"].Points[i].Label = avgValueO3 + "";
+                        chartDaysData.Series["O3"].LabelForeColor = Color.Black;
+                    }
                 }
-                x++;
             }
         }
 
@@ -833,13 +881,10 @@ namespace AirMonit_Admin
             labelChartFunctionType.Show();
             labelChartCurrentCity.Show();
             labelChartCurrentCityName.Show();
-            labelNoDataAvailable.Hide();
             labelChartDays.Show();
             labelChartValues.Show();
-            labelChartViewMode.Show();
-            buttonMode.Show();
-            labelChartActiveMode.Show();
-            labelChartActiveMode1.Show();
+     
+            labelNoDataAvailable.Hide();
         }
 
         private void HideChartContentLabels()
@@ -848,18 +893,31 @@ namespace AirMonit_Admin
             labelChartFunctionType.Hide();
             labelChartCurrentCity.Hide();
             labelChartCurrentCityName.Hide();
-            labelNoDataAvailable.Show();
             labelChartDays.Hide();
             labelChartValues.Hide();
+
+            labelNoDataAvailable.Show();
+        }
+
+        private void HideChartModeLayout()
+        {
             labelChartViewMode.Hide();
             buttonMode.Hide();
             labelChartActiveMode.Hide();
             labelChartActiveMode1.Hide();
         }
 
+        private void ShowChartModeLayout()
+        {
+            labelChartViewMode.Show();
+            buttonMode.Show();
+            labelChartActiveMode.Show();
+            labelChartActiveMode1.Show();
+        }
+
         private void comboBoxGroupBy_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DisplayChart();
+            ShowActiveChartMode();
         }
 
         private IEnumerable<InfoBetweenDate> RefreshSeries(string param, string type, DateTime startDate, DateTime endDate)
@@ -895,19 +953,41 @@ namespace AirMonit_Admin
 
         private void buttonMode_Click(object sender, EventArgs e)
         {
-            string text = buttonMode.Text;
-
             if (ActiveMode == Modes.DATE_MODE)
+            {
+                ActiveMode = Modes.HOUR_MODE;
+            }
+            else
+            {
+                ActiveMode = Modes.DATE_MODE;
+            }
+
+            ShowActiveChartMode();
+        }
+
+        private void ShowActiveChartMode()
+        {
+            Debug.WriteLine("Active chart mode: " + ActiveMode);
+
+            if (ActiveMode == Modes.HOUR_MODE)
             {
                 labelChartActiveMode1.Text = "24Hour Mode";
                 buttonMode.Text = "Date Mode";
-                ActiveMode = Modes.HOUR_MODE;
+                labelEndDate.Hide();
+                dateTimeEndDate.Hide();
+                labelStartDate.Text = "Choose a date";
+
+                DisplayHourChart();
             }
             else
             {
                 labelChartActiveMode1.Text = "Date Mode";
                 buttonMode.Text = "24Hour Mode";
-                ActiveMode = Modes.DATE_MODE;
+                labelEndDate.Show();
+                dateTimeEndDate.Show();
+                labelStartDate.Text = "Start date";
+
+                DisplayChart();
             }
         }
 
@@ -921,8 +1001,17 @@ namespace AirMonit_Admin
                 return null;
             }
 
-            Debug.WriteLine("Received AVG info count: " + avgInfo.Count());
-            return avgInfo;
+            // invert the order of the data in arrays to properly show data on chart from older date to current date
+            InfoBetweenDate[] avgInfoInverted = new InfoBetweenDate[avgInfo.Count()];
+            int x = 0;
+            for (int i = avgInfo.Count() - 1; i >= 0; i--)
+            {
+                avgInfoInverted[x] = avgInfo[i];
+                x++;
+            }
+
+            Debug.WriteLine("Received AVG info count: " + avgInfoInverted.Count());
+            return avgInfoInverted;
         }
 
         private IEnumerable<InfoBetweenDate> GetInfoMinBetweenDates(string parameter, string city, DateTime startDate, DateTime endDate)
@@ -935,8 +1024,17 @@ namespace AirMonit_Admin
                 return null;
             }
 
+            // invert the order of the data in arrays to properly show data on chart from older date to current date
+            InfoBetweenDate[] minInfoInverted = new InfoBetweenDate[minInfo.Count()];
+            int x = 0;
+            for (int i = minInfo.Count() - 1; i >= 0; i--)
+            {
+                minInfoInverted[x] = minInfo[i];
+                x++;
+            }
+
             Debug.WriteLine("Received MIN info count: " + minInfo.Count());
-            return minInfo;
+            return minInfoInverted;
         }
 
         private IEnumerable<InfoBetweenDate> GetInfoMaxBetweenDates(string parameter, string city, DateTime startDate, DateTime endDate)
@@ -949,8 +1047,17 @@ namespace AirMonit_Admin
                 return null;
             }
 
+            // invert the order of the data in arrays to properly show data on chart from older date to current date
+            InfoBetweenDate[] maxInfoInverted = new InfoBetweenDate[maxInfo.Count()];
+            int x = 0;
+            for (int i = maxInfo.Count() - 1; i >= 0; i--)
+            {
+                maxInfoInverted[x] = maxInfo[i];
+                x++;
+            }
+
             Debug.WriteLine("Received MAX info count: " + maxInfo.Count());
-            return maxInfo;
+            return maxInfoInverted;
         }
 
         private IEnumerable<AlarmLog> GetAlarmsBetweenDates(String city, DateTime startDate, DateTime endDate)
