@@ -6,8 +6,6 @@ namespace AirMonit_DLog
 {
     public class StoreData
     {
-        //private SqlConnection connection;
-
         // appHarbor dataset
         private AppHarborDataSet appHarborDataSet;
 
