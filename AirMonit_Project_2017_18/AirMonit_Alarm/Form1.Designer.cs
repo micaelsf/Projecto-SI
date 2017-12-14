@@ -18,9 +18,12 @@
                 components.Dispose();
             }
 
-            mClient.Unsubscribe(topics);
-            mClient.Disconnect();
-            mClient = null;
+            if (mClient != null && mClient.IsConnected)
+            {
+                mClient.Unsubscribe(topics);
+                mClient.Disconnect();
+                mClient = null;
+            }
 
             base.Dispose(disposing);
         }
@@ -239,9 +242,9 @@
             // 
             this.comboBoxCreateCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCreateCondition.FormattingEnabled = true;
-            this.comboBoxCreateCondition.Location = new System.Drawing.Point(116, 46);
+            this.comboBoxCreateCondition.Location = new System.Drawing.Point(101, 46);
             this.comboBoxCreateCondition.Name = "comboBoxCreateCondition";
-            this.comboBoxCreateCondition.Size = new System.Drawing.Size(93, 21);
+            this.comboBoxCreateCondition.Size = new System.Drawing.Size(79, 21);
             this.comboBoxCreateCondition.TabIndex = 22;
             this.comboBoxCreateCondition.SelectedIndexChanged += new System.EventHandler(this.comboBoxCreateCondition_SelectedIndexChanged);
             // 
@@ -276,10 +279,9 @@
             this.buttonAddCondition.Location = new System.Drawing.Point(9, 46);
             this.buttonAddCondition.Margin = new System.Windows.Forms.Padding(0);
             this.buttonAddCondition.Name = "buttonAddCondition";
-            this.buttonAddCondition.Size = new System.Drawing.Size(94, 22);
+            this.buttonAddCondition.Size = new System.Drawing.Size(82, 22);
             this.buttonAddCondition.TabIndex = 19;
-            this.buttonAddCondition.Text = "Add Condition";
-            this.buttonAddCondition.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.buttonAddCondition.Text = "Add Rule";
             this.buttonAddCondition.UseVisualStyleBackColor = false;
             this.buttonAddCondition.Click += new System.EventHandler(this.buttonAddCondition_Click);
             // 

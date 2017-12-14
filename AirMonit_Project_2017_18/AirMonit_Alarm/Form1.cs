@@ -387,14 +387,47 @@ namespace AirMonit_Alarm
                 return false;
             }
 
-            long valueMin, valueMax;
-            if (long.TryParse(textBoxConditionValue.Text, out valueMin) && long.TryParse(textBoxConditionValueMax.Text, out valueMax))
+            long valueMin = -1, valueMax = -1;
+            try
             {
-                if (selectedCondition == "between" && (valueMin >= valueMax))
+                valueMin = long.Parse(textBoxConditionValue.Text);
+
+                if (selectedCondition == "between")
+                {
+                    valueMax = long.Parse(textBoxConditionValueMax.Text);
+                }
+            }
+            catch (Exception e)
+            {
+                if (selectedCondition == "between")
+                {
+                    MessageBox.Show("Invalid values! Only numbers accepted.");
+                }
+                else
+                {
+                    MessageBox.Show("Invalid value! Only numbers accepted.");
+                }
+
+                return false;
+            }
+
+            if (selectedCondition == "between")
+            {
+                if (valueMin >= valueMax)
                 {
                     MessageBox.Show("Min value must be lower than max value!");
-                    return false;
                 }
+                if (valueMin < 0 || valueMax < 0)
+                {
+                    MessageBox.Show("Values cannot be negative numbers!");
+                }
+                return false;
+            }
+
+            if (valueMin < 0)
+            {
+                MessageBox.Show("Value cannot be a negative number!");
+                return false;
             }
 
             if (selectedCondition == "lessThan" && textBoxConditionValue.Text == "0")

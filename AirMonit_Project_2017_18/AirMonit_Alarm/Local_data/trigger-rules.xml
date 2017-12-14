@@ -1,15 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <conditions>
   <parameter type="NO2" active="true">
-    <rule condition="between">
-      <description>Qualidade do ar: Muito má</description>
-      <value>-1</value>
-      <minValue>240</minValue>
-      <maxValue>1130</maxValue>
-    </rule>
-    <rule condition="lessThan">
-      <description>Qualidade do ar: Moderada a Boa</description>
-      <value>240</value>
+    <rule condition="greaterThan">
+      <description>Qualidade do ar: Irrespirável! Perigo de saúde!</description>
+      <value>1131</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
@@ -19,9 +13,15 @@
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
-    <rule condition="greaterThan">
-      <description>Qualidade do ar: Irrespirável! Perigo de saúde!</description>
-      <value>1131</value>
+    <rule condition="between">
+      <description>Qualidade do ar: Muito má</description>
+      <value>-1</value>
+      <minValue>241</minValue>
+      <maxValue>1130</maxValue>
+    </rule>
+    <rule condition="lessThan">
+      <description>Qualidade do ar: Moderada a Boa</description>
+      <value>240</value>
       <minValue>-1</minValue>
       <maxValue>-1</maxValue>
     </rule>
