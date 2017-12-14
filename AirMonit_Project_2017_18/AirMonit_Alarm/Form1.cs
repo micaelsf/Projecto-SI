@@ -177,14 +177,16 @@ namespace AirMonit_Alarm
 
             this.Invoke((MethodInvoker)delegate ()
             {
-                listBoxAlarms.Items.Insert(0, 
-                    "[ "+ doc.GetElementsByTagName("AirMonitParam")[0].Attributes["param"].Value + " ] " +
-                    "City: " +  doc.GetElementsByTagName("AirMonitParam")[0].SelectSingleNode("city").InnerText +
-                    ", Value: " + doc.GetElementsByTagName("AirMonitParam")[0].SelectSingleNode("value").InnerText + 
-                    ", " + doc.GetElementsByTagName("description")[0].InnerText +
+                listBoxAlarms.Items.Insert(0,
+                    "[ " + doc.GetElementsByTagName("AirMonitParam")[0].Attributes["param"].Value + " ] " +
+                    "City: " + doc.GetElementsByTagName("AirMonitParam")[0].SelectSingleNode("city").InnerText +
+                    ", Value: " + doc.GetElementsByTagName("AirMonitParam")[0].SelectSingleNode("value").InnerText +
+                    ", DateTime: " + doc.GetElementsByTagName("AirMonitParam")[0].SelectSingleNode("date").InnerText + " "
+                    + "at " + doc.GetElementsByTagName("AirMonitParam")[0].SelectSingleNode("time").InnerText +
+                    ", " + doc.GetElementsByTagName("description")[0].InnerText + "" +
                     Environment.NewLine);
             });
-            Debug.WriteLine("\nPUBLISHED: " + outerXML + "\n\n");
+            
         }
 
         private void Form1_Closing(object sender, CancelEventArgs e)
