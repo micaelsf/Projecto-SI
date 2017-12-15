@@ -4,7 +4,6 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
-using System.ServiceModel;
 
 namespace AirMonit_Service
 {
@@ -17,7 +16,6 @@ namespace AirMonit_Service
         public const string tableUncommonEvents = "UncommonEvents";
     }
 
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
     public class AirMonit_Service : IAirMonit_AccessingData, IAirMonit_StoreData
     {
         private string connectionString = ConfigurationManager.ConnectionStrings["appHarborConnect"].ConnectionString;
@@ -27,7 +25,6 @@ namespace AirMonit_Service
         {
             connection = new SqlConnection(connectionString);
         }
-
 
         public int storeUncommonEvent(UncommonEvents userInfo)
         {
@@ -275,7 +272,7 @@ namespace AirMonit_Service
                     {
                         while (reader.Read())
                         {
-                            AlarmLog alarm  = new AlarmLog
+                            AlarmLog alarm = new AlarmLog
                             {
                                 City = reader["City_Name"] + "",
                                 Description = reader["Description"] + "",

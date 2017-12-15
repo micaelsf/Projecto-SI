@@ -33,18 +33,16 @@ namespace AirMonit_Service
 
         [OperationContract]
         List<UncommonEvents> getUncommonEventsBetweenDates(string cityName, DateTime startDate, DateTime endDate);
-
     }
 
     [ServiceContract]
     public interface IAirMonit_StoreData
     {
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/uncommonEvents")]
         int storeUncommonEvent(UncommonEvents userInfo);
     }
 
-    [DataContract(Name = "SensorData", Namespace = "AirMonit_Service")]
+    [DataContract]
     public class SensorData //DONE 
     {
         [DataMember]
@@ -61,7 +59,7 @@ namespace AirMonit_Service
         public int SensorId { get; set; }
     }
 
-    [DataContract(Name = "AlarmLog", Namespace = "AirMonit_Service")]
+    [DataContract]
     public class AlarmLog  //DONE
     {
         [DataMember]
@@ -76,7 +74,7 @@ namespace AirMonit_Service
         public int Value { get; set; }
     }
 
-    [DataContract(Name = "InfoBetweenDate", Namespace = "AirMonit_Service")]
+    [DataContract]
     public class InfoBetweenDate
     {
         [DataMember]
@@ -87,7 +85,7 @@ namespace AirMonit_Service
         public string City { get; set; }
     }
 
-    [DataContract(Name = "UncommonEvent", Namespace = "AirMonit_Service")]
+    [DataContract]
     public class UncommonEvents //DONE
     {
         [DataMember]
@@ -105,7 +103,6 @@ namespace AirMonit_Service
 
     }
 }
-
 
 
 

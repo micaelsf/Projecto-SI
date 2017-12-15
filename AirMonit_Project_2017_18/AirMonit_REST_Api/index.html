@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>AirMonit Events Simulator</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+
+</head>
+<body>
+    <h1 style="text-align: center">AirMonit Event Sender Simulator</h1>
+    <div style="text-align: center">
+        <br />
+        <div style="margin: auto; width: 50%">
+            <div style="border: 2px solid lightgray; border-radius:10px; text-align: center; padding: 15px 10px; margin: 15px">
+                <h2 style="text-align: center; margin-bottom: 15px; border-bottom: 1px solid lightgray">Event details</h2>
+                <p>
+                    <label for="cityName" style="display:block">City name</label>
+                    <input type="text" id="cityName" placeholder="City name" style="width: 100%; border-radius: 5px"/>
+                </p>
+                <p>
+                    <label for="type" style="display:block">Event type</label>
+                    <input type="text" id="type" placeholder="Event type" style="width: 100%; border-radius: 5px"/>
+                </p>
+                <p>
+                    <label for="temp" style="display:block">Temperature</label>
+                    <input type="number" id="temp" placeholder="15" style="width: 100%; border-radius: 5px"/>
+                </p>
+                <p>
+                    <label for="dateTime" style="display:block">DateTime</label>
+                    <input type="text" id="dateTime" placeholder="yyyy-mm-dd hh:mm:ss" style="width: 100%; border-radius: 5px"/>
+                </p>
+                <p>
+                    <label for="username" style="display:block">Username</label>
+                    <input type="text" id="username" placeholder="Username" style="width: 100%; border-radius: 5px"/>
+                </p>
+                <p>
+                    <label for="description" style="display:block">Description</label>
+                    <input type="text" id="description" placeholder="Description" style="width: 100%; border-radius: 5px"/>
+                </p>
+                <p>
+                    <input id="sendBtn" type="button" class="btn btn-md btn-default" value="Send" />
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+        <script>
+            $(function () {
+                var uri = 'http://localhost:51045/api/uncommonEvents';
+
+                var citynameElem = $('#cityName');
+                var typeElem = $('#type');
+                var tempElem = $('#temp');
+                var dateTimeElem = $('#dateTime');
+                var usernameElem = $('#username');
+                var descriptionElem = $('#description');
+
+                console.log(getDate());
+                dateTimeElem.val(getDate());
+
+                $('#sendBtn').click(function () {
+                    console.log("#1");
+
+                    if (validateAllFields()) {
+                        $.ajax({
+                            url: uri,
+                            type: 'post',
+                            contentType: 'application / json',
+                            data: JSON.stringify({
+                                cityname: citynameElem.val(),
+                                type: typeElem.val(),
+                                temp: tempElem.val(),
+                                dateTime: dateTimeElem.val(),
+                                username: usernameElem.val(),
+                                description: descriptionElem.val()
+                            }),
+                            success: function (data) {
+                                alert("Event sucessfully published!");
+                            },
+                            error: function (textStatus, errorThrown) {
+                                alert("An error ocurred: " + errorThrown);
+                            }
+                        });
+                    } else {
+                        alert("All fields are required!");
+                    }
+                });
+
+                function validateAllFields() {
+                    return citynameElem.val().trim() != "" &&
+                        typeElem.val().trim() != "" &&
+                        tempElem.val().trim() != "" &&
+                        dateTimeElem.val().trim() != "" &&
+                        usernameElem.val().trim() != "" &&
+                        descriptionElem.val().trim() != "";
+                }
+
+                function getDate() {
+                    var currentdate = new Date();
+                    return datetime = currentdate.getFullYear() + "-"
+                        + (currentdate.getMonth() + 1) + "-"
+                        + currentdate.getDay() + " "
+                        + currentdate.getHours() + ":"
+                        + currentdate.getMinutes() + ":"
+                        + currentdate.getSeconds();
+                }
+            });
+        </script>
+    </body>
+</html>
