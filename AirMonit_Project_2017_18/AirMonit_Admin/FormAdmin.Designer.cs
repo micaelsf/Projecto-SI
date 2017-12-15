@@ -228,6 +228,7 @@
             this.tabPageUncommonEvents.Controls.Add(this.label10);
             this.tabPageUncommonEvents.Controls.Add(this.dataGridViewUncommonEvents);
             this.tabPageUncommonEvents.Location = new System.Drawing.Point(4, 39);
+
             this.tabPageUncommonEvents.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageUncommonEvents.Name = "tabPageUncommonEvents";
             this.tabPageUncommonEvents.Padding = new System.Windows.Forms.Padding(2);
@@ -241,6 +242,7 @@
             this.labelTotalEvents.BackColor = System.Drawing.Color.Transparent;
             this.labelTotalEvents.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTotalEvents.ForeColor = System.Drawing.SystemColors.Highlight;
+
             this.labelTotalEvents.Location = new System.Drawing.Point(811, 4);
             this.labelTotalEvents.Name = "labelTotalEvents";
             this.labelTotalEvents.Size = new System.Drawing.Size(80, 25);
@@ -356,6 +358,7 @@
             this.tabPageRaisedAlarms.Controls.Add(this.label5);
             this.tabPageRaisedAlarms.Controls.Add(this.dataGridViewRaisedAlarms);
             this.tabPageRaisedAlarms.Location = new System.Drawing.Point(4, 39);
+
             this.tabPageRaisedAlarms.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageRaisedAlarms.Name = "tabPageRaisedAlarms";
             this.tabPageRaisedAlarms.Padding = new System.Windows.Forms.Padding(2);
@@ -369,6 +372,7 @@
             this.labelAlarmsCount.BackColor = System.Drawing.Color.Transparent;
             this.labelAlarmsCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAlarmsCount.ForeColor = System.Drawing.SystemColors.Highlight;
+
             this.labelAlarmsCount.Location = new System.Drawing.Point(811, 4);
             this.labelAlarmsCount.Name = "labelAlarmsCount";
             this.labelAlarmsCount.Size = new System.Drawing.Size(80, 25);
